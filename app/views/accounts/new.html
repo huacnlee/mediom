@@ -1,0 +1,23 @@
+{{set . "title" "注册新用户"}}
+{{template "header.html" .}}
+
+<div class="row">
+  <form class="signup col-md-8" action="/signup" method="POST">
+    {{.errors | error_messages}}
+    <div class="form-group">  
+      <label for="username">帐号</label>
+      <input type="text" class="form-control" name="login" value="{{.form.Login}}" id="username" placeholder="帐号">
+    </div>
+    <div class="form-group">  
+      <label for="password">密码</label>
+      <input type="password" class="form-control" name="password" id="password" >
+    </div>
+    <div class="form-group">  
+      <label for="password-confirm">确认密码</label>
+      <input type="password" class="form-control" name="password-confirm" id="password-confirm" >
+    </div>
+    <button type="submit" class="btn btn-primary">注册新用户</button> 如果你以及有帐号，可以 <a href="/signin">直接登录</a>
+  </form>
+</div>
+
+{{template "footer.html" .}}

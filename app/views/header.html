@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>{{.title}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+    <script src="/public/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    {{range .moreStyles}}
+      <link rel="stylesheet" type="text/css" href="/public/{{.}}">
+    {{end}}
+    {{range .moreScripts}}
+      <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
+    {{end}}
+  </head>
+  <body>
+  <div class="header">
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<nav class="nav pull-right">
+					<a href='/signup' class="btn btn-default navbar-btn">注册新用户</a>
+					<a href='/signin' class="btn btn-default navbar-btn">登录</a>
+				</nav>
+			</div>
+		</nav>
+	</div>
+  <div class="container">

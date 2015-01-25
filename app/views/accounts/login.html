@@ -1,0 +1,19 @@
+{{set . "title" "注册新用户"}}
+{{template "header.html" .}}
+
+<div class="row">
+  <form class="signin col-md-5" action="/signin" method="POST">
+    <div class="form-group">  
+      <label for="username">帐号</label>
+      <input type="text" class="form-control" name="login" value="{{.form.Login}}" id="username" placeholder="帐号">
+    </div>
+    <div class="form-group">  
+      <label for="password">密码</label>
+      <input type="password" class="form-control" name="password" id="password" >
+    </div>
+    <button type="submit" class="btn btn-block btn-primary">登录</button>
+  </form>
+</div>
+
+
+{{template "footer.html" .}}
