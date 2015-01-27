@@ -52,5 +52,5 @@ var InstramentFilter = func(c *revel.Controller, fc []revel.Filter) {
 	fc[0](c, fc[1:])
 
 	duration := time.Since(t1)
-	fmt.Println("\nComplated", c.Response.Status, "in", duration.Nanoseconds()/1000000.00, "ms")
+	fmt.Println("\nComplated", c.Response.Status, "in", fmt.Sprintf("%.2fms", float64(duration.Nanoseconds()/1e4)/100.0))
 }

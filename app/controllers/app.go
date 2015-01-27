@@ -69,6 +69,8 @@ func (c App) After() revel.Result {
 	for key := range c.Params.Values {
 		newParams[key] = c.Params.Get(key)
 	}
-	c.RenderArgs["params"] = newParams
+	if len(newParams) > 0 {
+		c.RenderArgs["params"] = newParams
+	}
 	return c.Result
 }
