@@ -8,8 +8,13 @@ import (
 )
 
 func init() {
-	revel.TemplateFuncs["error_messages"] = func(v revel.Validation) interface{} {
+	revel.TemplateFuncs["error_messages"] = func(args ...interface{}) interface{} {
 		out := ""
+		if len(args) == 0 {
+			return out
+		}
+
+		v := args[0].(revel.Validation)
 		var parts []string
 		if !v.HasErrors() {
 			return out

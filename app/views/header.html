@@ -21,9 +21,15 @@
         <nav class="navbar-header">
           <a href="/" class="navbar-brand">Mediom</a>
         </nav>
+        
 				<nav class="nav pull-right">
+          {{if .current_user}}
+          Hi, {{.current_user.Login}}
+          <a href="/signout" class="btn btn-default navbar-btn">登出</a>
+          {{else}}
 					<a href='/signup' class="btn btn-default navbar-btn">注册新用户</a>
 					<a href='/signin' class="btn btn-default navbar-btn">登录</a>
+          {{end}}
 				</nav>
 			</div>
 		</nav>

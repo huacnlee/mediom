@@ -1,6 +1,6 @@
-{{set . "title" "注册新用户"}}
+{{set . "title" "登录"}}
 {{template "header.html" .}}
-
+{{.session}}
 <div class="row">
   <form class="signin col-md-5" action="/signin" method="POST">
     <div class="form-group">  

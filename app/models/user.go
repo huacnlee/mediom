@@ -26,8 +26,8 @@ func (u User) EncodePassword(raw string) (md5Digest string) {
 	return
 }
 
-func (u User) Signup(login string, password string, passwordConfirm string) (v revel.Validation) {
-	login = strings.Trim(login, " ")
+func (u User) Signup(login string, password string, passwordConfirm string) (user User, v revel.Validation) {
+	u.Login = strings.Trim(login, " ")
 
 	v.MinSize(login, 5).Key("用户名").Message("最少要 5 个字符")
 	v.MinSize(password, 6).Key("密码").Message("最少要 6 个字符")
@@ -44,12 +44,17 @@ func (u User) Signup(login string, password string, passwordConfirm string) (v r
 	}
 
 	if v.HasErrors() {
-		return v
+		return u, v
 	}
 
-	u = User{Login: login, Password: u.EncodePassword(password)}
-	db.Create(&u)
-	return v
+	u.Password = u.EncodePassword(password)
+
+	err := db.Create(&u).Error
+	if err != nil {
+		v.Error(fmt.Sprintf("服务器异常, %v", err))
+	}
+	fmt.Println("created user: ", u)
+	return u, v
 }
 
 func (u User) Signin(login string, password string) (user User, v revel.Validation) {
