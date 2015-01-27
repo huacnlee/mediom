@@ -1,12 +1,11 @@
 {{set . "title" "注册新用户"}}
 {{template "header.html" .}}
-
 <div class="row">
   <form class="signup col-md-8" action="/signup" method="POST">
-    {{.errors | error_messages}}
+    {{.validation | error_messages}}
     <div class="form-group">  
       <label for="username">帐号</label>
-      <input type="text" class="form-control" name="login" value="{{.form.Login}}" id="username" placeholder="帐号">
+      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">
     </div>
     <div class="form-group">  
       <label for="password">密码</label>

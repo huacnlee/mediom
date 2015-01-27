@@ -8,15 +8,15 @@ import (
 )
 
 func init() {
-	revel.TemplateFuncs["error_messages"] = func(errors map[string]*revel.ValidationError) interface{} {
+	revel.TemplateFuncs["error_messages"] = func(v revel.Validation) interface{} {
 		out := ""
 		var parts []string
-		if len(errors) == 0 {
+		if !v.HasErrors() {
 			return out
 		}
 
 		parts = append(parts, "<div class=\"alert alert-block alert-warning\" role=\"alert\"><ul>")
-		for _, err := range errors {
+		for _, err := range v.ErrorMap() {
 			parts = append(parts, fmt.Sprintf("<li>%s %s</li>", err.Key, template.HTMLEscaper(err.Message)))
 		}
 

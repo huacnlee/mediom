@@ -18,12 +18,13 @@ func (c App) currentUser() *User {
 	return &u
 }
 
-func (c App) requireUser() {
+func (c App) requireUser() revel.Result {
 	u := c.currentUser()
 	if u.Id == 0 {
 		c.Flash.Error("你还未登录哦")
-		c.Redirect("/signin")
+		return c.Redirect(Accounts.Login)
 	} else {
 		fmt.Println("current_user: ", u)
+		return nil
 	}
 }

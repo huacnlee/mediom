@@ -25,7 +25,8 @@ func (c Accounts) Create() revel.Result {
 
 	v := u.Signup(c.Params.Get("login"), c.Params.Get("password"), c.Params.Get("password-confirm"))
 	if v.HasErrors() {
-		c.RenderArgs["errors"] = v.Errors
+		c.RenderArgs["a"] = 1
+		c.RenderArgs["validation"] = v
 		return c.RenderTemplate("accounts/new.html")
 	}
 
