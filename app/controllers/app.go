@@ -48,12 +48,23 @@ func (c App) requireUser() revel.Result {
 
 func init() {
 	revel.InterceptMethod((*App).Before, revel.BEFORE)
+	revel.InterceptMethod((*App).After, revel.AFTER)
 }
 
 func (c App) Before() revel.Result {
 	u := c.currentUser()
+	c.RenderArgs["validation"] = nil
 	if u.Id > 0 {
 		c.RenderArgs["current_user"] = u
 	}
+	return c.Result
+}
+
+func (c App) After() revel.Result {
+	newParams := make(map[string]string, len(c.Params.Values))
+	for key := range c.Params.Values {
+		newParams[key] = c.Params.Get(key)
+	}
+	c.RenderArgs["params"] = newParams
 	return c.Result
 }
