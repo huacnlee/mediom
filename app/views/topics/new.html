@@ -1,0 +1,19 @@
+{{set . "title" "发表新话题"}}
+{{template "header.html" .}}
+
+<div class="row">
+  <form class="signup col-md-8 col-md-offset-2" action="/topics" method="POST">
+    {{.validation | error_messages}}
+    <div class="form-group">  
+      <label for="title">标题</label>
+      <input type="text" class="form-control" name="title" value="{{.params.title}}" id="title" placeholder="请输入 5-100 字的标题">
+    </div>
+    <div class="form-group">  
+      <label for="body">正文</label>
+      <textarea class="form-control" name="body" rows="10" id="body">{{.params.body}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">提交</button>
+  </form>
+</div>
+
+{{template "footer.html" .}}

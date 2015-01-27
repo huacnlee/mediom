@@ -1,6 +1,6 @@
 {{set . "title" "注册新用户"}}
 {{template "header.html" .}}
-{{.params.login}}
+
 <div class="row">
   <form class="signup col-md-6 col-md-offset-3" action="/signup" method="POST">
     {{.validation | error_messages}}

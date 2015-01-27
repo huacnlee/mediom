@@ -1,8 +1,11 @@
 package app
 
 import (
+	"fmt"
 	_ "fmt"
 	"github.com/revel/revel"
+	"mediom/app/models"
+	"time"
 )
 
 func init() {
@@ -17,15 +20,17 @@ func init() {
 		revel.ValidationFilter,        // Restore kept validation errors and save new ones from cookie.
 		revel.I18nFilter,              // Resolve the requested language
 		HeaderFilter,                  // Add some security based headers
-		revel.InterceptorFilter,       // Run interceptors around the action.
-		revel.CompressFilter,          // Compress the result.
-		revel.ActionInvoker,           // Invoke the action.
+		InstramentFilter,
+		revel.InterceptorFilter, // Run interceptors around the action.
+		revel.CompressFilter,    // Compress the result.
+		revel.ActionInvoker,     // Invoke the action.
 	}
 
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	// revel.OnAppStart(initDB)
 	// revel.OnAppStart(FillCache)
+	models.DB.LogMode(revel.DevMode)
 }
 
 // TODO turn this into revel.HeaderFilter
@@ -38,4 +43,14 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
 
 	fc[0](c, fc[1:]) // Execute the next filter stage.
+}
+
+var InstramentFilter = func(c *revel.Controller, fc []revel.Filter) {
+	t1 := time.Now()
+	fmt.Println("\nStarted", c.Request.Method, c.Request.URL.String(), "at", time.Now().Format(time.RFC3339), "from", c.Request.RemoteAddr)
+
+	fc[0](c, fc[1:])
+
+	duration := time.Since(t1)
+	fmt.Println("\nComplated", c.Response.Status, "in", duration.Nanoseconds()/1000000.00, "ms")
 }

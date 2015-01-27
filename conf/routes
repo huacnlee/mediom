@@ -11,6 +11,10 @@ POST 	/signup 			Accounts.Create
 GET 		/signin 			Accounts.Login
 POST		/signin			Accounts.LoginCreate
 GET      /signout         Accounts.Logout
+GET     /topics           Topics.Index
+GET     /topics/new       Topics.New
+GET     /topics/:id       Topics.Show
+POST    /topics           Topics.Create
 GET     /u/:username      Users.Show
 
 # Ignore favicon requests

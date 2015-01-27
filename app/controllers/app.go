@@ -13,7 +13,6 @@ type App struct {
 }
 
 func (c App) currentUser() *User {
-	fmt.Println("is nil", c.CurrentUser.Id == 0)
 	if c.CurrentUser.Id > 0 {
 		return &c.CurrentUser
 	}
@@ -44,6 +43,11 @@ func (c App) requireUser() revel.Result {
 		fmt.Println("current_user: ", u)
 		return nil
 	}
+}
+
+func (c App) renderValidation(tpl string, v revel.Validation) revel.Result {
+	c.RenderArgs["validation"] = v
+	return c.RenderTemplate(tpl)
 }
 
 func init() {

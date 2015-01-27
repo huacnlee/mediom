@@ -16,7 +16,6 @@ func init() {
 		panic(err)
 	}
 
-	db.LogMode(true)
 	db.AutoMigrate(&User{}, &Topic{})
 	db.Model(&User{}).AddUniqueIndex("index_on_login", "login")
 }

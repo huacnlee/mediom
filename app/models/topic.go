@@ -4,8 +4,8 @@ import (
 	//"crypto/md5"
 	//"encoding/hex"
 	//"fmt"
-	//"github.com/martini-contrib/binding"
 	//"strings"
+	"github.com/revel/revel"
 	"time"
 )
 
@@ -17,4 +17,33 @@ type Topic struct {
 	Replies   []Reply
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (t *Topic) isNewRecord() bool {
+	return t.Id <= 0
+}
+
+func (t *Topic) validate() (v revel.Validation) {
+	v = revel.Validation{}
+	switch t.isNewRecord() {
+	case false:
+	default:
+		v.MinSize(t.Title, 10).Key("标题").Message("最少要 10 个子符")
+		v.MaxSize(t.Title, 100).Key("标题").Message("最多只能写 100 个字符")
+		v.MinSize(t.Body, 1).Key("内容").Message("不能为空")
+	}
+	return v
+}
+
+func CreateTopic(t *Topic) revel.Validation {
+	v := t.validate()
+	if v.HasErrors() {
+		return v
+	}
+
+	err := db.Save(&t)
+	if err != nil {
+		v.Error("服务器异常创建失败")
+	}
+	return v
 }

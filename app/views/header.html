@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
-    <script src="/public/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/public/js/bootstrap.min.js" type="text/javascript"></script>
     {{range .moreStyles}}
       <link rel="stylesheet" type="text/css" href="/public/{{.}}">
     {{end}}
@@ -22,15 +22,23 @@
           <a href="/" class="navbar-brand">Mediom</a>
         </nav>
         
-				<nav class="nav pull-right">
-          {{if .current_user}}
-          Hi, {{.current_user.Login}}
-          <a href="/signout" class="btn btn-default navbar-btn">登出</a>
-          {{else}}
-					<a href='/signup' class="btn btn-default navbar-btn">注册新用户</a>
-					<a href='/signin' class="btn btn-default navbar-btn">登录</a>
-          {{end}}
-				</nav>
+        {{if .current_user}}
+				<ul class="nav navbar-nav pull-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{.current_user.Login}} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/topics/new">发布话题</a></li>
+              <li class="divider"></li>
+              <li><a href="/signout">登出</a></li>
+            </ul>
+          </li>
+        </ul>
+        {{else}}
+        <nav  class="nav pull-right">
+				<a href='/signup' class="btn btn-default navbar-btn">注册新用户</a>
+				<a href='/signin' class="btn btn-default navbar-btn">登录</a>
+        </nav>
+        {{end}}
 			</div>
 		</nav>
 	</div>
