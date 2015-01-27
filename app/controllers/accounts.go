@@ -1,14 +1,12 @@
 package controllers
 
 import (
-	"fmt"
-	_ "fmt"
 	"github.com/revel/revel"
 	. "mediom/app/models"
 )
 
 type Accounts struct {
-	*revel.Controller
+	App
 }
 
 //func init() {
@@ -24,6 +22,12 @@ func (c Accounts) New() revel.Result {
 
 func (c Accounts) Create() revel.Result {
 	u := &User{}
+
+	v := u.Signup(c.Params.Get("login"), c.Params.Get("password"), c.Params.Get("password-confirm"))
+	if v.HasErrors() {
+		c.RenderArgs["errors"] = v.Errors
+		return c.RenderTemplate("accounts/new.html")
+	}
 
 	//v = u.
 

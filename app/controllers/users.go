@@ -6,7 +6,7 @@ import (
 )
 
 type Users struct {
-	*revel.Controller
+	App
 }
 
 //func init() {

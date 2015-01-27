@@ -2,13 +2,8 @@ package app
 
 import (
 	_ "fmt"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
 	"github.com/revel/revel"
-	"mediom/app/models"
 )
-
-var db gorm.DB
 
 func init() {
 	// Filters is the default set of global filters.
@@ -29,20 +24,8 @@ func init() {
 
 	// register startup functions with OnAppStart
 	// ( order dependent )
-	revel.OnAppStart(initDB)
+	// revel.OnAppStart(initDB)
 	// revel.OnAppStart(FillCache)
-}
-
-func initDB() {
-	var err error
-	db, err = gorm.Open("mysql", "monster:123123@/foo?charset=utf8&parseTime=True")
-	if err != nil {
-		panic(err)
-	}
-
-	db.LogMode(true)
-	db.AutoMigrate(&User{}, &Topic{})
-	db.Model(&User{}).AddUniqueIndex("index_on_login", "login")
 }
 
 // TODO turn this into revel.HeaderFilter

@@ -5,7 +5,7 @@ import (
 )
 
 type Home struct {
-	*revel.Controller
+	App
 }
 
 //func init() {
@@ -14,5 +14,6 @@ type Home struct {
 //}
 
 func (c Home) Index() revel.Result {
+	c.requireUser()
 	return c.Render()
 }
