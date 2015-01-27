@@ -1,8 +1,8 @@
 {{set . "title" "登录"}}
 {{template "header.html" .}}
-{{.session}}
+
 <div class="row">
-  <form class="signin col-md-5" action="/signin" method="POST">
+  <form class="signin col-md-4 col-md-offset-4" action="/signin" method="POST">
     {{.validation | error_messages}}
     <div class="form-group">  
       <label for="username">帐号</label>

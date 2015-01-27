@@ -1,7 +1,7 @@
 {{set . "title" "注册新用户"}}
 {{template "header.html" .}}
 <div class="row">
-  <form class="signup col-md-8" action="/signup" method="POST">
+  <form class="signup col-md-6 col-md-offset-3" action="/signup" method="POST">
     {{.validation | error_messages}}
     <div class="form-group">  
       <label for="username">帐号</label>
