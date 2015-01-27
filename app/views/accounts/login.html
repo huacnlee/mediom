@@ -3,6 +3,7 @@
 {{.session}}
 <div class="row">
   <form class="signin col-md-5" action="/signin" method="POST">
+    {{.validation | error_messages}}
     <div class="form-group">  
       <label for="username">帐号</label>
       <input type="text" class="form-control" name="login" value="{{.form.Login}}" id="username" placeholder="帐号">

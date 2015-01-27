@@ -25,7 +25,6 @@ func (c Accounts) Create() revel.Result {
 
 	newUser, v := u.Signup(c.Params.Get("login"), c.Params.Get("password"), c.Params.Get("password-confirm"))
 	if v.HasErrors() {
-		c.RenderArgs["a"] = 1
 		c.RenderArgs["validation"] = v
 		return c.RenderTemplate("accounts/new.html")
 	}
@@ -40,7 +39,17 @@ func (c Accounts) Login() revel.Result {
 }
 
 func (c Accounts) LoginCreate() revel.Result {
-	return c.Render()
+	u := &User{}
+
+	newUser, v := u.Signin(c.Params.Get("login"), c.Params.Get("password"))
+	if v.HasErrors() {
+		c.RenderArgs["validation"] = v
+		return c.RenderTemplate("accounts/login.html")
+	}
+
+	c.storeUser(&newUser)
+	c.Flash.Success("注册成功")
+	return c.Redirect(Home.Index)
 }
 
 func (c Accounts) Logout() revel.Result {
