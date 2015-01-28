@@ -1,0 +1,15 @@
+{{set . "title" "发表新话题"}}
+{{template "header.html" .}}
+
+<div class="topics">
+  {{range .topics}}
+  <div class="topic row">
+    <div class="avatar col-md-1">{{.User.Login}}</div>
+    <div class="col-md-8">
+      <a href="/topics/{{.Id}}">{{.Title}}</a>
+    </div>
+  </div>
+  {{end}}
+</div>
+
+{{template "footer.html" .}}

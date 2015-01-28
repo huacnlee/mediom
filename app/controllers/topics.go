@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"strconv"
 	//"fmt"
 	"github.com/revel/revel"
 	. "mediom/app/models"
@@ -12,7 +13,11 @@ type Topics struct {
 }
 
 func (c Topics) Index() revel.Result {
-	return c.Result
+	topics := []*Topic{}
+	offset, _ := strconv.Atoi(c.Params.Get("offset"))
+	DB.Order("id desc").Limit(20).Offset(offset).Find(&topics)
+	c.RenderArgs["topics"] = topics
+	return c.Render("topics/index.html")
 }
 
 func (c Topics) New() revel.Result {

@@ -20,6 +20,12 @@ type Topic struct {
 	UpdatedAt time.Time
 }
 
+func (t *Topic) User() *User {
+	u := &User{}
+	db.Model(t).Related(u)
+	return u
+}
+
 func (t *Topic) isNewRecord() bool {
 	return t.Id <= 0
 }
