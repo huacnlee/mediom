@@ -4,7 +4,6 @@ import (
 	"fmt"
 	_ "fmt"
 	"github.com/revel/revel"
-	"mediom/app/models"
 	"time"
 )
 
@@ -30,7 +29,6 @@ func init() {
 	// ( order dependent )
 	// revel.OnAppStart(initDB)
 	// revel.OnAppStart(FillCache)
-	models.DB.LogMode(revel.DevMode)
 }
 
 // TODO turn this into revel.HeaderFilter

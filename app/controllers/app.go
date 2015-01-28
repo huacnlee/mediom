@@ -9,16 +9,19 @@ import (
 
 type App struct {
 	*revel.Controller
-	CurrentUser User
 }
 
+var currentUser = &User{}
+
 func (c App) currentUser() *User {
-	if c.CurrentUser.Id > 0 {
-		return &c.CurrentUser
+	fmt.Println("before ", currentUser)
+	if currentUser.Id > 0 {
+		return currentUser
 	}
 	userId, _ := strconv.Atoi(c.Session["user_id"])
-	DB.Where("id = ?", userId).First(&c.CurrentUser)
-	return &c.CurrentUser
+	DB.Where("id = ?", userId).First(currentUser)
+
+	return currentUser
 }
 
 func (c App) storeUser(u *User) {

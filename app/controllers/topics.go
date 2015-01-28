@@ -23,9 +23,10 @@ func (c Topics) Create() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r
 	}
-	t := Topic{Title: c.Params.Get("title"), Body: c.Params.Get("body")}
-	t.UserId = c.CurrentUser.Id
-	v := CreateTopic(&t)
+	t := &Topic{Title: c.Params.Get("title"), Body: c.Params.Get("body")}
+
+	t.UserId = currentUser.Id
+	v := CreateTopic(t)
 	if v.HasErrors() {
 		return c.renderValidation("topics/new.html", v)
 	}
