@@ -47,14 +47,23 @@ func (c App) requireUser() revel.Result {
 
 func (c App) isOwner(obj interface{}) bool {
 	objType := reflect.TypeOf(obj)
-	switch objType.Name() {
+	switch objType.String() {
 	case "models.Topic":
 		return c.currentUser.Id == obj.(Topic).UserId
+	case "*models.Topic":
+		return c.currentUser.Id == obj.(*Topic).UserId
 	case "models.User":
 		return c.currentUser.Id == obj.(User).Id
+	case "*models.User":
+		return c.currentUser.Id == obj.(*User).Id
 	case "models.Reply":
 		return c.currentUser.Id == obj.(Reply).UserId
+	case "*models.Reply":
+		return c.currentUser.Id == obj.(*Reply).UserId
+	default:
+		panic(fmt.Sprintf("Invalid isOwner type: %v, %v, name: %v", obj, objType, objType.Name()))
 	}
+
 	return false
 }
 
