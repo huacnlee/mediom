@@ -38,6 +38,9 @@ func (c Topics) Create() revel.Result {
 	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
 }
 
-func (c Topics) Show(id string) revel.Result {
-	return c.RenderText(fmt.Sprintf("visit topic %v", id))
+func (c Topics) Show() revel.Result {
+	t := &Topic{}
+	DB.Where("id = ?", c.Params.Get("id")).First(t)
+	c.RenderArgs["topic"] = t
+	return c.Render("topics/show.html")
 }

@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/revel/revel"
 	"html/template"
+	"time"
 	//"reflect"
+	"github.com/huacnlee/timeago"
+	"github.com/russross/blackfriday"
 	"strings"
 )
 
@@ -38,5 +41,16 @@ func init() {
 		}
 
 		return template.HTML(out)
+	}
+
+	revel.TemplateFuncs["timeago"] = func(t time.Time) string {
+		return timeago.Chinese.Format(t)
+	}
+
+	revel.TemplateFuncs["markdown"] = func(text string) interface{} {
+		bytes := []byte(text)
+		outBytes := blackfriday.MarkdownCommon(bytes)
+		htmlText := string(outBytes[:])
+		return template.HTML(htmlText)
 	}
 }

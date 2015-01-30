@@ -2,10 +2,6 @@ package models
 
 import (
 	"fmt"
-	//"crypto/md5"
-	//"encoding/hex"
-	//"fmt"
-	//"strings"
 	"github.com/revel/revel"
 	"time"
 )
@@ -21,7 +17,7 @@ type Topic struct {
 }
 
 func (t *Topic) User() *User {
-	u := &User{}
+	u := &User{Login: "未知用户"}
 	db.Model(t).Related(u)
 	return u
 }

@@ -1,0 +1,19 @@
+{{set . "title" .topic.Title }}
+{{template "header.html" .}}
+
+<div class="row">
+  <div class="topic-detail col-md-9">
+    <h1>{{.topic.Title}}</h1>
+    <div class="info">
+      {{.topic.User.Login}} 发表于 {{timeago .topic.CreatedAt}}
+    </div>
+    <div class="markdown">
+      {{markdown .topic.Body}}
+    </div>
+  </div>
+  <div class="col-md-3">
+    {{template "partials/topic-side.html" .}}
+  </div>
+</div>
+
+{{template "footer.html" .}}
