@@ -5,7 +5,7 @@ import (
 )
 
 type Reply struct {
-	Id        int32
+	BaseModel
 	UserId    int32  `sql:"not null"`
 	Body      string `sql:"type:text;not null"`
 	CreatedAt time.Time

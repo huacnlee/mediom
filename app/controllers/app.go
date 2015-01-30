@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/revel/revel"
 	. "mediom/app/models"
+	"reflect"
 	"strconv"
 )
 
@@ -34,6 +35,7 @@ func (c App) storeUser(u *User) {
 }
 
 func (c App) clearUser() {
+	currentUser = nil
 	c.Session["user_id"] = ""
 }
 
@@ -46,6 +48,19 @@ func (c App) requireUser() revel.Result {
 		fmt.Println("current_user: ", u)
 		return nil
 	}
+}
+
+func (c App) isOwner(obj interface{}) bool {
+	objType := reflect.TypeOf(obj)
+	switch objType.Name() {
+	case "models.Topic":
+		return currentUser.Id == obj.(Topic).UserId
+	case "models.User":
+		return currentUser.Id == obj.(User).Id
+	case "models.Reply":
+		return currentUser.Id == obj.(Reply).UserId
+	}
+	return false
 }
 
 func (c App) renderValidation(tpl string, v revel.Validation) revel.Result {

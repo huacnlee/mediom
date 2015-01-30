@@ -10,13 +10,17 @@ import (
 )
 
 type User struct {
-	Id        int32
+	BaseModel
 	Login     string `sql:"size:255;not null"`
 	Password  string `sql:"size:255;not null"`
 	Topics    []Topic
 	Replies   []Reply
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (u User) SameAs(obj interface{}) bool {
+	return obj.(User).Id == u.Id
 }
 
 func (u User) EncodePassword(raw string) (md5Digest string) {

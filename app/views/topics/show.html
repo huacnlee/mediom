@@ -6,6 +6,9 @@
     <h1>{{.topic.Title}}</h1>
     <div class="info">
       {{.topic.User.Login}} 发表于 {{timeago .topic.CreatedAt}}
+      {{if eq .current_user.Id  .topic.UserId}}
+      <a href="/topics/{{.topic.Id}}/edit">编辑</a>
+      {{end}}
     </div>
     <div class="markdown">
       {{markdown .topic.Body}}

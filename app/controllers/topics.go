@@ -21,6 +21,11 @@ func (c Topics) Index() revel.Result {
 }
 
 func (c Topics) New() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := &Topic{}
+	c.RenderArgs["topic"] = t
 	return c.Render("topics/new.html")
 }
 
@@ -33,6 +38,7 @@ func (c Topics) Create() revel.Result {
 	t.UserId = currentUser.Id
 	v := CreateTopic(t)
 	if v.HasErrors() {
+		c.RenderArgs["topic"] = t
 		return c.renderValidation("topics/new.html", v)
 	}
 	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
@@ -43,4 +49,31 @@ func (c Topics) Show() revel.Result {
 	DB.Where("id = ?", c.Params.Get("id")).First(t)
 	c.RenderArgs["topic"] = t
 	return c.Render("topics/show.html")
+}
+
+func (c Topics) Edit() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := &Topic{}
+	DB.Where("id = ?", c.Params.Get("id")).First(t)
+	if !c.isOwner(t) {
+		c.Flash.Error("没有修改的权限")
+		return c.Redirect("/")
+	}
+	c.RenderArgs["topic"] = t
+	return c.Render("topics/edit.html")
+}
+
+func (c Topics) Update() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := &Topic{}
+	DB.Where("id = ?", c.Params.Get("id")).First(t)
+	if !c.isOwner(t) {
+		c.Flash.Error("没有修改的权限")
+		return c.Redirect("/")
+	}
+	return c.Redirect(fmt.Sprintf("/topics/%v", 0))
 }

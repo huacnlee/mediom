@@ -1,0 +1,17 @@
+<form class="signup col-md-8 col-md-offset-2" 
+  {{if .topic.NewRecord}}
+  action="/topics" method="POST"
+  {{else}}
+  action="/topics/{{.topic.Id}}" method="PATCH"
+  {{end}}
+ >
+  {{.validation | error_messages}}
+  <div class="form-group">  
+    <input type="text" class="form-control" name="title" 
+    value="{{.topic.Title}}" id="title" placeholder="请输入 5-100 字的标题">
+  </div>
+  <div class="form-group">  
+    <textarea class="form-control" name="body" rows="20" id="body" placeholder="话题正文，请用 GitHub 风格的 Markdown 编写">{{.topic.Body}}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>

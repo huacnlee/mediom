@@ -14,6 +14,8 @@ GET      /signout         Accounts.Logout
 GET     /topics           Topics.Index
 GET     /topics/new       Topics.New
 GET     /topics/:id       Topics.Show
+GET     /topics/:id/edit       Topics.Edit
+PATCH   /topics/:id       Topics.Update
 POST    /topics           Topics.Create
 GET     /u/:username      Users.Show
 

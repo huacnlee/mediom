@@ -7,7 +7,7 @@ import (
 )
 
 type Topic struct {
-	Id        int32
+	BaseModel
 	UserId    int32  `sql:"not null"`
 	Title     string `sql:"size:300;not null"`
 	Body      string `sql:"type:text;not null"`
