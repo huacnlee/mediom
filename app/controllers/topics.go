@@ -35,7 +35,7 @@ func (c Topics) Create() revel.Result {
 	}
 	t := &Topic{Title: c.Params.Get("title"), Body: c.Params.Get("body")}
 
-	t.UserId = currentUser.Id
+	t.UserId = c.currentUser.Id
 	v := CreateTopic(t)
 	if v.HasErrors() {
 		c.RenderArgs["topic"] = t

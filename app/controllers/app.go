@@ -10,42 +10,37 @@ import (
 
 type App struct {
 	*revel.Controller
+	currentUser *User
 }
 
-var currentUser = &User{}
-
-func (c App) currentUser() *User {
-	fmt.Println("before ", currentUser)
-	if currentUser.Id > 0 {
-		return currentUser
-	}
+func (c *App) prependCurrentUser() {
 	userId, _ := strconv.Atoi(c.Session["user_id"])
-	DB.Where("id = ?", userId).First(currentUser)
-
-	return currentUser
+	u := &User{}
+	DB.Where("id = ?", userId).First(u)
+	c.currentUser = u
 }
 
 func (c App) storeUser(u *User) {
-	fmt.Println("storeUser ", u)
 	if u.Id == 0 {
 		return
 	}
-	fmt.Println("will store session", u.Id)
 	c.Session["user_id"] = fmt.Sprintf("%v", u.Id)
 }
 
 func (c App) clearUser() {
-	currentUser = nil
 	c.Session["user_id"] = ""
 }
 
+func (c App) isLogined() bool {
+	return c.currentUser.Id > 0
+}
+
 func (c App) requireUser() revel.Result {
-	u := c.currentUser()
-	if u.Id == 0 {
+	if !c.isLogined() {
 		c.Flash.Error("你还未登录哦")
 		return c.Redirect(Accounts.Login)
 	} else {
-		fmt.Println("current_user: ", u)
+		fmt.Println("current_user: ", c.currentUser)
 		return nil
 	}
 }
@@ -54,11 +49,11 @@ func (c App) isOwner(obj interface{}) bool {
 	objType := reflect.TypeOf(obj)
 	switch objType.Name() {
 	case "models.Topic":
-		return currentUser.Id == obj.(Topic).UserId
+		return c.currentUser.Id == obj.(Topic).UserId
 	case "models.User":
-		return currentUser.Id == obj.(User).Id
+		return c.currentUser.Id == obj.(User).Id
 	case "models.Reply":
-		return currentUser.Id == obj.(Reply).UserId
+		return c.currentUser.Id == obj.(Reply).UserId
 	}
 	return false
 }
@@ -73,16 +68,15 @@ func init() {
 	revel.InterceptMethod((*App).After, revel.AFTER)
 }
 
-func (c App) Before() revel.Result {
-	u := c.currentUser()
+func (c *App) Before() revel.Result {
+	c.prependCurrentUser()
 	c.RenderArgs["validation"] = nil
-	if u.Id > 0 {
-		c.RenderArgs["current_user"] = u
-	}
+	c.RenderArgs["logined"] = c.isLogined()
+	c.RenderArgs["current_user"] = c.currentUser
 	return c.Result
 }
 
-func (c App) After() revel.Result {
+func (c *App) After() revel.Result {
 	newParams := make(map[string]string, len(c.Params.Values))
 	for key := range c.Params.Values {
 		newParams[key] = c.Params.Get(key)
