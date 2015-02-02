@@ -32,11 +32,6 @@ func init() {
 
 	train.ConfigureHttpHandler(nil)
 	http.ListenAndServe(":3000", nil)
-
-	// register startup functions with OnAppStart
-	// ( order dependent )
-	// revel.OnAppStart(initDB)
-	// revel.OnAppStart(FillCache)
 }
 
 // TODO turn this into revel.HeaderFilter
