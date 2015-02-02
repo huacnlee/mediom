@@ -4,12 +4,16 @@ import (
 	"fmt"
 	_ "fmt"
 	"github.com/revel/revel"
+	"github.com/shaoshing/train"
+	"net/http"
+	"strings"
 	"time"
 )
 
 func init() {
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
+		AssetsFilter,
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
 		revel.RouterFilter,            // Use the routing table to select the right Action
 		revel.FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
@@ -23,7 +27,11 @@ func init() {
 		revel.InterceptorFilter, // Run interceptors around the action.
 		revel.CompressFilter,    // Compress the result.
 		revel.ActionInvoker,     // Invoke the action.
+
 	}
+
+	train.ConfigureHttpHandler(nil)
+	http.ListenAndServe(":3000", nil)
 
 	// register startup functions with OnAppStart
 	// ( order dependent )
@@ -41,6 +49,16 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
 
 	fc[0](c, fc[1:]) // Execute the next filter stage.
+}
+
+// Server /assets with [train]
+var AssetsFilter = func(c *revel.Controller, fc []revel.Filter) {
+	path := c.Request.URL.Path
+	if strings.HasPrefix(path, "/assets") {
+		train.ServeRequest(c.Response.Out, c.Request.Request)
+	} else {
+		fc[0](c, fc[1:])
+	}
 }
 
 var InstramentFilter = func(c *revel.Controller, fc []revel.Filter) {

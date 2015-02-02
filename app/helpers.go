@@ -8,6 +8,7 @@ import (
 	//"reflect"
 	"github.com/huacnlee/timeago"
 	"github.com/russross/blackfriday"
+	"github.com/shaoshing/train"
 	"strings"
 )
 
@@ -53,4 +54,7 @@ func init() {
 		htmlText := string(outBytes[:])
 		return template.HTML(htmlText)
 	}
+
+	revel.TemplateFuncs["javascript_tag"] = train.JavascriptTag
+	revel.TemplateFuncs["stylesheet_tag"] = train.StylesheetTag
 }

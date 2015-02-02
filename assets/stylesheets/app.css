@@ -1,0 +1,14 @@
+/*
+ *= require stylesheets/bootstrap.min
+ */
+.topic-detail .markdown { 
+	overflow: hidden; 
+} 
+
+.topic-detail .markdown img {
+	max-width: 100%;
+}
+
+.topic-detail .info {
+	color: #d0d0d0;
+}
