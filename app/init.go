@@ -3,8 +3,8 @@ package app
 import (
 	"fmt"
 	_ "fmt"
+	"github.com/huacnlee/train"
 	"github.com/revel/revel"
-	"github.com/shaoshing/train"
 	"net/http"
 	"strings"
 	"time"
@@ -31,6 +31,9 @@ func init() {
 	}
 
 	train.ConfigureHttpHandler(nil)
+	train.Config.SASS.DebugInfo = true
+	train.Config.Verbose = true
+	train.Config.BundleAssets = true
 	http.ListenAndServe(":3000", nil)
 }
 
