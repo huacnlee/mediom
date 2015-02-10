@@ -3,13 +3,22 @@
  */
 
 .topic-detail {	
+	h1 { font-size:24px; color:#333;text-align: left; line-height:100%; margin-bottom:8px; }
 	.info {
-		color: #d0d0d0;
-	}
+      color:#d0d0d0; margin-bottom:2px;
+      font-size:12px;
+      .node {
+        padding: 1px 5px;
+        color: #778087;
+        text-decoration: none;
+        background-color: #f5f5f5;
+      }
+      em { font-style:normal; }
+    }
 }
 
 .markdown {
-	  position:relative;
+  position:relative;
   line-height: 1.8em; font-size:14px; text-overflow: ellipsis; word-wrap: break-word;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   p,
@@ -37,7 +46,7 @@
     code {
       padding: 0!important;
       font-size: 12px!important;
-      background-color: #eee!important;
+      background-color: #F5F5F5 !important;
       border: none!important; }
   }
   pre::-webkit-scrollbar {

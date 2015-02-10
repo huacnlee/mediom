@@ -7,7 +7,6 @@ import (
 	"time"
 	//"reflect"
 	"github.com/huacnlee/timeago"
-	"github.com/russross/blackfriday"
 	"github.com/shaoshing/train"
 	"strings"
 )
@@ -50,7 +49,7 @@ func init() {
 
 	revel.TemplateFuncs["markdown"] = func(text string) interface{} {
 		bytes := []byte(text)
-		outBytes := blackfriday.MarkdownCommon(bytes)
+		outBytes := MarkdownGitHub(bytes)
 		htmlText := string(outBytes[:])
 		return template.HTML(htmlText)
 	}

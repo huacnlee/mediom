@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/revel/revel"
 	"time"
 )
@@ -41,7 +40,6 @@ func (t *Topic) validate() (v revel.Validation) {
 }
 
 func CreateTopic(t *Topic) revel.Validation {
-	fmt.Println("topic", t)
 	v := t.validate()
 	if v.HasErrors() {
 		return v
@@ -50,6 +48,19 @@ func CreateTopic(t *Topic) revel.Validation {
 	err := db.Save(t).Error
 	if err != nil {
 		v.Error("服务器异常创建失败")
+	}
+	return v
+}
+
+func UpdateTopic(t *Topic) revel.Validation {
+	v := t.validate()
+	if v.HasErrors() {
+		return v
+	}
+
+	err := db.Save(t).Error
+	if err != nil {
+		v.Error("服务器异常更新失败")
 	}
 	return v
 }

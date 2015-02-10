@@ -2,7 +2,7 @@
   {{if .topic.NewRecord}}
   action="/topics" method="POST"
   {{else}}
-  action="/topics/{{.topic.Id}}" method="PATCH"
+  action="/topics/{{.topic.Id}}" method="POST"
   {{end}}
  >
   {{.validation | error_messages}}

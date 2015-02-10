@@ -75,5 +75,12 @@ func (c Topics) Update() revel.Result {
 		c.Flash.Error("没有修改的权限")
 		return c.Redirect("/")
 	}
-	return c.Redirect(fmt.Sprintf("/topics/%v", 0))
+	t.Title = c.Params.Get("title")
+	t.Body = c.Params.Get("body")
+	v := UpdateTopic(t)
+	if v.HasErrors() {
+		c.RenderArgs["topic"] = t
+		return c.renderValidation("topics/edit.html", v)
+	}
+	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
 }
