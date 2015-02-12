@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"errors"
+	"fmt"
 	"github.com/revel/revel"
 	. "mediom/app/models"
 )
@@ -31,9 +33,37 @@ func (c Replies) Create() revel.Result {
 }
 
 func (c Replies) Update() revel.Result {
-	return c.RenderText("h")
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	reply := &Reply{}
+	err := DB.Model(reply).First(reply, c.Params.Get("id")).Error
+	if err != nil {
+		return c.RenderError(err)
+	}
+	if !c.isOwner(reply) {
+		return c.RenderError(errors.New("Not allow."))
+	}
+	reply.Body = c.Params.Get("body")
+	err = DB.Save(reply).Error
+	if err != nil {
+		return c.RenderError(err)
+	}
+	return c.Redirect(fmt.Sprintf("/topics/%v", reply.TopicId))
 }
 
 func (c Replies) Edit() revel.Result {
-	return c.RenderText("h")
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	reply := &Reply{}
+	err := DB.Model(reply).First(reply, c.Params.Get("id")).Error
+	if err != nil {
+		return c.RenderError(err)
+	}
+	if !c.isOwner(reply) {
+		return c.RenderError(errors.New("Not allow."))
+	}
+	c.RenderArgs["reply"] = reply
+	return c.Render("replies/edit.html")
 }

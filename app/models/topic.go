@@ -7,13 +7,14 @@ import (
 
 type Topic struct {
 	BaseModel
-	UserId    int32 `sql:"not null"`
-	User      User
-	Title     string `sql:"size:300;not null"`
-	Body      string `sql:"type:text;not null"`
-	Replies   []Reply
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	UserId       int32 `sql:"not null"`
+	User         User
+	Title        string `sql:"size:300;not null"`
+	Body         string `sql:"type:text;not null"`
+	Replies      []Reply
+	RepliesCount int32 `sql:"not null;default 0"`
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 func (t *Topic) validate() (v revel.Validation) {

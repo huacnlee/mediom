@@ -1,5 +1,18 @@
 <div id="replies">
-	{{range .replies}}
-		{{template "topics/_reply.html" .}}
+	<h2>共 {{.topic.RepliesCount}} 条回帖</h2>
+	{{range $idx, $reply := .replies}}
+		<div id="reply{{$idx}}" class="reply">
+			<div class="content">
+				<div class="info">
+					{{user_name_tag $reply.User}} at {{timeago $reply.CreatedAt}}
+					{{if eq $.current_user.Id  $reply.UserId}}
+			      <a href="/replies/{{.Id}}/edit">编辑</a>
+			    {{end}}
+				</div>
+				<div class="markdown">
+					{{markdown $reply.Body}}
+				</div>
+			</div>
+		</div>
 	{{end}}
 </div>

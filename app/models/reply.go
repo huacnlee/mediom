@@ -16,6 +16,16 @@ type Reply struct {
 	UpdatedAt time.Time
 }
 
+func (r *Reply) BeforeCreate() (err error) {
+	err = db.Exec("update topics set replies_count = (replies_count + 1) where id = ?", r.TopicId).Error
+	return err
+}
+
+func (r *Reply) BeforeDelete() (err error) {
+	err = db.Exec("update topics set replies_count = (replies_count - 1) where id = ?", r.TopicId).Error
+	return err
+}
+
 func (r *Reply) validate() (v revel.Validation) {
 	v = revel.Validation{}
 	switch r.NewRecord() {

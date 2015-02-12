@@ -1,0 +1,17 @@
+{{set . "title" "修改回帖"}}
+{{template "header.html" .}}
+
+<div class="edit-reply">
+  <h2>修改回帖</h2>
+   <form class="reply-form" action="/replies/{{.reply.Id}}" method="POST">
+	  {{.validation | error_messages}}
+	  <div class="form-group">  
+	    <textarea class="form-control" name="body" rows="5" placeholder="">{{.reply.Body}}</textarea>
+	  </div>
+		<div class="actions">
+	  		<button type="submit" class="btn btn-primary btn-block">提交修改</button>
+		</div>
+	</form>
+</div>
+
+{{template "footer.html" .}}
