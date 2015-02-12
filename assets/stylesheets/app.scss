@@ -3,6 +3,7 @@
  */
 
 .topic-detail {	
+	margin-bottom: 30px;
 	h1 { font-size:24px; color:#333;text-align: left; line-height:100%; margin-bottom:8px; }
 	.info {
       color:#d0d0d0; margin-bottom:2px;
@@ -15,6 +16,12 @@
       }
       em { font-style:normal; }
     }
+}
+
+#replies {
+	margin-bottom: 30px;
+	.info { color:#d0d0d0; margin-bottom:2px; }
+	.reply { margin-bottom: 20px; }
 }
 
 .markdown {
@@ -134,4 +141,9 @@
     ol { list-style-type: lower-alpha; margin-bottom: 0px; }
   }
   img { vertical-align: top; max-width: 100%; }
+}
+
+
+footer {
+	margin-top: 50px;
 }

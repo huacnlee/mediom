@@ -7,7 +7,8 @@ import (
 
 type Topic struct {
 	BaseModel
-	UserId    int32  `sql:"not null"`
+	UserId    int32 `sql:"not null"`
+	User      User
 	Title     string `sql:"size:300;not null"`
 	Body      string `sql:"type:text;not null"`
 	Replies   []Reply
@@ -15,19 +16,9 @@ type Topic struct {
 	UpdatedAt time.Time
 }
 
-func (t *Topic) User() *User {
-	u := &User{Login: "未知用户"}
-	db.Model(t).Related(u)
-	return u
-}
-
-func (t *Topic) isNewRecord() bool {
-	return t.Id <= 0
-}
-
 func (t *Topic) validate() (v revel.Validation) {
 	v = revel.Validation{}
-	switch t.isNewRecord() {
+	switch t.NewRecord() {
 	case false:
 	default:
 		v.Required(t.UserId).Key("user_id").Message("不能为空")
@@ -37,6 +28,12 @@ func (t *Topic) validate() (v revel.Validation) {
 		v.MinSize(t.Body, 1).Key("内容").Message("不能为空")
 	}
 	return v
+}
+
+func FindTopicPages(offset, limit int) []*Topic {
+	topics := []*Topic{}
+	db.Preload("User").Order("id desc").Offset(offset).Limit(limit).Find(&topics)
+	return topics
 }
 
 func CreateTopic(t *Topic) revel.Validation {

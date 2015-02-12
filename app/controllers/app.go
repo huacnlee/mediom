@@ -6,11 +6,36 @@ import (
 	. "mediom/app/models"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 type App struct {
 	*revel.Controller
 	currentUser *User
+}
+
+func init() {
+	revel.InterceptMethod((*App).Before, revel.BEFORE)
+	revel.InterceptMethod((*App).After, revel.AFTER)
+}
+
+func (c *App) Before() revel.Result {
+	c.prependCurrentUser()
+	c.RenderArgs["validation"] = nil
+	c.RenderArgs["logined"] = c.isLogined()
+	c.RenderArgs["current_user"] = c.currentUser
+	return c.Result
+}
+
+func (c *App) After() revel.Result {
+	newParams := make(map[string]string, len(c.Params.Values))
+	for key := range c.Params.Values {
+		newParams[key] = c.Params.Get(key)
+	}
+	if len(newParams) > 0 {
+		c.RenderArgs["params"] = newParams
+	}
+	return c.Result
 }
 
 func (c *App) prependCurrentUser() {
@@ -72,26 +97,27 @@ func (c App) renderValidation(tpl string, v revel.Validation) revel.Result {
 	return c.RenderTemplate(tpl)
 }
 
-func init() {
-	revel.InterceptMethod((*App).Before, revel.BEFORE)
-	revel.InterceptMethod((*App).After, revel.AFTER)
+type AppResult struct {
+	code int
+	msg  string
+	data interface{}
 }
 
-func (c *App) Before() revel.Result {
-	c.prependCurrentUser()
-	c.RenderArgs["validation"] = nil
-	c.RenderArgs["logined"] = c.isLogined()
-	c.RenderArgs["current_user"] = c.currentUser
-	return c.Result
+func (c App) errorJSON(code int, msg string) revel.Result {
+	result := &AppResult{code: code, msg: msg}
+	return c.RenderJson(result)
 }
 
-func (c *App) After() revel.Result {
-	newParams := make(map[string]string, len(c.Params.Values))
-	for key := range c.Params.Values {
-		newParams[key] = c.Params.Get(key)
+func (c App) errorsJSON(code int, errs []*revel.ValidationError) revel.Result {
+	msgs := make([]string, len(errs))
+	for i, err := range errs {
+		msgs[i] = err.Message
 	}
-	if len(newParams) > 0 {
-		c.RenderArgs["params"] = newParams
-	}
-	return c.Result
+	result := &AppResult{code: code, msg: strings.Join(msgs, "\n")}
+	return c.RenderJson(result)
+}
+
+func (c App) successJSON(data interface{}) revel.Result {
+	result := &AppResult{code: 0, msg: "", data: data}
+	return c.RenderJson(result)
 }

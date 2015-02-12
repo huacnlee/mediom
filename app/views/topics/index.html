@@ -4,7 +4,7 @@
 <div class="topics">
   {{range .topics}}
   <div class="topic row">
-    <div class="avatar col-md-1">{{.User.Login}}</div>
+    <div class="avatar col-md-1">{{user_name_tag .User}}</div>
     <div class="col-md-8">
       <a href="/topics/{{.Id}}">{{.Title}}</a>
     </div>

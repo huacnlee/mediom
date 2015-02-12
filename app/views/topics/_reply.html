@@ -1,0 +1,10 @@
+<div id="reply-{{.Id}}" class="reply">
+	<div class="content">
+		<div class="info">
+			{{user_name_tag .User}} at {{timeago .CreatedAt}}
+		</div>
+		<div class="markdown">
+			{{markdown .Body}}
+		</div>
+	</div>
+</div>

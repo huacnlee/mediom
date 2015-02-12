@@ -8,6 +8,7 @@ import (
 	//"reflect"
 	"github.com/huacnlee/timeago"
 	"github.com/shaoshing/train"
+	. "mediom/app/models"
 	"strings"
 )
 
@@ -52,6 +53,20 @@ func init() {
 		outBytes := MarkdownGitHub(bytes)
 		htmlText := string(outBytes[:])
 		return template.HTML(htmlText)
+	}
+
+	revel.TemplateFuncs["user_name_tag"] = func(obj interface{}) interface{} {
+		out := "未知用户"
+		if obj != nil {
+			u := obj.(User)
+			if u.NewRecord() {
+				return out
+			}
+			out = fmt.Sprintf("<a href='/u/%v' class='uname'>%v</a>", u.Login, u.Login)
+			return template.HTML(out)
+		}
+
+		return out
 	}
 
 	revel.TemplateFuncs["javascript_tag"] = train.JavascriptTag

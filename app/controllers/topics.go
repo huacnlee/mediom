@@ -13,9 +13,8 @@ type Topics struct {
 }
 
 func (c Topics) Index() revel.Result {
-	topics := []*Topic{}
 	offset, _ := strconv.Atoi(c.Params.Get("offset"))
-	DB.Order("id desc").Limit(20).Offset(offset).Find(&topics)
+	topics := FindTopicPages(offset, 20)
 	c.RenderArgs["topics"] = topics
 	return c.Render("topics/index.html")
 }
@@ -47,7 +46,10 @@ func (c Topics) Create() revel.Result {
 func (c Topics) Show() revel.Result {
 	t := &Topic{}
 	DB.Where("id = ?", c.Params.Get("id")).First(t)
+	replies := []*Reply{}
+	DB.Preload("User").Where("topic_id = ?", t.Id).Order("id asc").Find(&replies)
 	c.RenderArgs["topic"] = t
+	c.RenderArgs["replies"] = replies
 	return c.Render("topics/show.html")
 }
 
