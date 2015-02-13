@@ -27,6 +27,11 @@ type User struct {
 	UpdatedAt   time.Time
 }
 
+func (u User) GavatarURL(size string) string {
+	emailMD5 := u.EncodePassword(u.Email)
+	return fmt.Sprintf("https://ruby-china.org/avatar/%v?s=%v", emailMD5, size)
+}
+
 func (u User) SameAs(obj interface{}) bool {
 	return obj.(User).Id == u.Id
 }

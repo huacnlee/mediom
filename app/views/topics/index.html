@@ -3,10 +3,15 @@
 
 <div class="topics">
   {{range .topics}}
-  <div class="topic row">
-    <div class="avatar col-md-1">{{user_name_tag .User}}</div>
-    <div class="col-md-8">
-      <a href="/topics/{{.Id}}">{{.Title}}</a>
+  <div class="topic clearfix">
+    <div class="avatar">
+			{{user_avatar_tag .User "96x96"}}
+		</div>
+    <div class="infos">
+      <div class="title"><a href="/topics/{{.Id}}">{{.Title}}</a></div>
+			<div class="info">
+				{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}
+			</div>
     </div>
   </div>
   {{end}}

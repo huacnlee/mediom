@@ -69,6 +69,20 @@ func init() {
 		return out
 	}
 
+	revel.TemplateFuncs["user_avatar_tag"] = func(obj interface{}, size string) interface{} {
+		out := ""
+		if obj != nil {
+			u := obj.(User)
+			if u.NewRecord() {
+				return out
+			}
+
+			out = fmt.Sprintf("<a href=\"/u/%v\" class=\"uname\"><img src=\"%v\" class=\"avatar-%v\" /></a>", u.Login, u.GavatarURL(size), size)
+		}
+
+		return template.HTML(out)
+	}
+
 	revel.TemplateFuncs["javascript_tag"] = train.JavascriptTag
 	revel.TemplateFuncs["stylesheet_tag"] = train.StylesheetTag
 }
