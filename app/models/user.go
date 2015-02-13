@@ -13,6 +13,8 @@ type User struct {
 	BaseModel
 	Login     string `sql:"size:255;not null"`
 	Password  string `sql:"size:255;not null"`
+	Email     string `sql:"size:255"`
+	Avatar    string `sql:"size:255"`
 	Topics    []Topic
 	Replies   []Reply
 	CreatedAt time.Time
@@ -74,4 +76,16 @@ func (u User) Signin(login string, password string) (user User, v revel.Validati
 		v.Error("帐号密码不正确")
 	}
 	return user, v
+}
+
+func UpdateUserProfile(u User) (user User, v revel.Validation) {
+	v.Email(u.Email).Key("Email").Message("格式不正确")
+	if v.HasErrors() {
+		return u, v
+	}
+	err := db.Model(u).Updates(User{Email: u.Email}).Error
+	if err != nil {
+		v.Error(err.Error())
+	}
+	return u, v
 }

@@ -1,0 +1,19 @@
+{{set . "title" "个人设置"}}
+{{template "header.html" .}}
+
+<div class="row">
+  <form class="signup col-md-6 col-md-offset-3" action="/account" method="POST">
+    {{.validation | error_messages}}
+    <div class="form-group">  
+      <label for="username">帐号</label>
+      <input type="readonly" class="form-control" name="login" value="{{.current_user.Login}}">
+    </div>
+    <div class="form-group">  
+      <label for="email">Email</label>
+      <input type="email" class="form-control" name="email" id="email" value={{.current_user.Email}}>
+    </div>
+    <button type="submit" class="btn btn-primary">保存我的信息</button>
+  </form>
+</div>
+
+{{template "footer.html" .}}

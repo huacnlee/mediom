@@ -54,3 +54,25 @@ func (c Accounts) Logout() revel.Result {
 	c.clearUser()
 	return c.Redirect(Home.Index)
 }
+
+func (c Accounts) Edit() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	return c.Render("accounts/edit.html")
+}
+
+func (c Accounts) Update() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	c.currentUser.Email = c.Params.Get("email")
+	var u User
+	u = *c.currentUser
+	_, v := UpdateUserProfile(u)
+	if v.HasErrors() {
+		return c.Render("accounts/edit.html")
+	}
+	c.Flash.Success("个人信息修改成功")
+	return c.Redirect("/account/edit")
+}
