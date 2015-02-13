@@ -11,14 +11,20 @@ import (
 
 type User struct {
 	BaseModel
-	Login     string `sql:"size:255;not null"`
-	Password  string `sql:"size:255;not null"`
-	Email     string `sql:"size:255"`
-	Avatar    string `sql:"size:255"`
-	Topics    []Topic
-	Replies   []Reply
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	Login       string `sql:"size:255;not null"`
+	Password    string `sql:"size:255;not null"`
+	Email       string `sql:"size:255"`
+	Avatar      string `sql:"size:255"`
+	GitHub      string
+	Twitter     string
+	HomePage    string
+	Tagline     string
+	Description string
+	Location    string
+	Topics      []Topic
+	Replies     []Reply
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 func (u User) SameAs(obj interface{}) bool {
@@ -83,7 +89,15 @@ func UpdateUserProfile(u User) (user User, v revel.Validation) {
 	if v.HasErrors() {
 		return u, v
 	}
-	err := db.Model(u).Updates(User{Email: u.Email}).Error
+	willUpdateUser := User{
+		Email:       u.Email,
+		Location:    u.Location,
+		Description: u.Description,
+		GitHub:      u.GitHub,
+		Twitter:     u.Twitter,
+		Tagline:     u.Tagline,
+	}
+	err := db.Model(u).Updates(willUpdateUser).Error
 	if err != nil {
 		v.Error(err.Error())
 	}

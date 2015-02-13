@@ -2,15 +2,37 @@
 {{template "header.html" .}}
 
 <div class="row">
-  <form class="signup col-md-6 col-md-offset-3" action="/account" method="POST">
+  <form class="signup col-md-8 col-md-offset-2" action="/account" method="POST">
     {{.validation | error_messages}}
     <div class="form-group">  
-      <label for="username">帐号</label>
+      <label for="user-login">帐号</label>
       <input type="readonly" class="form-control" name="login" value="{{.current_user.Login}}">
     </div>
     <div class="form-group">  
-      <label for="email">Email</label>
-      <input type="email" class="form-control" name="email" id="email" value={{.current_user.Email}}>
+      <label for="user-email">Email</label>
+     	<input type="email" class="form-control" name="email" id="user-email" value={{.current_user.Email}}>
+    </div>
+		<div class="form-group">  
+      <label for="user-github">GitHub</label>
+			<div class="input-group col-xs-6">
+			  <span class="input-group-addon" id="twitter-addon">github.com/</span>
+				<input type="text" class="form-control" name="github" id="user-github" aria-describedby="github-addon" value={{.current_user.GitHub}}>
+			</div>
+    </div>
+		<div class="form-group">  
+      <label for="user-twitter">Twitter</label>
+			<div class="input-group col-xs-6">
+			  <span class="input-group-addon" id="twitter-addon">@</span>
+				<input type="text" class="form-control" name="twitter" id="user-twitter" aria-describedby="twitter-addon" value={{.current_user.Twitter}}>
+			</div>
+    </div>
+		<div class="form-group">  
+      <label for="user-tagline">一句话介绍自己</label>
+      <input type="text" class="form-control" name="tagline" id="user-tagline" value={{.current_user.Tagline}}>
+    </div>
+		<div class="form-group">  
+      <label for="user-description">详细介绍 (Markdown)</label>
+			<textarea class="form-control" rows="6" name="description" id="user-description">{{.current_user.Description}}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">保存我的信息</button>
   </form>
