@@ -10,7 +10,8 @@
     <div class="infos">
       <div class="title"><a href="/topics/{{.Id}}">{{.Title}}</a></div>
 			<div class="info">
-				{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}
+				{{user_name_tag .User}}・发表于 {{timeago .CreatedAt}}
+				・{{.RepliesCount}} 条回复
 			</div>
     </div>
   </div>

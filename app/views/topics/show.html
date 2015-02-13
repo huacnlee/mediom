@@ -8,7 +8,10 @@
 	    <div class="info">
 	      {{.topic.User.Login}} 发表于 {{timeago .topic.CreatedAt}}
 	      {{if eq .current_user.Id  .topic.UserId}}
-	      <a href="/topics/{{.topic.Id}}/edit">编辑</a>
+				<span class="opts">
+	     		<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>
+					<a href="/topics/{{.topic.Id}}/delete" data-confirm="确定要删除吗？" data-method="post"><i class="fa fa-trash-o"></i></a>
+				</span>
 	      {{end}}
 	    </div>
 	    <div class="markdown">

@@ -31,8 +31,8 @@ func (t *Topic) validate() (v revel.Validation) {
 	return v
 }
 
-func FindTopicPages(offset, limit int) []*Topic {
-	topics := []*Topic{}
+func FindTopicPages(offset, limit int) []Topic {
+	topics := []Topic{}
 	db.Preload("User").Order("id desc").Offset(offset).Limit(limit).Find(&topics)
 	return topics
 }

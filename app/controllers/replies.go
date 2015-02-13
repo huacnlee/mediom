@@ -67,3 +67,21 @@ func (c Replies) Edit() revel.Result {
 	c.RenderArgs["reply"] = reply
 	return c.Render("replies/edit.html")
 }
+
+func (c Replies) Delete() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	reply := Reply{}
+	err := DB.First(&reply, c.Params.Get("id")).Error
+	if err != nil {
+		return c.RenderError(err)
+	}
+	if !c.isOwner(reply) {
+		return c.RenderError(errors.New("Not allow."))
+	}
+
+	DB.Delete(&reply)
+	c.Flash.Success("回帖删除成功")
+	return c.Redirect(fmt.Sprintf("/topics/%v", reply.TopicId))
+}

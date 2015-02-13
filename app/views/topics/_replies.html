@@ -2,17 +2,24 @@
 	<h2>共 {{.topic.RepliesCount}} 条回帖</h2>
 	{{range $idx, $reply := .replies}}
 		<div id="reply{{$idx}}" class="reply">
+			{{if $reply.IsDeleted}}
+			<div class="content deleted">回复已删除</div>
+			{{else}}
 			<div class="content">
 				<div class="info">
 					{{user_name_tag $reply.User}} at {{timeago $reply.CreatedAt}}
-					{{if eq $.current_user.Id  $reply.UserId}}
-			      <a href="/replies/{{.Id}}/edit">编辑</a>
-			    {{end}}
+					<div class="pull-right opts">
+						{{if eq $.current_user.Id  $reply.UserId}}
+				      <a href="/replies/{{.Id}}/edit"><i class="fa fa-pencil"></i></a>
+							<a href="/replies/{{.Id}}/delete" data-confirm="确定要删除这个回帖么？" data-method="post"><i class="fa fa-trash-o"></i></a>
+				    {{end}}
+					</div>
 				</div>
 				<div class="markdown">
 					{{markdown $reply.Body}}
 				</div>
 			</div>
+			{{end}}
 		</div>
 	{{end}}
 </div>

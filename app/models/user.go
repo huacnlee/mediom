@@ -102,7 +102,7 @@ func UpdateUserProfile(u User) (user User, v revel.Validation) {
 		Twitter:     u.Twitter,
 		Tagline:     u.Tagline,
 	}
-	err := db.Model(u).Updates(willUpdateUser).Error
+	err := db.First(&u, u.Id).Updates(willUpdateUser).Error
 	if err != nil {
 		v.Error(err.Error())
 	}

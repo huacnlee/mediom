@@ -71,18 +71,36 @@ func (c Topics) Update() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r
 	}
-	t := &Topic{}
-	DB.Where("id = ?", c.Params.Get("id")).First(t)
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
 	if !c.isOwner(t) {
 		c.Flash.Error("没有修改的权限")
 		return c.Redirect("/")
 	}
 	t.Title = c.Params.Get("title")
 	t.Body = c.Params.Get("body")
-	v := UpdateTopic(t)
+	v := UpdateTopic(&t)
 	if v.HasErrors() {
 		c.RenderArgs["topic"] = t
 		return c.renderValidation("topics/edit.html", v)
 	}
 	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+}
+
+func (c Topics) Delete() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
+	if !c.isOwner(t) {
+		c.Flash.Error("没有修改的权限")
+		return c.Redirect("/")
+	}
+
+	err := DB.Delete(&t).Error
+	if err != nil {
+		c.RenderError(err)
+	}
+	return c.Redirect("/topics")
 }

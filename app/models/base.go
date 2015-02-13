@@ -1,21 +1,30 @@
 package models
 
 import (
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"reflect"
+	"time"
 )
 
 var db gorm.DB
 var DB *gorm.DB
 
 type BaseModel struct {
-	Id int32
+	Id        int32
+	DeletedAt time.Time
 }
 
 func (m BaseModel) NewRecord() bool {
 	return m.Id <= 0
+}
+
+func (m BaseModel) Destroy() error {
+	err := db.Delete(&m).Error
+	return err
+}
+
+func (m BaseModel) IsDeleted() bool {
+	return !m.DeletedAt.IsZero()
 }
 
 func init() {
@@ -26,11 +35,11 @@ func init() {
 		panic(err)
 	}
 
-	fmt.Println("------- typeof ", reflect.TypeOf(BaseModel{}))
-	fmt.Println("------- typeof ", reflect.TypeOf(Topic{}))
-
 	db.LogMode(true)
-	db.AutoMigrate(&User{}, &Topic{})
+	db.AutoMigrate(&User{}, &Topic{}, &Reply{})
 	db.Model(&User{}).AddUniqueIndex("index_on_login", "login")
 	db.Model(&Topic{}).AddIndex("index_on_user_id", "user_id")
+	db.Model(&User{}).AddIndex("index_on_deleted_at", "deleted_at")
+	db.Model(&Topic{}).AddIndex("index_on_deleted_at", "deleted_at")
+	db.Model(&Reply{}).AddIndex("index_on_deleted_at", "deleted_at")
 }

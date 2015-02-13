@@ -1,5 +1,6 @@
 /*
  *= require stylesheets/bootstrap.min
+ *= require stylesheets/font-awesome.min
  */
 
 .avatar-96x96 { width: 48px; height: 48px; }
@@ -27,13 +28,36 @@
         background-color: #f5f5f5;
       }
       em { font-style:normal; }
+	
+		.opts {
+			a { 
+				margin-left: 5px; color: #999; 
+				&:hover { color: #333; }
+			}
+		}
     }
 }
 
 #replies {
 	margin-bottom: 30px;
-	.info { color:#d0d0d0; margin-bottom:2px; }
-	.reply { margin-bottom: 20px; }
+	.info { 
+		color:#aaa; margin-bottom:2px; 
+		.uname { color: #777; font-weight: bold; }
+		.opts {
+			a { 
+				margin-left: 5px; color: #999; 
+				&:hover { color: #333; }
+			}
+		}
+	}
+	.reply { 
+		margin-bottom: 20px; 
+		.deleted { 
+			color:#aaa;
+      		text-decoration: line-through;
+      		font-size:12px; text-align:center; 
+		}
+	}
 }
 
 .markdown {

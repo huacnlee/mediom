@@ -1,7 +1,3 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
 module:testrunner
 
 GET     /				Home.Index
@@ -10,7 +6,7 @@ GET 		/signup 			Accounts.New
 POST 	/signup 			Accounts.Create
 GET 		/signin 			Accounts.Login
 POST		/signin			Accounts.LoginCreate
-GET     /signout         Accounts.Logout
+POST   /signout         Accounts.Logout
 GET     /account/edit     Accounts.Edit
 POST    /account          Accounts.Update
 
@@ -20,16 +16,11 @@ GET     /topics/:id       Topics.Show
 GET     /topics/:id/edit       Topics.Edit
 POST    /topics/:id       Topics.Update
 POST    /topics           Topics.Create
+POST  /topics/:id/delete       Topics.Delete
 POST    /topics/:id/reply          Replies.Create
-GET    /replies/:id/edit          Replies.Edit
+GET     /replies/:id/edit          Replies.Edit
 POST    /replies/:id          Replies.Update
+POST  /replies/:id/delete          Replies.Delete
 GET     /u/:username      Users.Show
-
-# Ignore favicon requests
 GET     /favicon.ico                            404
-
-# Catch all
-# *       /:controller/:action                    :controller.:action
-
-# Map static resources from the /app/public folder to the /public path
 GET     /*filepath                       Static.Serve("public")
