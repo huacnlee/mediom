@@ -4,16 +4,21 @@
 <div class="row">
 	<div class="col-md-9">
 	  <div class="topic-detail">
-	    <h1>{{.topic.Title}}</h1>
-	    <div class="info">
-	      {{.topic.User.Login}} 发表于 {{timeago .topic.CreatedAt}}
-	      {{if eq .current_user.Id  .topic.UserId}}
-				<span class="opts">
-	     		<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>
-					<a href="/topics/{{.topic.Id}}/delete" data-confirm="确定要删除吗？" data-method="post"><i class="fa fa-trash-o"></i></a>
-				</span>
-	      {{end}}
-	    </div>
+			<div class="title-line clearfix">
+		    <h1>{{.topic.Title}}</h1>
+		    <div class="info">
+		      {{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
+		      {{if eq .current_user.Id  .topic.UserId}}
+					<span class="opts">
+		     		<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>
+						<a href="/topics/{{.topic.Id}}/delete" data-confirm="确定要删除吗？" data-method="post"><i class="fa fa-trash-o"></i></a>
+					</span>
+		      {{end}}
+		    </div>
+				<div class="avatar">
+					{{user_avatar_tag .topic.User "96x96"}}
+				</div>
+			</div>
 	    <div class="markdown">
 	      {{markdown .topic.Body}}
 	    </div>

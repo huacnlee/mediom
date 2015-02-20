@@ -17,7 +17,13 @@
 
 .topic-detail {	
 	margin-bottom: 30px;
-	h1 { font-size:24px; color:#333;text-align: left; line-height:100%; margin-bottom:8px; }
+	.title-line {
+		padding-right: 60px;
+		margin-bottom: 10px;
+		h1 { margin-top:0; font-size:24px; color:#333;text-align: left; line-height:100%; margin-bottom:8px; }
+		.avatar { position: absolute; top: 0px; right: 0; text-align:center; }
+	}
+	
 	.info {
       color:#d0d0d0; margin-bottom:2px;
       font-size:12px;

@@ -45,7 +45,7 @@ func (c Topics) Create() revel.Result {
 
 func (c Topics) Show() revel.Result {
 	t := &Topic{}
-	DB.Where("id = ?", c.Params.Get("id")).First(t)
+	DB.Preload("User").First(t, c.Params.Get("id"))
 	replies := []*Reply{}
 	DB.Preload("User").Where("topic_id = ?", t.Id).Order("id asc").Find(&replies)
 	c.RenderArgs["topic"] = t
