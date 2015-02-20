@@ -51,12 +51,19 @@
 		}
 	}
 	.reply { 
+		position: relative;
 		margin-bottom: 20px; 
 		.deleted { 
 			color:#aaa;
       		text-decoration: line-through;
       		font-size:12px; text-align:center; 
 		}
+		
+		.content { 
+			margin-left: 58px; 
+			&.deleted { margin-left:0px; }
+		}
+		.avatar { position: absolute; top: 0px; left: 0; text-align:center; }
 	}
 }
 
