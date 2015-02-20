@@ -26,6 +26,12 @@ func (r *Reply) BeforeDelete() (err error) {
 	return err
 }
 
+func (r *Reply) AfterCreate() (err error) {
+	err = r.Topic.UpdateLastReply(r)
+
+	return nil
+}
+
 func (r *Reply) validate() (v revel.Validation) {
 	v = revel.Validation{}
 	switch r.NewRecord() {

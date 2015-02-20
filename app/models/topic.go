@@ -1,20 +1,32 @@
 package models
 
 import (
+	"errors"
 	"github.com/revel/revel"
 	"time"
 )
 
 type Topic struct {
 	BaseModel
-	UserId       int32 `sql:"not null"`
-	User         User
-	Title        string `sql:"size:300;not null"`
-	Body         string `sql:"type:text;not null"`
-	Replies      []Reply
-	RepliesCount int32 `sql:"not null;default 0"`
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	UserId             int32 `sql:"not null"`
+	User               User
+	Title              string `sql:"size:300;not null"`
+	Body               string `sql:"type:text;not null"`
+	Replies            []Reply
+	RepliesCount       int32 `sql:"not null;default 0"`
+	LastActiveMark     int64 `sql:"not null; default: 0"`
+	LastRepliedAt      time.Time
+	LastReplyId        int32
+	LastReplyUserId    int32
+	LastReplyUser      User `sql:"size:255"`
+	LastReplyUserLogin string
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+}
+
+func (t *Topic) BeforeCreate() (err error) {
+	t.LastActiveMark = time.Now().Unix()
+	return nil
 }
 
 func (t *Topic) validate() (v revel.Validation) {
@@ -61,4 +73,23 @@ func UpdateTopic(t *Topic) revel.Validation {
 		v.Error("服务器异常更新失败")
 	}
 	return v
+}
+
+func (t *Topic) UpdateLastReply(reply *Reply) (err error) {
+	if reply == nil {
+		return errors.New("Reply is nil")
+	}
+
+	db.First(&reply.User, reply.UserId)
+	err = db.Exec(`UPDATE topics SET updated_at = ?, last_active_mark = ?, last_replied_at = ?, 
+		last_reply_id = ?, last_reply_user_login = ?, last_reply_user_id = ? WHERE id = ?`,
+		time.Now(),
+		time.Now().Unix(),
+		time.Now(),
+		reply.Id,
+		reply.User.Login,
+		reply.UserId,
+		reply.TopicId).Error
+
+	return err
 }
