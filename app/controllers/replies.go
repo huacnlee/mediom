@@ -27,9 +27,10 @@ func (c Replies) Create() revel.Result {
 	reply.UserId = c.currentUser.Id
 	v := CreateReply(reply)
 	if v.HasErrors() {
-		return c.errorsJSON(1, v.Errors)
+		c.Flash.Error("回帖失败")
+		return c.Redirect(fmt.Sprintf("/topics/%v", c.topic.Id))
 	}
-	return c.successJSON(reply)
+	return c.Redirect(fmt.Sprintf("/topics/%v#reply", c.topic.Id))
 }
 
 func (c Replies) Update() revel.Result {
