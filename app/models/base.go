@@ -39,6 +39,7 @@ func init() {
 	db.AutoMigrate(&User{}, &Topic{}, &Reply{})
 	db.Model(&User{}).AddUniqueIndex("index_on_login", "login")
 	db.Model(&Topic{}).AddIndex("index_on_user_id", "user_id")
+	db.Model(&Topic{}).AddIndex("index_on_last_active_mark_deleted_at", "last_active_mark", "deleted_at")
 	db.Model(&User{}).AddIndex("index_on_deleted_at", "deleted_at")
 	db.Model(&Topic{}).AddIndex("index_on_deleted_at", "deleted_at")
 	db.Model(&Reply{}).AddIndex("index_on_deleted_at", "deleted_at")

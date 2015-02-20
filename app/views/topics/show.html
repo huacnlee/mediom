@@ -7,7 +7,11 @@
 			<div class="title-line clearfix">
 		    <h1>{{.topic.Title}}</h1>
 		    <div class="info">
-		      {{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
+					{{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
+					・ 共 {{.topic.RepliesCount}} 条回复
+					{{if .topic.LastReplyUserLogin}}
+					・ 最后由 {{user_name_tag .topic.LastReplyUserLogin}} 于 {{timeago .topic.LastRepliedAt}}回复
+					{{end}}
 		      {{if eq .current_user.Id  .topic.UserId}}
 					<span class="opts">
 		     		<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>

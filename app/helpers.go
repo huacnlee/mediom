@@ -57,16 +57,19 @@ func init() {
 
 	revel.TemplateFuncs["user_name_tag"] = func(obj interface{}) interface{} {
 		out := "未知用户"
-		if obj != nil {
+		switch obj.(type) {
+		case User:
 			u := obj.(User)
 			if u.NewRecord() {
 				return out
 			}
 			out = fmt.Sprintf("<a href='/u/%v' class='uname'>%v</a>", u.Login, u.Login)
-			return template.HTML(out)
+		default:
+			out = fmt.Sprintf(`<a href="/u/%v" class="uname">%v</a>`, obj, obj)
+
 		}
 
-		return out
+		return template.HTML(out)
 	}
 
 	revel.TemplateFuncs["user_avatar_tag"] = func(obj interface{}, size string) interface{} {
