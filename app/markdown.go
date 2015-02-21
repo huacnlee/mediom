@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/microcosm-cc/bluemonday"
 	. "github.com/russross/blackfriday"
+	"regexp"
 )
 
 func MarkdownGitHub(input []byte) []byte {
@@ -23,5 +24,23 @@ func MarkdownGitHub(input []byte) []byte {
 
 	unsafe := Markdown(input, renderer, extensions)
 	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+	html = RemoveBlankChars(html)
 	return html
+}
+
+var blankRegexp, _ = regexp.Compile(`>\s+<`)
+
+func RemoveBlankChars(input []byte) []byte {
+	return blankRegexp.ReplaceAll(input, []byte("><"))
+}
+
+func linkMentionFloor(input []byte) []byte {
+	for c := range input {
+		if c == '#' {
+
+		}
+	}
+
+	return input
+
 }
