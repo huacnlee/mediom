@@ -3,6 +3,24 @@
  *= require stylesheets/font-awesome.min
  */
 
+body {
+	background: #E5E5E5;
+}
+
+.header {
+	.navbar {
+		background-color: #FFF;
+		border:0px;
+		box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.1),0 1px 0 0 rgba(0, 0, 0, 0.1);
+	}
+}
+
+.panel {
+	border: 0px;
+	border-radius: 3px;
+	box-shadow: 0 0px 2px rgba(0, 0, 0, 0.07);
+}
+
 .opts {
 	a { margin-right: 5px; }
 	a:link,
