@@ -1,6 +1,7 @@
-<div id="reply">
-	<h2 class="title">回帖</h2>
-	<form class="reply-form" 
+	
+<div id="reply" class="panel panel-default">
+	<div class="panel-heading">回帖</div>
+	<form class="reply-form panel-body" 
 	  action="/topics/{{.topic.Id}}/reply" method="POST"
 	 >
 	  {{.validation | error_messages}}

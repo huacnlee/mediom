@@ -86,6 +86,20 @@ func init() {
 		return template.HTML(out)
 	}
 
+	revel.TemplateFuncs["node_name_tag"] = func(obj interface{}) interface{} {
+		out := ""
+		switch obj.(type) {
+		case Node:
+			n := obj.(Node)
+			if n.NewRecord() {
+				return out
+			}
+			out = fmt.Sprintf("<a href='/topics/n%v' class='node-name'>%v</a>", n.Id, n.Name)
+		}
+
+		return template.HTML(out)
+	}
+
 	revel.TemplateFuncs["javascript_tag"] = train.JavascriptTag
 	revel.TemplateFuncs["stylesheet_tag"] = train.StylesheetTag
 }

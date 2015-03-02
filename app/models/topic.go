@@ -10,6 +10,7 @@ type Topic struct {
 	BaseModel
 	UserId             int32 `sql:"not null"`
 	User               User
+	NodeId             int32
 	Node               Node
 	Title              string `sql:"size:300;not null"`
 	Body               string `sql:"type:text;not null"`
@@ -36,6 +37,7 @@ func (t *Topic) validate() (v revel.Validation) {
 	case false:
 	default:
 		v.Required(t.UserId).Key("user_id").Message("不能为空")
+		v.Required(t.NodeId).Key("node_id").Message("不能为空")
 		v.Min(int(t.UserId), 1).Key("user_id").Message("不正确")
 		v.MinSize(t.Title, 10).Key("标题").Message("最少要 10 个子符")
 		v.MaxSize(t.Title, 100).Key("标题").Message("最多只能写 100 个字符")
@@ -46,7 +48,7 @@ func (t *Topic) validate() (v revel.Validation) {
 
 func FindTopicPages(offset, limit int) []Topic {
 	topics := []Topic{}
-	db.Preload("User").Order("last_active_mark desc, id desc").Offset(offset).Limit(limit).Find(&topics)
+	db.Preload("User").Preload("Node").Order("last_active_mark desc, id desc").Offset(offset).Limit(limit).Find(&topics)
 	return topics
 }
 
@@ -55,7 +57,7 @@ func CreateTopic(t *Topic) revel.Validation {
 	if v.HasErrors() {
 		return v
 	}
-
+	t.LastActiveMark = time.Now().Unix()
 	err := db.Save(t).Error
 	if err != nil {
 		v.Error("服务器异常创建失败")

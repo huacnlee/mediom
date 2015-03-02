@@ -22,8 +22,7 @@ func (c *Nodes) Before() revel.Result {
 }
 
 func (c Nodes) Index() revel.Result {
-	var nodes []Node
-	DB.Limit(100).Offset(0).Find(&nodes)
+	nodes := FindAllNodes()
 	c.RenderArgs["nodes"] = nodes
 	return c.Render("nodes/index.html")
 }

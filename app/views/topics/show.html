@@ -3,29 +3,37 @@
 
 <div class="row">
 	<div class="col-md-9">
-	  <div class="topic-detail">
-			<div class="title-line clearfix">
+	  <div class="topic-detail panel panel-default">
+			<div class="panel-heading clearfix">
 		    <h1>{{.topic.Title}}</h1>
 		    <div class="info">
+					{{node_name_tag .topic.Node}}
 					{{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
-					・ 共 {{.topic.RepliesCount}} 条回复
 					{{if .topic.LastReplyUserLogin}}
 					・ 最后由 {{user_name_tag .topic.LastReplyUserLogin}} 于 {{timeago .topic.LastRepliedAt}}回复
 					{{end}}
-		      {{if eq .current_user.Id  .topic.UserId}}
-					<span class="opts">
-		     		<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>
-						<a href="/topics/{{.topic.Id}}/delete" data-confirm="确定要删除吗？" data-method="post"><i class="fa fa-trash-o"></i></a>
-					</span>
-		      {{end}}
 		    </div>
 				<div class="avatar">
 					{{user_avatar_tag .topic.User "96x96"}}
 				</div>
 			</div>
-	    <div class="markdown">
+	    <div class="panel-body markdown">
 	      {{markdown .topic.Body}}
 	    </div>
+			<div class="panel-footer clearfix">
+				<span class="opts">
+					<a href="/topics/{{.topic.Id}}/watch" data-method="post"><i class="fa fa-eye"></i> 关注</a>
+					<a href="/topics/{{.topic.Id}}/star" data-method="post"><i class="fa fa-star-o"></i> 收藏</a>
+					<a href="/topics/{{.topic.Id}}/thumbs-up" title="加精" data-confirm="确定要设置为精华帖么？" data-method="POST"><i class="fa fa-thumbs-o-up"></i> 加精</a>
+					<a href="/topics/{{.topic.Id}}/thumbs-down" title="NoPoint" data-confirm="确定要将此帖移动到 NoPoint 节点么？" data-method="POST"><i class="fa fa-thumbs-o-down"></i> 埋贴</a>
+				</span>
+				{{if eq .current_user.Id  .topic.UserId}}
+				<span class="pull-right opts">
+		     	<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>
+					<a href="/topics/{{.topic.Id}}/delete" data-confirm="确定要删除吗？" data-method="post"><i class="fa fa-trash-o"></i></a>
+				</span>
+				{{end}}
+			</div>
 		</div>
 			
 		{{template "topics/_replies.html" .}}

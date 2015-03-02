@@ -1,5 +1,6 @@
-<div id="replies">
-	<h2>共 {{.topic.RepliesCount}} 条回帖</h2>
+<div id="replies" class="panel panel-default">
+	<div class="panel-heading">共 {{.topic.RepliesCount}} 条回复</div>
+	<div class="panel-body">
 	{{range $idx, $reply := .replies}}
 		<div id="reply{{$idx}}" class="reply">
 			{{if $reply.IsDeleted}}
@@ -25,4 +26,5 @@
 			{{end}}
 		</div>
 	{{end}}
+	</div>
 </div>

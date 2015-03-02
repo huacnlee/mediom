@@ -7,11 +7,40 @@
  >
   {{.validation | error_messages}}
   <div class="form-group">  
-    <input type="text" class="form-control" name="title" 
-    value="{{.topic.Title}}" id="title" placeholder="请输入 5-100 字的标题">
+		<div class="input-group">
+			<div class="input-group-btn">
+			  <button class="btn btn-default dropdown-toggle" type="button" 
+					data-toggle="dropdown" aria-expanded="false">
+			    <span data-bind="label">{{if .Node.Name}} {{.Node.Name}} {{else}}请选择节点{{end}}</span> <span class="caret"></span>
+			  </button>
+				<input type="hidden" data-bind="value" value="{{.NodeId}}" name="node_id" />
+			  <ul class="dropdown-menu" role="menu">
+			    {{range .nodes}}
+					<li data-id="{{.Id}}"><a href="#">{{.Name}}</a></li>
+					{{end}}
+			  </ul>
+			</div>
+	    <input type="text" class="form-control" name="title" 
+	    value="{{.topic.Title}}" id="title" placeholder="请输入 5-100 字的标题">
+		</div>
   </div>
   <div class="form-group">  
     <textarea class="form-control" name="body" rows="20" id="body" placeholder="话题正文，请用 GitHub 风格的 Markdown 编写">{{.topic.Body}}</textarea>
   </div>
   <button type="submit" class="btn btn-primary" data-disable-with="提交中...">提交</button>
 </form>
+<script type='text/javascript'>
+$( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+   var $target = $( event.currentTarget );
+
+   $target.closest('.input-group-btn')
+			.find('[data-bind="value"]').val($target.data("id"))
+				.end()
+      .find('[data-bind="label"]').text($target.text())
+        .end()
+      .children( '.dropdown-toggle' ).dropdown( 'toggle' );
+
+   return false;
+
+});
+</script>

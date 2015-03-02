@@ -1,24 +1,28 @@
 {{set . "title" "社区"}}
 {{template "header.html" .}}
 
-<div class="topics">
-  {{range .topics}}
-  <div class="topic clearfix">
-    <div class="avatar">
-			{{user_avatar_tag .User "96x96"}}
-		</div>
-    <div class="infos">
-      <div class="title"><a href="/topics/{{.Id}}">{{.Title}}</a></div>
-			<div class="info">
-				{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}
-				・ {{.RepliesCount}} 条回复
-				{{if .LastReplyUserLogin}}
-				・ 最后由 {{user_name_tag .LastReplyUserLogin}} 于 {{timeago .LastRepliedAt}}回复
-				{{end}}
+<div class="topics panel panel-default">
+	<div class="panel-heading">话题列表</div>
+	<div class="panel-body">
+	  {{range .topics}}
+	  <div class="topic clearfix">
+	    <div class="avatar">
+				{{user_avatar_tag .User "96x96"}}
 			</div>
-    </div>
-  </div>
-  {{end}}
+	    <div class="infos">
+	      <div class="title"><a href="/topics/{{.Id}}">{{.Title}}</a></div>
+				<div class="info">
+					{{node_name_tag .Node}}
+					{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}
+					・ {{.RepliesCount}} 条回复
+					{{if .LastReplyUserLogin}}
+					・ 最后由 {{user_name_tag .LastReplyUserLogin}} 于 {{timeago .LastRepliedAt}}回复
+					{{end}}
+				</div>
+	    </div>
+	  </div>
+	  {{end}}
+	</div>
 </div>
 
 {{template "footer.html" .}}

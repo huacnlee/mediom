@@ -47,3 +47,8 @@ func UpdateNode(n *Node) revel.Validation {
 	}
 	return v
 }
+
+func FindAllNodes() (nodes []*Node) {
+	db.Order("name asc").Find(&nodes)
+	return
+}
