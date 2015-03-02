@@ -1,0 +1,15 @@
+{{set . "title" "修改节点"}}
+{{template "header.html" .}}
+
+<div class="panel panel-default">
+	<div class="panel-heading">修改</div>
+	<form action="/nodes/{{.node.Id}}" class="panel-body form-inline" method="POST">
+		{{.validation | error_messages}}
+		<div class="form-group">
+			<input type="text" class="form-control" value="{{.node.Name}}" name="name" placeholder="节点名称" />
+		</form>
+		<button type="submit" class="btn btn-primary">更新</button>
+	</form>
+</div>
+
+{{template "footer.html" .}}

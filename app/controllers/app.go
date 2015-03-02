@@ -70,6 +70,19 @@ func (c App) requireUser() revel.Result {
 	}
 }
 
+func (c App) requireAdmin() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+
+	if !c.currentUser.IsAdmin() {
+		c.Flash.Error("此功能需要管理员权限。")
+		return c.Redirect("/")
+	}
+
+	return nil
+}
+
 func (c App) isOwner(obj interface{}) bool {
 	objType := reflect.TypeOf(obj)
 	switch objType.String() {

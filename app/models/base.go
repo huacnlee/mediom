@@ -11,7 +11,9 @@ var DB *gorm.DB
 
 type BaseModel struct {
 	Id        int32
-	DeletedAt time.Time
+	DeletedAt *time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 func (m BaseModel) NewRecord() bool {
@@ -24,7 +26,7 @@ func (m BaseModel) Destroy() error {
 }
 
 func (m BaseModel) IsDeleted() bool {
-	return !m.DeletedAt.IsZero()
+	return m.DeletedAt != nil
 }
 
 func init() {
@@ -36,7 +38,7 @@ func init() {
 	}
 
 	db.LogMode(true)
-	db.AutoMigrate(&User{}, &Topic{}, &Reply{})
+	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{})
 	db.Model(&User{}).AddUniqueIndex("index_on_login", "login")
 	db.Model(&Topic{}).AddIndex("index_on_user_id", "user_id")
 	db.Model(&Topic{}).AddIndex("index_on_last_active_mark_deleted_at", "last_active_mark", "deleted_at")

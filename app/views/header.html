@@ -5,7 +5,7 @@
     <title>{{.title}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     {{stylesheet_tag "app"}}
-    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
     {{javascript_tag "app"}}
   </head>
   <body>
@@ -27,6 +27,10 @@
             <ul class="dropdown-menu" role="menu">
 						 <li><a href="/account/edit">个人设置</a></li>
               <li><a href="/topics/new">发布话题</a></li>
+							{{if .current_user.IsAdmin}}
+							<li class="divider"></li>
+							<li><a href="/nodes">节点管理</a></li>
+							{{end}}
               <li class="divider"></li>
               <li><a href="/signout" data-method="post" rel="nofollow">登出</a></li>
             </ul>

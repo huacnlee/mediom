@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+var ADMIN_LOGINS = []string{"huacnlee"}
+
 type User struct {
 	BaseModel
 	Login       string `sql:"size:255;not null"`
@@ -34,6 +36,15 @@ func (u User) GavatarURL(size string) string {
 
 func (u User) SameAs(obj interface{}) bool {
 	return obj.(User).Id == u.Id
+}
+
+func (u User) IsAdmin() bool {
+	for _, str := range ADMIN_LOGINS {
+		if u.Login == str {
+			return true
+		}
+	}
+	return false
 }
 
 func (u User) EncodePassword(raw string) (md5Digest string) {

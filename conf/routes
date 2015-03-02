@@ -6,7 +6,7 @@ GET 		/signup 			Accounts.New
 POST 	/signup 			Accounts.Create
 GET 		/signin 			Accounts.Login
 POST		/signin			Accounts.LoginCreate
-POST   /signout         Accounts.Logout
+POST    /signout         Accounts.Logout
 GET     /account/edit     Accounts.Edit
 POST    /account          Accounts.Update
 
@@ -16,11 +16,16 @@ GET     /topics/:id       Topics.Show
 GET     /topics/:id/edit       Topics.Edit
 POST    /topics/:id       Topics.Update
 POST    /topics           Topics.Create
-POST  /topics/:id/delete       Topics.Delete
+POST    /topics/:id/delete       Topics.Delete
 POST    /topics/:id/reply          Replies.Create
 GET     /replies/:id/edit          Replies.Edit
 POST    /replies/:id          Replies.Update
-POST  /replies/:id/delete          Replies.Delete
+POST    /replies/:id/delete          Replies.Delete
+GET     /nodes            Nodes.Index
+POST    /nodes            Nodes.Create
+GET     /nodes/:id/edit            Nodes.Edit
+POST    /nodes/:id            Nodes.Update
+POST    /nodes/:id/delete            Nodes.Delete
 GET     /u/:username      Users.Show
 GET     /favicon.ico                            404
 GET     /*filepath                       Static.Serve("public")

@@ -10,6 +10,7 @@ type Topic struct {
 	BaseModel
 	UserId             int32 `sql:"not null"`
 	User               User
+	Node               Node
 	Title              string `sql:"size:300;not null"`
 	Body               string `sql:"type:text;not null"`
 	Replies            []Reply
