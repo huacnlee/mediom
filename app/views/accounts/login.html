@@ -2,19 +2,26 @@
 {{template "header.html" .}}
 
 <div class="row">
-  <form class="signin col-md-4 col-md-offset-4" action="/signin" method="POST">
-    {{.validation | error_messages}}
-    <div class="form-group">  
-      <label for="username">帐号</label>
-      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">
-    </div>
-    <div class="form-group">  
-      <label for="password">密码</label>
-      <input type="password" class="form-control" name="password" id="password" >
-    </div>
-    <button type="submit" class="btn btn-block btn-primary">登录</button>
-  </form>
+	<div class="col-md-4 col-md-offset-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">登录社区</div>
+		  <form class="signin panel-body" action="/signin" method="POST">
+		    {{.validation | error_messages}}
+		    <div class="form-group">  
+		      <label for="username">帐号</label>
+		      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">
+		    </div>
+		    <div class="form-group">  
+		      <label for="password">密码</label>
+		      <input type="password" class="form-control" name="password" id="password" >
+		    </div>
+		    <button type="submit" class="btn btn-block btn-primary">登录</button>
+		  </form>
+			<div class="panel-footer">
+				如果你还没有帐号，可以 <a href="/signup">注册一个</a>
+			</div>
+		</div>
+	</div>
 </div>
-
 
 {{template "footer.html" .}}
