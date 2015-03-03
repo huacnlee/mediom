@@ -30,7 +30,7 @@ func (c Replies) Create() revel.Result {
 		c.Flash.Error("回帖失败")
 		return c.Redirect(fmt.Sprintf("/topics/%v", c.topic.Id))
 	}
-	return c.Redirect(fmt.Sprintf("/topics/%v#reply", c.topic.Id))
+	return c.Redirect(fmt.Sprintf("/topics/%v#reply%v", c.topic.Id, c.topic.RepliesCount))
 }
 
 func (c Replies) Update() revel.Result {

@@ -12,6 +12,10 @@ import (
 )
 
 func init() {
+	revel.TemplateFuncs["plus"] = func(a, b int) int {
+		return a + b
+	}
+
 	revel.TemplateFuncs["error_messages"] = func(args ...interface{}) interface{} {
 		out := ""
 

@@ -73,6 +73,23 @@ a.followed {
 		.avatar { position: absolute; top: 0px; left: 0; text-align:center; }
 		.title { font-size: 15px; }
 		.info { color: #aaa; font-size: 12px; margin-top: 5px; }
+		.count { 
+			width: 100px; text-align: right;
+			position: absolute; right: 10px; top: 10px; float: right; 
+			a:link,
+			a:hover,
+			a:visited { 
+				line-height: 12px;
+				color: #fff; font-weight:bold; 
+				border-radius: 80px; padding: 2px 10px 2px 10px; 
+				display: inline-block; 
+				text-decoration: none;
+			}
+			
+			a:link { background: #98ACDF; }
+			a:hover { background: #0069D6; }
+			a:visited { background: #AAA; }
+		}
 	}
 }
 

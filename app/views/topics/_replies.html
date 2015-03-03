@@ -3,7 +3,7 @@
 	<div class="panel-body">
 	{{if .replies}}
 		{{range $idx, $reply := .replies}}
-		<div id="reply{{$idx}}" class="reply">
+		<div id="reply-{{plus $idx 1}}" class="reply">
 			{{if $reply.IsDeleted}}
 			<div class="content deleted">回复已删除</div>
 			{{else}}
