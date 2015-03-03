@@ -46,10 +46,13 @@ func (t *Topic) validate() (v revel.Validation) {
 	return v
 }
 
-func FindTopicPages(offset, limit int) []Topic {
-	topics := []Topic{}
-	db.Preload("User").Preload("Node").Order("last_active_mark desc, id desc").Offset(offset).Limit(limit).Find(&topics)
-	return topics
+func FindTopicPages(page, perPage int) (topics []Topic, pageInfo Pagination) {
+	pageInfo = Pagination{}
+	pageInfo.Query = db.Model(&Topic{}).Preload("User").Preload("Node").Order("last_active_mark desc, id desc")
+	pageInfo.Path = "/topics"
+	pageInfo.PerPage = perPage
+	pageInfo.Paginate(page).Find(&topics)
+	return
 }
 
 func CreateTopic(t *Topic) revel.Validation {

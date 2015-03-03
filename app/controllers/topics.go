@@ -13,9 +13,11 @@ type Topics struct {
 }
 
 func (c Topics) Index() revel.Result {
-	offset, _ := strconv.Atoi(c.Params.Get("offset"))
-	topics := FindTopicPages(offset, 20)
+	page, _ := strconv.Atoi(c.Params.Get("page"))
+	topics, pageInfo := FindTopicPages(page, 20)
+	pageInfo.Path = c.Request.URL.Path
 	c.RenderArgs["topics"] = topics
+	c.RenderArgs["page_info"] = pageInfo
 	return c.Render("topics/index.html")
 }
 
