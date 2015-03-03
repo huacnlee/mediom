@@ -117,3 +117,43 @@ func (c Topics) Delete() revel.Result {
 	}
 	return c.Redirect("/topics")
 }
+
+func (c Topics) Watch() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
+	c.currentUser.Watch(t)
+	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+}
+
+func (c Topics) UnWatch() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
+	c.currentUser.UnWatch(t)
+	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+}
+
+func (c Topics) Star() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
+	c.currentUser.Star(t)
+	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+}
+
+func (c Topics) UnStar() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
+	c.currentUser.UnStar(t)
+	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+}

@@ -22,8 +22,8 @@
 	    </div>
 			<div class="panel-footer clearfix">
 				<span class="opts">
-					<a href="/topics/{{.topic.Id}}/watch" data-method="post"><i class="fa fa-eye"></i> 关注</a>
-					<a href="/topics/{{.topic.Id}}/star" data-method="post"><i class="fa fa-star-o"></i> 收藏</a>
+					{{watch_tag .topic .current_user}}
+					{{star_tag .topic .current_user}}
 					<a href="/topics/{{.topic.Id}}/thumbs-up" title="加精" data-confirm="确定要设置为精华帖么？" data-method="POST"><i class="fa fa-thumbs-o-up"></i> 加精</a>
 					<a href="/topics/{{.topic.Id}}/thumbs-down" title="NoPoint" data-confirm="确定要将此帖移动到 NoPoint 节点么？" data-method="POST"><i class="fa fa-thumbs-o-down"></i> 埋贴</a>
 				</span>

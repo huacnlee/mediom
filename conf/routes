@@ -18,6 +18,10 @@ POST    /topics/:id       Topics.Update
 POST    /topics           Topics.Create
 POST    /topics/:id/delete       Topics.Delete
 POST    /topics/:id/reply          Replies.Create
+POST    /topics/:id/watch       Topics.Watch
+POST    /topics/:id/unwatch       Topics.UnWatch
+POST    /topics/:id/star       Topics.Star
+POST    /topics/:id/unstar       Topics.UnStar
 GET     /replies/:id/edit          Replies.Edit
 POST    /replies/:id          Replies.Update
 POST    /replies/:id/delete          Replies.Delete

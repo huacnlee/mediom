@@ -15,13 +15,15 @@ type Topic struct {
 	Title              string `sql:"size:300;not null"`
 	Body               string `sql:"type:text;not null"`
 	Replies            []Reply
-	RepliesCount       int32 `sql:"not null;default 0"`
+	RepliesCount       int32 `sql:"not null;default: 0"`
 	LastActiveMark     int64 `sql:"not null; default: 0"`
 	LastRepliedAt      time.Time
 	LastReplyId        int32
 	LastReplyUserId    int32
 	LastReplyUser      User `sql:"size:255"`
 	LastReplyUserLogin string
+	StarsCount         int32 `sql:"not null; default: 0"`
+	WatchesCount       int32 `sql:"not null; default: 0"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
