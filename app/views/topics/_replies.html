@@ -28,8 +28,8 @@
 		</div>
 		{{end}}
 	{{else}}
-		暂无回复
+		<div class="reply none">暂时还没有人回帖哦，赶紧抢先</div>
 	{{end}}
-	
 	</div>
 </div>
+{{template "topics/_reply_form.html" .}}

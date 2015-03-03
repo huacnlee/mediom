@@ -3,6 +3,20 @@
  *= require stylesheets/font-awesome.min
  */
 
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+  & {
+    zoom:1;
+  }
+}
+
 body {
 	background: #E5E5E5;
 }
@@ -86,6 +100,10 @@ body {
 
 #replies {
 	margin-bottom: 30px;
+	.panel-body {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
 	.info { 
 		color:#aaa; margin-bottom:2px; 
 		.uname { color: #777; font-weight: bold; }
@@ -97,8 +115,19 @@ body {
 		}
 	}
 	.reply { 
+		margin: 0 -15px 0 -15px;
+		padding:15px;
+		min-height: 78px;
 		position: relative;
-		margin-bottom: 20px; 
+		border-bottom: 1px solid #eee;
+		&:last-child {
+			border-bottom: 0px;
+		}
+		&.none {
+			text-align: center;
+			color: #999;
+			min-height: 32px;
+		}
 		.deleted { 
 			color:#aaa;
       		text-decoration: line-through;
@@ -109,7 +138,7 @@ body {
 			margin-left: 58px; 
 			&.deleted { margin-left:0px; }
 		}
-		.avatar { position: absolute; top: 0px; left: 0; text-align:center; }
+		.avatar { position: absolute; top: 14pxpx; left: 14px; text-align:center; }
 		.info { font-size: 12px; }
 	}
 }
