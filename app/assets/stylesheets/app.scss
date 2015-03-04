@@ -200,6 +200,8 @@ a.followed {
       		text-decoration: line-through;
       		font-size:12px; text-align:center; 
 		}
+		&.light { background:#F7F2FC; }
+    		&.popular { background:#fffce9; }
 		
 		.content { 
 			margin-left: 58px; 
