@@ -5,7 +5,7 @@
 	<div class="col-md-9">
 	  <div class="topic-detail panel panel-default">
 			<div class="panel-heading clearfix">
-		    <h1>{{.topic.Title}}</h1>
+		    <h1>{{.topic.Title}} {{awesome_icon_tag .topic}}</h1>
 		    <div class="info">
 					{{node_name_tag .topic.Node}}
 					{{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
