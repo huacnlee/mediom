@@ -13,10 +13,11 @@ type Topics struct {
 	App
 }
 
-func (c Topics) Index() revel.Result {
+func (c Topics) Index(channel string) revel.Result {
 	page, _ := strconv.Atoi(c.Params.Get("page"))
-	topics, pageInfo := FindTopicPages(page, 20, false)
+	topics, pageInfo := FindTopicPages(channel, page, 20)
 	pageInfo.Path = c.Request.URL.Path
+	c.RenderArgs["channel"] = channel
 	c.RenderArgs["topics"] = topics
 	c.RenderArgs["page_info"] = pageInfo
 	return c.Render("topics/index.html")

@@ -66,11 +66,21 @@ body {
 
 a.followed {
 	.fa {
-		color: #C99B9E;
+		color: #CC897B;
 	}
 }
 
 .topics {
+	.filter {
+		padding: 3px 0 2px 0;
+		font-size: 13px;
+		color: #ddd;
+		span.l { color: #aaa; margin-right: 5px; }
+		a:link,a:visited { margin: 0 3px; }
+		a:hover { text-decoration:underline; }
+		a.popular { color: #CC897B; }
+		a.active { color: #333; border-bottom: 1px dotted #DDD; text-decoration: none; }
+	}
 	.topic {
 		padding-bottom: 10px; min-height: 58px;
 		position: relative; padding-left: 60px;

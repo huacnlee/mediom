@@ -11,6 +11,8 @@ GET     /account/edit     Accounts.Edit
 POST    /account          Accounts.Update
 
 GET     /topics           Topics.Index
+GET     /topics/popular           Topics.Index("popular")
+GET     /topics/recent           Topics.Index("recent")
 GET     /topics/new       Topics.New
 GET     /topics/:id       Topics.Show
 GET     /topics/:id/edit       Topics.Edit

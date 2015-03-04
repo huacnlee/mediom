@@ -180,4 +180,12 @@ func init() {
 		out = `<i class="fa fa-diamond awesome" title="精华帖标记"></i>`
 		return template.HTML(out)
 	}
+
+	revel.TemplateFuncs["active_class"] = func(a string, b string) string {
+		if strings.EqualFold(a, b) {
+			return " active "
+		} else {
+			return ""
+		}
+	}
 }

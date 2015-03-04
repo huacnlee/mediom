@@ -55,13 +55,19 @@ func (t *Topic) validate() (v revel.Validation) {
 	return v
 }
 
-func FindTopicPages(page, perPage int, inlucdeNoPoint bool) (topics []Topic, pageInfo Pagination) {
+func FindTopicPages(channel string, page, perPage int) (topics []Topic, pageInfo Pagination) {
 	pageInfo = Pagination{}
 	pageInfo.Query = db.Model(&Topic{}).Preload("User").Preload("Node")
-	if !inlucdeNoPoint {
-		pageInfo.Query = pageInfo.Query.Where("rank >= 0")
+
+	switch channel {
+	case "recent":
+		pageInfo.Query = pageInfo.Query.Order("id desc")
+	case "popular":
+		pageInfo.Query = pageInfo.Query.Where("rank = 1 or stars_count >= 5")
+		pageInfo.Query = pageInfo.Query.Order("last_active_mark desc, id desc")
+	default:
+		pageInfo.Query = pageInfo.Query.Where("rank >= 0").Order("last_active_mark desc, id desc")
 	}
-	pageInfo.Query = pageInfo.Query.Order("last_active_mark desc, id desc")
 	pageInfo.Path = "/topics"
 	pageInfo.PerPage = perPage
 	pageInfo.Paginate(page).Find(&topics)
