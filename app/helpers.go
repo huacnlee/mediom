@@ -16,6 +16,27 @@ func init() {
 		return a + b
 	}
 
+	revel.TemplateFuncs["is_owner"] = func(u User, obj interface{}) bool {
+		if u.IsAdmin() {
+			return true
+		}
+
+		switch obj.(type) {
+		case User:
+			u1 := obj.(User)
+			return u1.Id == u.Id
+		case Topic:
+			t := obj.(Topic)
+			return u.Id == t.UserId
+		case Reply:
+			r := obj.(Reply)
+			return u.Id == r.UserId
+		}
+
+		return false
+
+	}
+
 	revel.TemplateFuncs["error_messages"] = func(args ...interface{}) interface{} {
 		out := ""
 
@@ -98,7 +119,7 @@ func init() {
 			if n.NewRecord() {
 				return out
 			}
-			out = fmt.Sprintf("<a href='/topics/n%v' class='node-name'>%v</a>", n.Id, template.HTMLEscapeString(n.Name))
+			out = fmt.Sprintf("<a href='/topics/node/%v' class='node-name'>%v</a>", n.Id, template.HTMLEscapeString(n.Name))
 		}
 
 		return template.HTML(out)

@@ -3,12 +3,18 @@
 
 <div class="panel panel-default">
 	<div class="panel-heading">修改</div>
-	<form action="/nodes/{{.node.Id}}" class="panel-body form-inline" method="POST">
+	<form action="/nodes/{{.node.Id}}" class="panel-body" method="POST">
 		{{.validation | error_messages}}
 		<div class="form-group">
 			<input type="text" class="form-control" value="{{.node.Name}}" name="name" placeholder="节点名称" />
-		</form>
-		<button type="submit" class="btn btn-primary">更新</button>
+		</div>
+		<div class="form-group">
+			<textarea class="form-control" rows="10" name="summary" placeholder="用 Markdown 编写说明">{{.node.Summary}}</textarea>
+		</div>
+		<div class="actions">
+			<button type="submit" class="btn btn-primary">更新</button>
+			<a class="btn btn-default" href="/nodes">取消</a>
+		</div>
 	</form>
 </div>
 

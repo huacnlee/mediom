@@ -5,12 +5,21 @@
 	<div class="col-md-9">
 		<div class="topics panel panel-default">
 			<div class="panel-heading clearfix">
+        {{if eq .channel "node"}}
+				<div class="node-info">
+					<div class="name">{{.node.Name}}</div>
+					<div class="summary">
+						{{markdown .node.Summary}}
+					</div>
+				</div>
+        {{else}}
 				<div class="filter pull-right">
 					<span class="l">查看:</span>
 					<a href="/topics" class="normal {{active_class .channel ""}}">默认</a> / 
 					<a href="/topics/popular" class="popular {{active_class .channel "popular"}}"><i class="fa fa-diamond"></i> 优质帖子</a> / 
 					<a href="/topics/recent" class="recent {{active_class .channel "recent"}}">最近发布</a>
 				</div>
+        {{end}}
 			</div>
 			<div class="panel-body">
 			  {{range .topics}}

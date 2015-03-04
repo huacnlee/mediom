@@ -14,7 +14,7 @@
 					<div class="info">
 						{{user_name_tag $reply.User}} at {{timeago $reply.CreatedAt}}
 						<div class="pull-right opts">
-							{{if eq $.current_user.Id  $reply.UserId}}
+							{{if is_owner $.current_user $reply}}
 					      <a href="/replies/{{.Id}}/edit"><i class="fa fa-pencil"></i></a>
 								<a href="/replies/{{.Id}}/delete" data-confirm="确定要删除这个回帖么？" data-method="post"><i class="fa fa-trash-o"></i></a>
 					    {{end}}

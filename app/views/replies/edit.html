@@ -1,17 +1,20 @@
 {{set . "title" "修改回帖"}}
 {{template "header.html" .}}
 
-<div class="edit-reply">
-  <h2>修改回帖</h2>
-   <form class="reply-form" action="/replies/{{.reply.Id}}" method="POST">
-	  {{.validation | error_messages}}
-	  <div class="form-group">  
-	    <textarea class="form-control" name="body" rows="5" placeholder="">{{.reply.Body}}</textarea>
-	  </div>
-		<div class="actions">
-	  		<button type="submit" class="btn btn-primary btn-block">提交修改</button>
-		</div>
-	</form>
+<div class="col-md-8 col-md-offset-2">
+	<div class="panel panel-default">
+		<div class="panel-heading">修改回帖内容</div>
+		<form class="reply-form panel-body" action="/replies/{{.reply.Id}}" method="POST">
+		  {{.validation | error_messages}}
+		  <div class="form-group">  
+		    <textarea class="form-control" name="body" rows="5" placeholder="">{{.reply.Body}}</textarea>
+		  </div>
+			<div class="actions">
+		  		<button type="submit" class="btn btn-primary">提交修改</button>
+          <a class="btn btn-default" href="/topics/{{.reply.TopicId}}">取消</a>
+			</div>
+		</form>
+	</div>
 </div>
 
 {{template "footer.html" .}}

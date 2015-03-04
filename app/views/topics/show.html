@@ -49,7 +49,7 @@
 						{{end}}
 					{{end}}
 				</span>
-				{{if eq .current_user.Id  .topic.UserId}}
+				{{if is_owner .current_user .topic}}
 				<span class="pull-right opts">
 		     	<a href="/topics/{{.topic.Id}}/edit"><i class="fa fa-pencil"></i></a>
 					<a href="/topics/{{.topic.Id}}/delete" data-confirm="确定要删除吗？" data-method="post"><i class="fa fa-trash-o"></i></a>

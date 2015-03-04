@@ -55,7 +55,7 @@ func (t *Topic) validate() (v revel.Validation) {
 	return v
 }
 
-func FindTopicPages(channel string, page, perPage int) (topics []Topic, pageInfo Pagination) {
+func FindTopicPages(channel string, nodeId, page, perPage int) (topics []Topic, pageInfo Pagination) {
 	pageInfo = Pagination{}
 	pageInfo.Query = db.Model(&Topic{}).Preload("User").Preload("Node")
 
@@ -64,6 +64,9 @@ func FindTopicPages(channel string, page, perPage int) (topics []Topic, pageInfo
 		pageInfo.Query = pageInfo.Query.Order("id desc")
 	case "popular":
 		pageInfo.Query = pageInfo.Query.Where("rank = 1 or stars_count >= 5")
+		pageInfo.Query = pageInfo.Query.Order("last_active_mark desc, id desc")
+	case "node":
+		pageInfo.Query = pageInfo.Query.Where("node_id = ?", nodeId)
 		pageInfo.Query = pageInfo.Query.Order("last_active_mark desc, id desc")
 	default:
 		pageInfo.Query = pageInfo.Query.Where("rank >= 0").Order("last_active_mark desc, id desc")

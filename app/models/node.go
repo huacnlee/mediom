@@ -8,6 +8,7 @@ import (
 type Node struct {
 	BaseModel
 	Name      string
+	Summary   string `sql:"type:text"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

@@ -79,6 +79,19 @@ a.followed {
 }
 
 .topics {
+	.node-info {
+		.name { 
+			font-weight: bold; color: #666;
+			text-align: center;
+			font-size: 16px; padding-bottom: 10px; 
+			border-bottom: 1px dashed #e0e0e0; margin-bottom: 10px; 
+		}
+		.summary { 
+		color: #888;
+			h1, h2, h3, h4, h5 { font-size: 14px; }
+			font-size: 13px; 
+		}
+	}
 	.filter {
 		padding: 3px 0 2px 0;
 		font-size: 13px;

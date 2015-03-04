@@ -15,7 +15,13 @@ type Topics struct {
 
 func (c Topics) Index(channel string) revel.Result {
 	page, _ := strconv.Atoi(c.Params.Get("page"))
-	topics, pageInfo := FindTopicPages(channel, page, 20)
+	nodeId, _ := strconv.Atoi(c.Params.Get("node_id"))
+	node := Node{}
+	if strings.EqualFold(channel, "node") {
+		DB.Model(&Node{}).First(&node, nodeId)
+		c.RenderArgs["node"] = node
+	}
+	topics, pageInfo := FindTopicPages(channel, nodeId, page, 20)
 	pageInfo.Path = c.Request.URL.Path
 	c.RenderArgs["channel"] = channel
 	c.RenderArgs["topics"] = topics

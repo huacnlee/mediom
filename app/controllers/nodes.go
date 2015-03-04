@@ -57,6 +57,7 @@ func (c Nodes) Update() revel.Result {
 		return c.RenderError(err)
 	}
 	node.Name = c.Params.Get("name")
+	node.Summary = c.Params.Get("summary")
 	v := UpdateNode(&node)
 
 	c.RenderArgs["node"] = node
