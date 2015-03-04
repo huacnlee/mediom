@@ -282,12 +282,11 @@ a.followed {
     color:#0069D6 !important; text-decoration: none !important; 
   }
   a:hover { text-decoration: underline !important; color:#00438A !important; }
-  
   a.at_floor { color:#60b566 !important;  }
-  a.at_user {
+  a.mention {
     color:#777 !important; font-weight: bold;
     margin-right: 2px;
-    i { color:#777 !important; }
+    b { color:#777 !important; font-weight: normal; }
   }
   h1,
   h2,
