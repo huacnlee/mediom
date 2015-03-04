@@ -25,13 +25,15 @@ func MarkdownGitHub(input []byte) []byte {
 	unsafe := Markdown(input, renderer, extensions)
 	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
 	html = LinkMentionUser(html)
+	html = LinkMentionFloor(html)
 	html = RemoveBlankChars(html)
 	return html
 }
 
 var (
-	blankRegexp, _   = regexp.Compile(`>\s+<`)
-	mentionRegexp, _ = regexp.Compile(`@([\w\-\_]{3,20})`)
+	blankRegexp, _        = regexp.Compile(`>\s+<`)
+	mentionRegexp, _      = regexp.Compile(`@([\w\-\_]{3,20})`)
+	mentionFloorRegexp, _ = regexp.Compile(`#([0-9]+)楼`)
 )
 
 func RemoveBlankChars(input []byte) []byte {
@@ -39,6 +41,9 @@ func RemoveBlankChars(input []byte) []byte {
 }
 
 func LinkMentionUser(input []byte) []byte {
-
 	return mentionRegexp.ReplaceAll(input, []byte(`<a href="/u/$1" class="mention"><b>@</b>$1</a>`))
+}
+
+func LinkMentionFloor(input []byte) []byte {
+	return mentionFloorRegexp.ReplaceAll(input, []byte(`<a href="#reply${1}" class="mention-floor" data-floor="$1">#${1}楼</a>`))
 }

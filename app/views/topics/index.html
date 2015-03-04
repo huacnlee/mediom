@@ -19,7 +19,7 @@
 						{{user_avatar_tag .User "96x96"}}
 					</div>
 			    <div class="infos">
-			      <div class="title"><a href="/topics/{{.Id}}#reply{{.RepliesCount}}">{{.Title}}</a> {{awesome_icon_tag .}}</div>
+			      <div class="title"><a href="/topics/{{.Id}}#{{.RepliesCount}}">{{.Title}}</a> {{awesome_icon_tag .}}</div>
 						<div class="info">
 							{{node_name_tag .Node}}
 							{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}
@@ -29,7 +29,7 @@
 						</div>
 			    </div>
 					<div class="count">
-						<a href="/topics/{{.Id}}#reply{{.RepliesCount}}">{{.RepliesCount}}</a>
+						<a href="/topics/{{.Id}}#{{.RepliesCount}}">{{.RepliesCount}}</a>
 					</div>
 			  </div>
 			  {{end}}

@@ -3,7 +3,7 @@
 	<div class="panel-body">
 	{{if .replies}}
 		{{range $idx, $reply := .replies}}
-		<div id="reply-{{plus $idx 1}}" class="reply{{if $reply.IsDeleted}} deleted{{end}}">
+		<div id="reply{{plus $idx 1}}" class="reply{{if $reply.IsDeleted}} deleted{{end}}">
 			{{if $reply.IsDeleted}}
 			<div class="content">回复已删除</div>
 			{{else}}
@@ -18,7 +18,7 @@
 					      <a href="/replies/{{.Id}}/edit"><i class="fa fa-pencil"></i></a>
 								<a href="/replies/{{.Id}}/delete" data-confirm="确定要删除这个回帖么？" data-method="post"><i class="fa fa-trash-o"></i></a>
 					    {{end}}
-							<a href="#" class="reply" title="回复"><i class="fa fa-mail-reply"></i></a>
+							<a href="#" class="btn-reply fa fa-mail-reply" data-floor="{{plus $idx 1}}" data-login="{{$reply.User.Login}}" title="回复"></a>
 						</div>
 					</div>
 					<div class="markdown">

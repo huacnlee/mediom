@@ -63,3 +63,12 @@ func TestLinkMentionUser(t *testing.T) {
 		t.Errorf("== expect\n%v \n== but\n%v", expect, out)
 	}
 }
+
+func TestLinkMentionFloorUser(t *testing.T) {
+	source := `#1楼 Hi`
+	out := string(LinkMentionFloor([]byte(source)))
+	expect := `<a href="#reply1" class="mention-floor" data-floor="1">#1楼</a> hi`
+	if !strings.Contains(out, expect) {
+		t.Errorf("== expect\n%v \n== but\n%v", expect, out)
+	}
+}
