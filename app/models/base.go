@@ -29,7 +29,7 @@ func (m BaseModel) IsDeleted() bool {
 
 func init() {
 	var err error
-	db, err = gorm.Open("mysql", "monster:123123@/foo?charset=utf8&parseTime=True")
+	db, err = gorm.Open("mysql", "monster:123123@/mediom?charset=utf8&parseTime=True")
 	DB = &db
 	if err != nil {
 		panic(err)
