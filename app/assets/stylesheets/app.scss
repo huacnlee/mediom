@@ -59,6 +59,9 @@ body {
 	background: #f0f0f0; padding: 1px 3px; color: #777; margin-right: 5px; 
 	&:hover { color:#555; text-decoration:none; background:#e0e0e0; }
 }
+.fa.awesome {
+	color: #CC897B;
+}
 
 a.followed {
 	.fa {
@@ -99,6 +102,24 @@ a.followed {
 		padding-right: 60px;
 		h1 { margin-top:0; font-size:24px; color:#333;text-align: left; line-height:100%; margin-bottom:8px; }
 		.avatar { position: absolute; top: 10px; right: 25px; text-align:center; }
+	}
+	
+	.label-awesome {
+		font-size: 12px;
+		background:#FCF8F7;
+		padding: 3px 15px;
+		border-top: 1px solid #eae5e4;
+		color: #aAa5a4;
+		
+		a { color: #aAa5a4; }
+	}
+	.label-nopoint {
+		background:#FCF8E3;
+		padding: 3px 15px;
+		border-top: 1px solid #FAEBCC;
+		color: #ae938B;
+		
+		a { color: #ae938B; }
 	}
 	
 	.info {
@@ -151,7 +172,10 @@ a.followed {
 			color: #999;
 			min-height: 32px;
 		}
-		.deleted { 
+		&.deleted { 
+			margin-bottom: 0px;
+			min-height: 32px;
+			padding-left: 0px;
 			color:#aaa;
       		text-decoration: line-through;
       		font-size:12px; text-align:center; 

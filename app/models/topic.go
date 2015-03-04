@@ -24,9 +24,16 @@ type Topic struct {
 	LastReplyUserLogin string
 	StarsCount         int32 `sql:"not null; default: 0"`
 	WatchesCount       int32 `sql:"not null; default: 0"`
+	Rank               int32 `sql:"not null; default: 0"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
+
+const (
+	RankNoPoint = -1
+	RankNormal  = 0
+	RankAwesome = 1
+)
 
 func (t *Topic) BeforeCreate() (err error) {
 	t.LastActiveMark = time.Now().Unix()
@@ -48,9 +55,13 @@ func (t *Topic) validate() (v revel.Validation) {
 	return v
 }
 
-func FindTopicPages(page, perPage int) (topics []Topic, pageInfo Pagination) {
+func FindTopicPages(page, perPage int, inlucdeNoPoint bool) (topics []Topic, pageInfo Pagination) {
 	pageInfo = Pagination{}
-	pageInfo.Query = db.Model(&Topic{}).Preload("User").Preload("Node").Order("last_active_mark desc, id desc")
+	pageInfo.Query = db.Model(&Topic{}).Preload("User").Preload("Node")
+	if !inlucdeNoPoint {
+		pageInfo.Query = pageInfo.Query.Where("rank >= 0")
+	}
+	pageInfo.Query = pageInfo.Query.Order("last_active_mark desc, id desc")
 	pageInfo.Path = "/topics"
 	pageInfo.PerPage = perPage
 	pageInfo.Paginate(page).Find(&topics)
@@ -100,4 +111,25 @@ func (t *Topic) UpdateLastReply(reply *Reply) (err error) {
 		reply.TopicId).Error
 
 	return err
+}
+
+func (t Topic) UpdateRank(rank int) error {
+	if t.NewRecord() {
+		return errors.New("Give a empty record.")
+	}
+
+	return db.Model(t).Update("rank", rank).Error
+
+}
+
+func (t Topic) IsAwesome() bool {
+	return t.Rank == RankAwesome
+}
+
+func (t Topic) IsNormal() bool {
+	return t.Rank == RankNormal
+}
+
+func (t Topic) IsNoPoint() bool {
+	return t.Rank == RankNoPoint
 }

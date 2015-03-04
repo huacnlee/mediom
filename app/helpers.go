@@ -52,7 +52,7 @@ func init() {
 	}
 
 	revel.TemplateFuncs["markdown"] = func(text string) interface{} {
-		bytes := []byte(text)
+		bytes := []byte(template.HTMLEscapeString(text))
 		outBytes := MarkdownGitHub(bytes)
 		htmlText := string(outBytes[:])
 		return template.HTML(htmlText)
@@ -66,9 +66,10 @@ func init() {
 			if u.NewRecord() {
 				return out
 			}
-			out = fmt.Sprintf("<a href='/u/%v' class='uname'>%v</a>", u.Login, u.Login)
+			out = fmt.Sprintf("<a href='/u/%v' class='uname'>%v</a>", template.HTMLEscapeString(u.Login), template.HTMLEscapeString(u.Login))
 		default:
-			out = fmt.Sprintf(`<a href="/u/%v" class="uname">%v</a>`, obj, obj)
+			login := fmt.Sprintf("%v", obj)
+			out = fmt.Sprintf(`<a href="/u/%v" class="uname">%v</a>`, template.HTMLEscapeString(login), template.HTMLEscapeString(login))
 
 		}
 
@@ -83,7 +84,7 @@ func init() {
 				return out
 			}
 
-			out = fmt.Sprintf("<a href=\"/u/%v\" class=\"uname\"><img src=\"%v\" class=\"avatar-%v\" /></a>", u.Login, u.GavatarURL(size), size)
+			out = fmt.Sprintf("<a href=\"/u/%v\" class=\"uname\"><img src=\"%v\" class=\"avatar-%v\" /></a>", template.HTMLEscapeString(u.Login), u.GavatarURL(size), size)
 		}
 
 		return template.HTML(out)
@@ -97,7 +98,7 @@ func init() {
 			if n.NewRecord() {
 				return out
 			}
-			out = fmt.Sprintf("<a href='/topics/n%v' class='node-name'>%v</a>", n.Id, n.Name)
+			out = fmt.Sprintf("<a href='/topics/n%v' class='node-name'>%v</a>", n.Id, template.HTMLEscapeString(n.Name))
 		}
 
 		return template.HTML(out)
@@ -170,4 +171,13 @@ func init() {
 		return template.HTML(out)
 	}
 
+	revel.TemplateFuncs["awesome_icon_tag"] = func(t Topic) interface{} {
+		out := ""
+		if !t.IsAwesome() {
+			return out
+		}
+
+		out = `<i class="fa fa-diamond awesome" title="精华帖标记"></i>`
+		return template.HTML(out)
+	}
 }

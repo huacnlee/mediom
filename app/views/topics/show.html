@@ -20,12 +20,34 @@
 	    <div class="panel-body markdown">
 	      {{markdown .topic.Body}}
 	    </div>
+			{{if .topic.IsAwesome}}
+				<div class="label-awesome">
+				{{awesome_icon_tag .topic}} 此话题已被管理员设置为精华帖！
+				{{if .current_user.IsAdmin}}
+				<a href="/topics/{{.topic.Id}}/rank?v=normal" title="取消精华" class="pull-right" data-confirm="确定要取消精华帖么？" data-method="POST"><i class="fa fa-remove"></i></a>
+				{{end}}
+				</div>
+			{{end}}
+			{{if .topic.IsNoPoint}}
+				<div class="label-nopoint">
+				此帖已被标记 NoPoint 将不会在列表页面显示，请检查帖子内容是否不符合社区要求。
+				{{if .current_user.IsAdmin}}
+				<a href="/topics/{{.topic.Id}}/rank?v=normal" title="取消" class="pull-right" data-confirm="确定要取消么？" data-method="POST"><i class="fa fa-remove"></i></a>
+				{{end}}
+				</div>
+			{{end}}
 			<div class="panel-footer clearfix">
 				<span class="opts">
 					{{watch_tag .topic .current_user}}
 					{{star_tag .topic .current_user}}
-					<a href="/topics/{{.topic.Id}}/thumbs-up" title="加精" data-confirm="确定要设置为精华帖么？" data-method="POST"><i class="fa fa-thumbs-o-up"></i> 加精</a>
-					<a href="/topics/{{.topic.Id}}/thumbs-down" title="NoPoint" data-confirm="确定要将此帖移动到 NoPoint 节点么？" data-method="POST"><i class="fa fa-thumbs-o-down"></i> 埋贴</a>
+					{{if .current_user.IsAdmin}}
+						{{if .topic.IsNormal}}
+						<a href="/topics/{{.topic.Id}}/rank?v=awesome" title="加精" data-confirm="确定要设置为精华帖么？" data-method="POST"><i class="fa fa-thumbs-o-up"></i> 加精</a>
+						{{end}}
+						{{if .topic.IsNormal}}
+						<a href="/topics/{{.topic.Id}}/rank?v=nopoint" title="NoPoint" data-confirm="确定要将此帖移动到 NoPoint 节点么？" data-method="POST"><i class="fa fa-thumbs-o-down"></i> 埋贴</a>
+						{{end}}
+					{{end}}
 				</span>
 				{{if eq .current_user.Id  .topic.UserId}}
 				<span class="pull-right opts">

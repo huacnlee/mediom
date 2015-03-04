@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	//"fmt"
 	"github.com/revel/revel"
 	. "mediom/app/models"
@@ -14,7 +15,7 @@ type Topics struct {
 
 func (c Topics) Index() revel.Result {
 	page, _ := strconv.Atoi(c.Params.Get("page"))
-	topics, pageInfo := FindTopicPages(page, 20)
+	topics, pageInfo := FindTopicPages(page, 20, false)
 	pageInfo.Path = c.Request.URL.Path
 	c.RenderArgs["topics"] = topics
 	c.RenderArgs["page_info"] = pageInfo
@@ -155,5 +156,29 @@ func (c Topics) UnStar() revel.Result {
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.UnStar(t)
+	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+}
+
+func (c Topics) Rank() revel.Result {
+	if r := c.requireAdmin(); r != nil {
+		return r
+	}
+
+	rankVal := 0
+	switch strings.ToLower(c.Params.Get("v")) {
+	case "nopoint":
+		rankVal = RankNoPoint
+	case "awesome":
+		rankVal = RankAwesome
+	default:
+		rankVal = RankNormal
+	}
+
+	t := Topic{}
+	DB.First(&t, c.Params.Get("id"))
+	err := t.UpdateRank(rankVal)
+	if err != nil {
+		return c.RenderError(err)
+	}
 	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
 }

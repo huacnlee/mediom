@@ -12,7 +12,7 @@
 						{{user_avatar_tag .User "96x96"}}
 					</div>
 			    <div class="infos">
-			      <div class="title"><a href="/topics/{{.Id}}#reply{{.RepliesCount}}">{{.Title}}</a></div>
+			      <div class="title"><a href="/topics/{{.Id}}#reply{{.RepliesCount}}">{{.Title}}</a> {{awesome_icon_tag .}}</div>
 						<div class="info">
 							{{node_name_tag .Node}}
 							{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}

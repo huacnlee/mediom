@@ -4,7 +4,12 @@ import (
 	"fmt"
 	_ "fmt"
 	"github.com/revel/revel"
+	"log"
 	"time"
+)
+
+var (
+	Logger log.Logger
 )
 
 func init() {
@@ -20,12 +25,13 @@ func init() {
 		revel.ValidationFilter,        // Restore kept validation errors and save new ones from cookie.
 		revel.I18nFilter,              // Resolve the requested language
 		HeaderFilter,                  // Add some security based headers
-
-		revel.InterceptorFilter, // Run interceptors around the action.
-		revel.CompressFilter,    // Compress the result.
+		revel.InterceptorFilter,       // Run interceptors around the action.
+		revel.CompressFilter,          // Compress the result.
 		InstramentFilter,
 		revel.ActionInvoker, // Invoke the action.
 	}
+
+	Logger = log.Logger{}
 }
 
 // TODO turn this into revel.HeaderFilter

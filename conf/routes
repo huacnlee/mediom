@@ -22,6 +22,7 @@ POST    /topics/:id/watch       Topics.Watch
 POST    /topics/:id/unwatch       Topics.UnWatch
 POST    /topics/:id/star       Topics.Star
 POST    /topics/:id/unstar       Topics.UnStar
+POST    /topics/:id/rank         Topics.Rank
 GET     /replies/:id/edit          Replies.Edit
 POST    /replies/:id          Replies.Update
 POST    /replies/:id/delete          Replies.Delete
