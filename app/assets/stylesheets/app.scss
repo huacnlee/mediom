@@ -70,6 +70,14 @@ a.followed {
 	}
 }
 
+.pager {
+	.info {
+		line-height: 32px;
+		color: #ccc;
+		samp { color: #999; }
+	}
+}
+
 .topics {
 	.filter {
 		padding: 3px 0 2px 0;

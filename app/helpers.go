@@ -117,17 +117,17 @@ func init() {
 
 		html := `<ul class="pager">`
 		if pageInfo.Page > 1 {
-			html += fmt.Sprintf(`<li class="previous"><a href="%s%spage=%d"><span aria-hidden="true">&larr;</span> 上一页</a></li>`, pageInfo.Path, linkFlag, pageInfo.Page-1)
+			html += fmt.Sprintf(`<li class="previous"><a href="%s%spage=%d"><i class="fa fa-arrow-left" aria-hidden="true"></i> 上一页</a></li>`, pageInfo.Path, linkFlag, pageInfo.Page-1)
 		} else {
-			html += fmt.Sprintf(`<li class="previous disabled"><a href="%s%spage=1"><span aria-hidden="true">&larr;</span> 上一页</a></li>`, pageInfo.Path, linkFlag)
+			html += fmt.Sprintf(`<li class="previous disabled"><a href="%s%spage=1"><i class="fa fa-arrow-left" aria-hidden="true"></i> 上一页</a></li>`, pageInfo.Path, linkFlag)
 		}
 
-		html += fmt.Sprintf(`<li class="number">%d/%d</li>`, pageInfo.Page, pageInfo.TotalPages)
+		html += fmt.Sprintf(`<li class="info"><samp>%d</samp> / <samp>%d</samp></li>`, pageInfo.Page, pageInfo.TotalPages)
 
 		if pageInfo.Page < pageInfo.TotalPages {
-			html += fmt.Sprintf(`<li class="next"><a href="%s%spage=%d">下一页 <span aria-hidden="true">&rarr;</span></a></li>`, pageInfo.Path, linkFlag, pageInfo.Page+1)
+			html += fmt.Sprintf(`<li class="next"><a href="%s%spage=%d">下一页 <i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>`, pageInfo.Path, linkFlag, pageInfo.Page+1)
 		} else {
-			html += fmt.Sprintf(`<li class="next disabled"><a href="%s%spage=%s">下一页 <span aria-hidden="true">&rarr;</span></a></li>`, pageInfo.Path, linkFlag, pageInfo.TotalPages)
+			html += fmt.Sprintf(`<li class="next disabled"><a href="%s%spage=%s">下一页 <i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>`, pageInfo.Path, linkFlag, pageInfo.TotalPages)
 		}
 		html += "</ul>"
 
