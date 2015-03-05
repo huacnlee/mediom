@@ -47,6 +47,11 @@ func (u User) IsAdmin() bool {
 	return false
 }
 
+func (u User) UnReadNotificationsCount() (count int) {
+	db.Model(&Notification{}).Where("`user_id` = ? and `read` = 0", u.Id).Count(&count)
+	return
+}
+
 func (u User) EncodePassword(raw string) (md5Digest string) {
 	data := []byte(raw)
 	result := md5.Sum(data)

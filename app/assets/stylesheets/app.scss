@@ -52,7 +52,6 @@ body {
 .pull-right.opts {
 	a { margin-left: 5px; margin-right: 0px; }
 }
-
 .avatar-96x96 { width: 48px; height: 48px; }
 .uname { color:#666; }
 .node-name { 
@@ -62,6 +61,9 @@ body {
 .fa.awesome {
 	font-size: 13px;
 	color: #CC897B;
+}
+.notification-count {
+	.badge-new { background: #CC897B; }
 }
 
 a.followed {
@@ -222,6 +224,15 @@ a.followed {
 		}
 		.avatar { position: absolute; top: 14pxpx; left: 14px; text-align:center; }
 		.info { font-size: 12px; }
+	}
+}
+
+#notifications {
+	.notification {
+		position: relative; padding-left: 58px; min-height: 58px;
+		.avatar { position: absolute; top: 0px; left: 0px; text-align:center; }
+		.info { color: #999;  font-size: 12px; }
+		.summary { }
 	}
 }
 

@@ -1,0 +1,17 @@
+<div class="avatar">
+	{{user_avatar_tag .Actor "96x96"}}
+</div>
+{{if .IsNotifyableReply}}
+<div class="info">
+	{{user_name_tag .Actor}} 在话题 <a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a> 回帖提及了你
+</div>
+<div class="summary">
+	{{markdown .Reply.Body}}
+</div>
+{{end}}
+{{if .IsNotifyableTopic}}
+<div class="info">
+	{{user_name_tag .Actor}} 发帖 <a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a> 提及了你:
+	{{markdown .Topic.Body}}
+</div>
+{{end}}

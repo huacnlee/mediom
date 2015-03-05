@@ -2,18 +2,24 @@ package app
 
 import (
 	"fmt"
-	"github.com/revel/revel"
 	"html/template"
 	"time"
+
+	"github.com/revel/revel"
 	//"reflect"
-	"github.com/huacnlee/timeago"
 	. "mediom/app/models"
 	"strings"
+
+	"github.com/huacnlee/timeago"
 )
 
 func init() {
 	revel.TemplateFuncs["plus"] = func(a, b int) int {
 		return a + b
+	}
+
+	revel.TemplateFuncs["join"] = func(args []string, split string) string {
+		return strings.Join(args, split)
 	}
 
 	revel.TemplateFuncs["is_owner"] = func(u User, obj interface{}) bool {

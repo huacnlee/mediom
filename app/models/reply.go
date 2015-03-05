@@ -27,8 +27,10 @@ func (r *Reply) BeforeDelete() (err error) {
 }
 
 func (r *Reply) AfterCreate() (err error) {
+	db.Model(r).Related(&r.Topic)
 	err = r.Topic.UpdateLastReply(r)
-
+	r.NotifyReply()
+	r.CheckMention()
 	return nil
 }
 

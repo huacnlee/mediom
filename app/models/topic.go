@@ -40,6 +40,11 @@ func (t *Topic) BeforeCreate() (err error) {
 	return nil
 }
 
+func (t *Topic) AfterCreate() (err error) {
+	t.CheckMention()
+	return nil
+}
+
 func (t *Topic) validate() (v revel.Validation) {
 	v = revel.Validation{}
 	switch t.NewRecord() {
