@@ -228,6 +228,9 @@ a.followed {
 }
 
 #notifications {
+	.panel-heading { 
+		.clean-button { margin-left: 10px; }
+	}
 	.notification {
 		position: relative; padding-left: 58px; min-height: 58px;
 		.avatar { position: absolute; top: 0px; left: 0px; text-align:center; }

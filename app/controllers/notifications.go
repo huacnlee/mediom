@@ -26,3 +26,12 @@ func (c Notifications) Index() revel.Result {
 	c.RenderArgs["page_info"] = pageInfo
 	return c.Render("notifications/index.html")
 }
+
+func (c Notifications) Clear() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return r
+	}
+
+	c.currentUser.ClearNotifications()
+	return c.Redirect("/notifications")
+}

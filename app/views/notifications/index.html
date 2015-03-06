@@ -1,12 +1,13 @@
 {{set . "title" "社区"}}
 {{template "header.html" .}}
 
-<div id="notifications">
-	<div class="topics panel panel-default">
-		<div class="panel-heading clearfix">
-			通知 {{.page_info.TotalEntites}}
-		</div>
-		<div class="panel-body">
+<div id="notifications" class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<b>通知</b>{{if .page_info.TotalEntites}} <span class="info">(共 {{.page_info.TotalEntites}} 条)</span>{{end}}
+		<a href="/notifications/clear" class="btn clean-button btn-xs btn-danger" data-method="POST" data-confirm="确定要清空么？">删除所有通知</a>
+	</div>
+	<div class="panel-body">
+		{{if .notifications}}
 			{{range .notifications}}
 			<div class="notification">
 				{{if .IsReply}}
@@ -17,9 +18,11 @@
 				{{end}}
 			</div>
 			{{end}}
-		</div>
-		<div class="panel-footer">
-			{{paginate .page_info}}
-		</div>
+		{{else}}
+			<div class="noresult">暂时没有通知</div>
+		{{end}}
+	</div>
+	<div class="panel-footer">
+		{{paginate .page_info}}
 	</div>
 </div>

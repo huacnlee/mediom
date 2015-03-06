@@ -72,6 +72,14 @@ func createNotification(notifyType string, userId int32, actorId int32, notifyab
 		NotifyableId:   notifyableId,
 	}
 
+	exitCount := 0
+	db.Model(Notification{}).Where(
+		"user_id = ? and actor_id = ? and notifyable_type = ? and notifyable_id = ?",
+		userId, actorId, notifyableType, notifyableId).Count(&exitCount)
+	if exitCount > 0 {
+		return nil
+	}
+
 	return db.Save(&note).Error
 }
 
@@ -107,7 +115,14 @@ func (u User) ReadNotifications(notes []Notification) error {
 	for _, note := range notes {
 		ids = append(ids, note.Id)
 	}
-	return db.Model(&Notification{}).Where("user_id = ? and id in (?)", u.Id, ids).Update("read", true).Error
+	if len(ids) > 0 {
+		return db.Model(Notification{}).Where("user_id = ? and id in (?)", u.Id, ids).Update("read", true).Error
+	}
+	return nil
+}
+
+func (u User) ClearNotifications() error {
+	return db.Where("user_id = ?", u.Id).Delete(Notification{}).Error
 }
 
 func (n *Notification) IsTopic() bool {

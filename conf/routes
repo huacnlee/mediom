@@ -33,6 +33,7 @@ POST    /replies/:id          Replies.Update
 POST    /replies/:id/delete          Replies.Delete
 
 GET     /notifications            Notifications.Index
+POST    /notifications/clear      Notifications.Clear
 
 GET     /nodes            Nodes.Index
 POST    /nodes            Nodes.Create

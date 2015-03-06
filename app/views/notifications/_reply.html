@@ -2,5 +2,8 @@
 	{{user_avatar_tag .Actor "96x96"}}
 </div>
 <div class="info">
-	{{user_name_tag .Actor}} 回复了你发布的主题：<a href="/topics/{{.Topic.Id}}">{{.Topic.Title}}</a>
+	{{user_name_tag .Actor}} 于 {{timeago .CreatedAt}} 回复了你发布的主题：<a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a>
+</div>
+<div class="summary">
+  {{markdown .Reply.Body}}
 </div>
