@@ -27,6 +27,8 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{.current_user.Login}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+						 <li><a href="/{{.current_user.Login}}">个人主页</a></li>
+						 <li class="divider"></li>
 						 <li><a href="/account/edit">个人设置</a></li>
               <li><a href="/topics/new">发布话题</a></li>
 							{{if .current_user.IsAdmin}}

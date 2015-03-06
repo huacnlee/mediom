@@ -1,0 +1,72 @@
+{{set . "title" "社区"}}
+{{template "header.html" .}}
+
+<div class="row">
+	<div class="col-md-9 col-md-offset-1">
+		<div id="user-show" class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<h4>{{.user.Login}}</h4>
+			</div>
+			<div class="panel-body">
+				<div class="media">
+					<div class="media-body">
+						<form class="form-horizontal">
+							{{if .user.Location}}
+							<div class="form-group">
+						    <label class="col-sm-2 control-label">城市</label>
+						    <div class="col-sm-10">
+						      <p class="form-control-static">{{.user.Location}}</a></p>
+						    </div>
+						  </div>
+							{{end}}
+							{{if .user.Tagline}}
+							<div class="form-group">
+						    <label class="col-sm-2 control-label">签名</label>
+						    <div class="col-sm-10">
+						      <p class="form-control-static">{{.user.Tagline}}</p>
+						    </div>
+						  </div>
+							{{end}}
+							{{if .user.GitHub}}
+							<div class="form-group">
+						    <label class="col-sm-2 control-label">GitHub</label>
+						    <div class="col-sm-10">
+						      <p class="form-control-static"><a href="https://github.com/{{.user.GitHub}}" target="_blank">github.com/{{.user.GitHub}}</a></p>
+						    </div>
+						  </div>
+							{{end}}
+							{{if .user.Twitter}}
+							<div class="form-group">
+						    <label class="col-sm-2 control-label">Twitter</label>
+						    <div class="col-sm-10">
+						      <p class="form-control-static"><a href="https://twitter.com/{{.user.Twitter}}" target="_blank">@{{.user.Twitter}}</a></p>
+						    </div>
+						  </div>
+							{{end}}
+							<div class="form-group">
+						    <label class="col-sm-2 control-label">加入时间</label>
+						    <div class="col-sm-10">
+						      <p class="form-control-static">{{timeago .user.CreatedAt}}</a></p>
+						    </div>
+						  </div>
+						</form>
+					</div>
+					<div class="avatar media-right">
+						{{user_avatar_tag .user "256x256"}}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">个人介绍</div>
+				<div class="panel-body">
+					{{if .user.Description}}
+						{{markdown .user.Description}}
+					{{else}}
+						还为编写介绍信息
+					{{end}}
+				</div>
+		</div>
+	</div>
+</div>

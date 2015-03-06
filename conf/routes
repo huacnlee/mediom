@@ -40,6 +40,9 @@ POST    /nodes            Nodes.Create
 GET     /nodes/:id/edit            Nodes.Edit
 POST    /nodes/:id            Nodes.Update
 POST    /nodes/:id/delete            Nodes.Delete
-GET     /u/:username      Users.Show
 GET     /favicon.ico                            404
+GET     /:login      Users.Show
 GET     /*filepath                       Static.Serve("public")
+
+
+

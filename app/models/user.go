@@ -29,6 +29,11 @@ type User struct {
 	UpdatedAt   time.Time
 }
 
+func (u User) BeforeCreate() error {
+	u.Login = strings.ToLower(u.Login)
+	return nil
+}
+
 func (u User) GavatarURL(size string) string {
 	emailMD5 := u.EncodePassword(u.Email)
 	return fmt.Sprintf("https://ruby-china.org/avatar/%v?s=%v", emailMD5, size)
@@ -60,7 +65,7 @@ func (u User) EncodePassword(raw string) (md5Digest string) {
 }
 
 func (u User) Signup(login string, password string, passwordConfirm string) (user User, v revel.Validation) {
-	u.Login = strings.Trim(login, " ")
+	u.Login = strings.ToLower(strings.Trim(login, " "))
 
 	v.MinSize(login, 5).Key("用户名").Message("最少要 5 个字符")
 	v.MinSize(password, 6).Key("密码").Message("最少要 6 个字符")
@@ -97,7 +102,7 @@ func (u User) Signin(login string, password string) (user User, v revel.Validati
 		v.Error("还未输入密码")
 	}
 
-	db.First(&user, "login = ? and password = ?", login, u.EncodePassword(password))
+	db.First(&user, "login = ? and password = ?", strings.ToLower(login), u.EncodePassword(password))
 	fmt.Println("first user:", user)
 	if user.Id == 0 {
 		v.Error("帐号密码不正确")
@@ -123,4 +128,9 @@ func UpdateUserProfile(u User) (user User, v revel.Validation) {
 		v.Error(err.Error())
 	}
 	return u, v
+}
+
+func FindUserByLogin(login string) (u User, err error) {
+	err = db.Where("login = ?", strings.ToLower(login)).First(&u).Error
+	return
 }

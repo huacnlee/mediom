@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/revel/revel"
+	. "mediom/app/models"
 )
 
 type Users struct {
@@ -14,6 +14,11 @@ type Users struct {
 //	revel.InterceptMethod((*Users).After, revel.AFTER)
 //}
 
-func (c Users) Show(username string) revel.Result {
-	return c.RenderText(fmt.Sprintf("You want visit %s's home page.", username))
+func (c Users) Show(login string) revel.Result {
+	u, err := FindUserByLogin(login)
+	if err != nil {
+		return c.RenderError(err)
+	}
+	c.RenderArgs["user"] = u
+	return c.Render("users/show.html")
 }
