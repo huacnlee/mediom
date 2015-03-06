@@ -36,7 +36,9 @@ func init() {
 	}
 
 	db.LogMode(true)
-	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &Followable{}, &Notification{})
+	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &NodeGroup{}, &Followable{}, &Notification{})
+	db.Model(NodeGroup{}).AddIndex("index_on_sort", "sort")
+	db.Model(Node{}).AddIndex("index_on_group_and_sort", "node_group_id", "sort")
 	db.Model(&User{}).AddUniqueIndex("index_on_login", "login")
 	db.Model(&Topic{}).AddIndex("index_on_user_id", "user_id")
 	db.Model(&Topic{}).AddIndex("index_on_last_active_mark_deleted_at", "last_active_mark", "deleted_at")

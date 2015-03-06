@@ -7,10 +7,19 @@ import (
 
 type Node struct {
 	BaseModel
-	Name      string
-	Summary   string `sql:"type:text"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	Name        string `sql:"not null"`
+	Summary     string `sql:"type:text"`
+	NodeGroupId int
+	Sort        int `sql:"default: 0; not null"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+type NodeGroup struct {
+	Id    int32
+	Name  string
+	Sort  int `sql:"default: 0; not null"`
+	Nodes []Node
 }
 
 func (n *Node) validate() (v revel.Validation) {
@@ -49,7 +58,17 @@ func UpdateNode(n *Node) revel.Validation {
 	return v
 }
 
+func FindAllNodeGroups() (groups []*NodeGroup) {
+	db.Preload("Nodes").Order("sort desc").Find(&groups)
+	return
+}
+
 func FindAllNodes() (nodes []*Node) {
 	db.Order("name asc").Find(&nodes)
+	return
+}
+
+func FindNodesBySort(limit int) (nodes []*Node) {
+	db.Order("sort desc, name asc").Limit(limit).Find(&nodes)
 	return
 }

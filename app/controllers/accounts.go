@@ -70,6 +70,7 @@ func (c Accounts) Update() revel.Result {
 	c.currentUser.GitHub = c.Params.Get("github")
 	c.currentUser.Twitter = c.Params.Get("twitter")
 	c.currentUser.Tagline = c.Params.Get("tagline")
+	c.currentUser.Location = c.Params.Get("location")
 	c.currentUser.Description = c.Params.Get("description")
 	var u User
 	u = *c.currentUser

@@ -215,4 +215,26 @@ func init() {
 			return ""
 		}
 	}
+
+	revel.TemplateFuncs["node_list"] = func() interface{} {
+		groups := FindAllNodeGroups()
+		outs := []string{}
+		subs := []string{}
+		outs = append(outs, `<div class="row node-list">`)
+		for _, group := range groups {
+			subs = []string{
+				`<div class="node media clearfix">`,
+				fmt.Sprintf(`<label class="media-left col-md-2">%v</label>`, group.Name),
+				`<div class="nodes media-body">`,
+			}
+			for _, node := range group.Nodes {
+				subs = append(subs, fmt.Sprintf(`<span class="name"><a href="/topics/node/%v">%v</a></span>`, node.Id, node.Name))
+			}
+			subs = append(subs, "</div></div>")
+
+			outs = append(outs, strings.Join(subs, ""))
+		}
+		outs = append(outs, "</div>")
+		return template.HTML(strings.Join(outs, ""))
+	}
 }

@@ -1,6 +1,8 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<a href="/topics/new" class="btn btn-primary">发表新话题</a>
+
+{{template "partials/node-list.html" .}}
+
 
 {{template "footer.html" .}}
