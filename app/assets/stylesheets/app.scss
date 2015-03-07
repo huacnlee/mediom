@@ -2,7 +2,6 @@
  *= require stylesheets/bootstrap.min
  *= require stylesheets/font-awesome.min
  */
-
 @mixin clearfix() {
   &:before,
   &:after {
@@ -13,7 +12,7 @@
     clear: both;
   }
   & {
-    zoom:1;
+    zoom: 1;
   }
 }
 

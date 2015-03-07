@@ -80,7 +80,7 @@ func init() {
 	}
 
 	revel.TemplateFuncs["markdown"] = func(text string) interface{} {
-		bytes := []byte(template.HTMLEscapeString(text))
+		bytes := []byte(text)
 		outBytes := MarkdownGitHub(bytes)
 		htmlText := string(outBytes[:])
 		return template.HTML(htmlText)
