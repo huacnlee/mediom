@@ -11,7 +11,7 @@
 		  {{.validation | error_messages}}
 		  <div class="form-group">  
 				<div class="input-group">
-					<div class="input-group-btn">
+					<div class="input-group-btn md-dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" 
 							data-toggle="dropdown" aria-expanded="false">
 					    <span data-bind="label">{{if .Node.Name}} {{.Node.Name}} {{else}}请选择节点{{end}}</span> <span class="caret"></span>
@@ -34,19 +34,3 @@
 		</form>
 	</div>
 </div>
-
-<script type='text/javascript'>
-$("body").on( 'click', '.topic-form .dropdown-menu li', function( event ) {
-   var $target = $( event.currentTarget );
-
-   $target.closest('.input-group-btn')
-			.find('[data-bind="value"]').val($target.data("id"))
-				.end()
-      .find('[data-bind="label"]').text($target.text())
-        .end()
-      .children( '.dropdown-toggle' ).dropdown( 'toggle' );
-
-   return false;
-
-});
-</script>

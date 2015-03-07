@@ -7,6 +7,17 @@ window.App =
     # Turbolinks.visit(url)
     location.href = url
     
+  initDropdown : () ->
+    $("body").on 'click', '.md-dropdown .dropdown-menu li', (event) ->
+      $target = $(event.currentTarget)
+      $target.closest('.input-group-btn')
+             .find('[data-bind="value"]')
+             .val($target.data("id")).end()
+      .find('[data-bind="label"]')
+      .text($target.text()).end()
+      .children( '.dropdown-toggle' ).dropdown( 'toggle' )
+      return false
+    
 window.Topics = 
   repliesPerPage: 50
     
@@ -61,4 +72,5 @@ window.Topics =
     	return false
   
 $(document).ready ->
+  App.initDropdown()
   Topics.init()

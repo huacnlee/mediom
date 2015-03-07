@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/revel/revel"
 	. "mediom/app/models"
+	"strconv"
 )
 
 type Nodes struct {
@@ -21,17 +22,29 @@ func (c *Nodes) Before() revel.Result {
 	return nil
 }
 
-func (c Nodes) Index() revel.Result {
+func (c *Nodes) loadNodeGroups() {
+	groups := []NodeGroup{}
+	DB.Order("sort desc").Find(&groups)
+	c.RenderArgs["groups"] = groups
+}
+
+func (c *Nodes) Index() revel.Result {
+	c.loadNodeGroups()
 	nodes := FindAllNodes()
 	c.RenderArgs["nodes"] = nodes
 	return c.Render("nodes/index.html")
 }
 
-func (c Nodes) Create() revel.Result {
-	n := Node{Name: c.Params.Get("name")}
+func (c *Nodes) Create() revel.Result {
+	nodeGroupId, _ := strconv.Atoi(c.Params.Get("node_group_id"))
+	n := Node{
+		Name:        c.Params.Get("name"),
+		NodeGroupId: nodeGroupId,
+	}
 
 	v := CreateNode(&n)
 	if v.HasErrors() {
+		c.loadNodeGroups()
 		c.RenderArgs["node"] = n
 		return c.renderValidation("nodes/index.html", v)
 	}
@@ -40,6 +53,8 @@ func (c Nodes) Create() revel.Result {
 }
 
 func (c Nodes) Edit() revel.Result {
+	c.loadNodeGroups()
+
 	node := Node{}
 	err := DB.First(&node, c.Params.Get("id")).Error
 	if err != nil {
@@ -58,10 +73,12 @@ func (c Nodes) Update() revel.Result {
 	}
 	node.Name = c.Params.Get("name")
 	node.Summary = c.Params.Get("summary")
+	node.NodeGroupId, _ = strconv.Atoi(c.Params.Get("node_group_id"))
 	v := UpdateNode(&node)
 
 	c.RenderArgs["node"] = node
 	if v.HasErrors() {
+		c.loadNodeGroups()
 		return c.renderValidation("nodes/edit.html", v)
 	}
 	c.Flash.Success("节点更新成功")

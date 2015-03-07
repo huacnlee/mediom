@@ -6,7 +6,10 @@
 	<form action="/nodes/{{.node.Id}}" class="panel-body" method="POST">
 		{{.validation | error_messages}}
 		<div class="form-group">
-			<input type="text" class="form-control" value="{{.node.Name}}" name="name" placeholder="节点名称" />
+			<div class="input-group">
+				{{select_tag .groups "Name" "Id" "node_group_id" .node.NodeGroupId}}
+				<input type="text" class="form-control" value="{{.node.Name}}" name="name" placeholder="节点名称" />
+			</div>
 		</div>
 		<div class="form-group">
 			<textarea class="form-control" rows="10" name="summary" placeholder="用 Markdown 编写说明">{{.node.Summary}}</textarea>

@@ -5,8 +5,12 @@
 	<div class="panel-heading">创建节点</div>
 	<form action="/nodes" class="panel-body form-inline" method="POST">
 		{{.validation | error_messages}}
+		
 		<div class="form-group">
-			<input type="text" class="form-control" name="name" placeholder="节点名称" />
+			<div class="input-group">
+				{{select_tag .groups "Name" "Id" "node_group_id" 0}}
+				<input type="text" class="form-control" name="name" placeholder="节点名称" />
+			</div>
 		</div>
 		<button type="submit" class="btn btn-primary">提交</button>
 	</form>

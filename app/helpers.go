@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"html/template"
+	"reflect"
 	"time"
 
 	"github.com/revel/revel"
@@ -235,6 +236,51 @@ func init() {
 			outs = append(outs, strings.Join(subs, ""))
 		}
 		outs = append(outs, "</div>")
+		return template.HTML(strings.Join(outs, ""))
+	}
+
+	revel.TemplateFuncs["select_tag"] = func(objs interface{}, nameKey, valueKey, formName string, defaultValue interface{}) interface{} {
+		objsVal := reflect.ValueOf(objs)
+		if objsVal.Kind() != reflect.Slice {
+			fmt.Println("Give a bad params, objs need to be a Slice")
+			return ""
+		}
+
+		outs := []string{}
+
+		subs := []string{}
+		var nameField reflect.Value
+		var valueField reflect.Value
+
+		defaultName := "请选择"
+
+		for i := 0; i < objsVal.Len(); i++ {
+			val := objsVal.Index(i)
+			nameField = val.FieldByName(nameKey)
+			valueField = val.FieldByName(valueKey)
+			subs = append(subs, fmt.Sprintf(`
+               <li data-id="%v"><a href="#">%v</a></li>
+            `, valueField.Int(), nameField.String()))
+
+			// check current name
+			if strings.EqualFold(fmt.Sprintf("%v", valueField.Int()), fmt.Sprintf("%v", defaultValue)) {
+				defaultName = nameField.String()
+			}
+		}
+
+		outs = append(outs, `<div class="input-group-btn md-dropdown">`)
+		outs = append(outs, fmt.Sprintf(`
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+            <span data-bind="label">%v</span> <span class="caret"></span>
+        </button>
+        <input type="hidden" data-bind="value" value="%v" name="%v" />`,
+			defaultName, defaultValue, formName))
+
+		outs = append(outs, `<ul class="dropdown-menu" role="menu">`)
+		outs = append(outs, strings.Join(subs, ""))
+		outs = append(outs, `</ul>`)
+		outs = append(outs, `</div>`)
+
 		return template.HTML(strings.Join(outs, ""))
 	}
 }
