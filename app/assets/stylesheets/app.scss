@@ -249,8 +249,7 @@ a.followed {
   .notification {
     position: relative; padding-left: 58px; min-height: 58px;
     .avatar { position: absolute; top: 0px; left: 0px; text-align:center; }
-    .info { color: #999;  font-size: 12px; }
-    .summary { }
+    .info { color: #999; margin-bottom: 8px;}
   }
 }
 
