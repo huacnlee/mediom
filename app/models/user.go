@@ -4,7 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"github.com/revel/revel"
+	"github.com/huacnlee/revel"
 	"strings"
 	"time"
 )

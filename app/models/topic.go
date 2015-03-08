@@ -2,7 +2,7 @@ package models
 
 import (
 	"errors"
-	"github.com/revel/revel"
+	"github.com/huacnlee/revel"
 	"time"
 )
 

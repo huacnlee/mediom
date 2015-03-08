@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/revel/revel"
+	"github.com/huacnlee/revel"
 	"strconv"
 )
 

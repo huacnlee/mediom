@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 	_ "fmt"
-	"github.com/revel/revel"
+	"github.com/huacnlee/revel"
 	"log"
 	"time"
 )
