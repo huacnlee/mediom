@@ -1,4 +1,3 @@
-module:testrunner
 
 GET     /				Home.Index
 

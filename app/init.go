@@ -2,14 +2,16 @@ package app
 
 import (
 	"fmt"
+	"github.com/huacnlee/train"
 	"github.com/revel/revel"
+	"strings"
 	"time"
 )
 
 func init() {
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
-		revel.AssetsFilter,
+		AssetsFilter,
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
 		revel.RouterFilter,            // Use the routing table to select the right Action
 		revel.FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
@@ -24,6 +26,15 @@ func init() {
 		InstramentFilter,
 		revel.ActionInvoker, // Invoke the action.
 	}
+
+	train.Config.AssetsPath = "app/assets"
+	train.Config.SASS.DebugInfo = true
+	train.Config.Verbose = true
+	train.Config.BundleAssets = true
+	train.ConfigureHttpHandler(nil)
+
+	revel.TemplateFuncs["javascript_include_tag"] = train.JavascriptTag
+	revel.TemplateFuncs["stylesheet_link_tag"] = train.StylesheetTag
 }
 
 // TODO turn this into revel.HeaderFilter
@@ -48,4 +59,13 @@ var InstramentFilter = func(c *revel.Controller, fc []revel.Filter) {
 	// Response Header X-Runtime
 	c.Response.Out.Header().Add("X-Runtime", duration)
 	fmt.Println("\nComplated", c.Response.Status, "in", duration)
+}
+
+var AssetsFilter = func(c *revel.Controller, fc []revel.Filter) {
+	path := c.Request.URL.Path
+	if strings.HasPrefix(path, "/assets") {
+		train.ServeRequest(c.Response.Out, c.Request.Request)
+	} else {
+		fc[0](c, fc[1:])
+	}
 }
