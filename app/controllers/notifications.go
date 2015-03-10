@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/huacnlee/revel"
-	"strconv"
 )
 
 type Notifications struct {
@@ -18,8 +17,8 @@ func (c Notifications) Index() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r
 	}
-
-	page, _ := strconv.Atoi(c.Params.Get("page"))
+	var page int
+	c.Params.Bind(&page, "page")
 	notes, pageInfo := c.currentUser.NotificationsPage(page, 10)
 	c.currentUser.ReadNotifications(notes)
 	c.RenderArgs["notifications"] = notes

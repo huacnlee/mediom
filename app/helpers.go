@@ -2,16 +2,13 @@ package app
 
 import (
 	"fmt"
-	"html/template"
-	"reflect"
-	"time"
-
 	"github.com/huacnlee/revel"
-	//"reflect"
-	. "mediom/app/models"
-	"strings"
-
 	"github.com/huacnlee/timeago"
+	"html/template"
+	. "mediom/app/models"
+	"reflect"
+	"strings"
+	"time"
 )
 
 func init() {

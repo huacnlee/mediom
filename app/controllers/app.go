@@ -5,7 +5,6 @@ import (
 	"github.com/huacnlee/revel"
 	. "mediom/app/models"
 	"reflect"
-	"strconv"
 	"strings"
 )
 
@@ -39,9 +38,8 @@ func (c *App) After() revel.Result {
 }
 
 func (c *App) prependCurrentUser() {
-	userId, _ := strconv.Atoi(c.Session["user_id"])
 	u := &User{}
-	DB.Where("id = ?", userId).First(u)
+	DB.Where("id = ?", c.Session["user_id"]).First(u)
 	c.currentUser = u
 }
 

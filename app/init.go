@@ -2,14 +2,8 @@ package app
 
 import (
 	"fmt"
-	_ "fmt"
 	"github.com/huacnlee/revel"
-	"log"
 	"time"
-)
-
-var (
-	Logger log.Logger
 )
 
 func init() {
@@ -30,8 +24,6 @@ func init() {
 		InstramentFilter,
 		revel.ActionInvoker, // Invoke the action.
 	}
-
-	Logger = log.Logger{}
 }
 
 // TODO turn this into revel.HeaderFilter
@@ -52,6 +44,8 @@ var InstramentFilter = func(c *revel.Controller, fc []revel.Filter) {
 
 	fc[0](c, fc[1:])
 
-	duration := time.Since(t1)
-	fmt.Println("\nComplated", c.Response.Status, "in", fmt.Sprintf("%.2fms", float64(duration.Nanoseconds()/1e4)/100.0))
+	duration := fmt.Sprintf("%.2fms", float64(time.Since(t1).Nanoseconds()/1e4)/100.0)
+	// Response Header X-Runtime
+	c.Response.Out.Header().Add("X-Runtime", duration)
+	fmt.Println("\nComplated", c.Response.Status, "in", duration)
 }

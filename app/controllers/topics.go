@@ -14,8 +14,9 @@ type Topics struct {
 }
 
 func (c Topics) Index(channel string) revel.Result {
-	page, _ := strconv.Atoi(c.Params.Get("page"))
-	nodeId, _ := strconv.Atoi(c.Params.Get("node_id"))
+	var page, nodeId int
+	c.Params.Bind(&page, "page")
+	c.Params.Bind(&nodeId, "node_id")
 	node := Node{}
 	if strings.EqualFold(channel, "node") {
 		DB.Model(&Node{}).First(&node, nodeId)
@@ -43,11 +44,12 @@ func (c Topics) Create() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r
 	}
-	nodeId, _ := strconv.Atoi(c.Params.Get("node_id"))
+	var nodeId int32
+	c.Params.Bind(&nodeId, "node_id")
 	t := &Topic{
 		Title:  c.Params.Get("title"),
 		Body:   c.Params.Get("body"),
-		NodeId: int32(nodeId),
+		NodeId: nodeId,
 	}
 
 	t.UserId = c.currentUser.Id
