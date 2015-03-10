@@ -42,7 +42,7 @@ func (t *Topic) BeforeCreate() (err error) {
 }
 
 func (t *Topic) AfterCreate() (err error) {
-	t.CheckMention()
+	go t.CheckMention()
 	return nil
 }
 
@@ -151,7 +151,7 @@ func (t Topic) IsNoPoint() bool {
 
 func TopicsCountCached() (count int) {
 	if err := cache.Get("topics/total", &count); err != nil {
-		if err = db.Model(Topic{}).Count(&count).Error; err != nil {
+		if err = db.Model(Topic{}).Count(&count).Error; err == nil {
 			go cache.Set("topics/total", count, 30*time.Minute)
 		}
 	}

@@ -30,8 +30,8 @@ func (r *Reply) BeforeDelete() (err error) {
 func (r *Reply) AfterCreate() (err error) {
 	db.Model(r).Related(&r.Topic)
 	err = r.Topic.UpdateLastReply(r)
-	r.NotifyReply()
-	r.CheckMention()
+	go r.NotifyReply()
+	go r.CheckMention()
 	return nil
 }
 
@@ -65,7 +65,7 @@ func CreateReply(r *Reply) revel.Validation {
 
 func RepliesCountCached() (count int) {
 	if err := cache.Get("replies/total", &count); err != nil {
-		if err = db.Model(Reply{}).Count(&count).Error; err != nil {
+		if err = db.Model(Reply{}).Count(&count).Error; err == nil {
 			go cache.Set("replies/total", count, 30*time.Minute)
 		}
 	}

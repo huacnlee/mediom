@@ -138,7 +138,7 @@ func FindUserByLogin(login string) (u User, err error) {
 
 func UsersCountCached() (count int) {
 	if err := cache.Get("users/total", &count); err != nil {
-		if err = db.Model(User{}).Count(&count).Error; err != nil {
+		if err = db.Model(User{}).Count(&count).Error; err == nil {
 			go cache.Set("users/total", count, 30*time.Minute)
 		}
 	}
