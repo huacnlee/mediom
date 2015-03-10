@@ -7,7 +7,7 @@
 			<div class="panel-heading">个人设置</div>
 			<div class="panel-body">
 			  <form class="signup" action="/account" method="POST">
-			    {{.validation | error_messages}}
+			    {{error_messages .validation}}
 			    <div class="form-group">  
 			      <label for="user-login">帐号</label>
 			      <input type="readonly" class="form-control" name="login" value="{{.current_user.Login}}">
