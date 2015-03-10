@@ -48,6 +48,10 @@ body {
   a:hover { color: #999; text-decoration: none; }
 }
 
+html.turbolinks-progress-bar::before {
+  background-color: #CC897B !important; height: 3px !important;
+}
+
 .pull-right.opts {
   a { margin-left: 5px; margin-right: 0px; }
 }

@@ -1,6 +1,8 @@
 #= require javascripts/jquery-2.1.3.min
+#= require javascripts/jquery.turbolinks.min
 #= require javascripts/jquery-ujs
 #= require javascripts/bootstrap.min
+#= require javascripts/turbolinks
 window.App =
   # Use this method to redirect so that it can be stubbed in test
   gotoUrl: (url) ->
@@ -71,6 +73,6 @@ window.Topics =
       Topics.reply($el.data("floor"), $el.data("login"))
     	return false
   
-$(document).ready ->
+$(document).on "ready page:load", ->
   App.initDropdown()
   Topics.init()
