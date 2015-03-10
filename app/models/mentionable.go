@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"regexp"
 	"sort"
 )
@@ -40,7 +39,6 @@ func (r *Reply) CheckMention() {
 		if userId == r.UserId {
 			continue
 		}
-		fmt.Println("------- will mention to", userId)
 		NotifyMention(userId, r.UserId, "Reply", r.Id)
 	}
 }

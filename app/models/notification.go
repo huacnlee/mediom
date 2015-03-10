@@ -92,6 +92,10 @@ func (r *Reply) NotifyReply() error {
 		return nil
 	}
 
+	if r.Topic.UserId == r.UserId {
+		return nil
+	}
+
 	return createNotification("Reply", r.Topic.UserId, r.UserId, "Reply", r.Id)
 }
 
