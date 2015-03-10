@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/huacnlee/revel"
+	"github.com/revel/revel"
 	. "mediom/app/models"
 	"reflect"
 	"strings"

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 	//"fmt"
-	"github.com/huacnlee/revel"
+	"github.com/revel/revel"
 	. "mediom/app/models"
 )
 

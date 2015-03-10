@@ -6,7 +6,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">登录社区</div>
 		  <form class="signin panel-body" action="/signin" method="POST">
-		    {{error_messages .validation}}
+		    {{.validation | error_messages}}
 		    <div class="form-group">  
 		      <label for="username">帐号</label>
 		      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">

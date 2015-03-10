@@ -2,7 +2,7 @@ package app
 
 import (
 	"fmt"
-	"github.com/huacnlee/revel"
+	"github.com/revel/revel"
 	"time"
 )
 

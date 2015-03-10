@@ -8,7 +8,7 @@
 		  action="/topics/{{.topic.Id}}" method="POST"
 		  {{end}}
 		 >
-		  {{error_messages .validation}}
+		  {{.validation | error_messages}}
 		  <div class="form-group">  
 				<div class="input-group">
 					<div class="input-group-btn md-dropdown">

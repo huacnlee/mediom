@@ -3,7 +3,7 @@ package controllers
 import (
 	"errors"
 	"fmt"
-	"github.com/huacnlee/revel"
+	"github.com/revel/revel"
 	. "mediom/app/models"
 )
 

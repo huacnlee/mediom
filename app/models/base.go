@@ -48,4 +48,5 @@ func init() {
 	db.Model(Reply{}).AddIndex("index_on_deleted_at", "deleted_at")
 	db.Model(Notification{}).AddIndex("index_on_user_id", "user_id")
 	db.Model(Notification{}).AddIndex("index_on_notifyable", "notifyable_type", "notifyable_id")
+
 }

@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/huacnlee/revel"
+	"github.com/revel/revel"
 )
 
 type Home struct {
