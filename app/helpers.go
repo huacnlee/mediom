@@ -2,8 +2,8 @@ package app
 
 import (
 	"fmt"
-	"github.com/revel/revel"
 	"github.com/huacnlee/timeago"
+	"github.com/revel/revel"
 	"html/template"
 	. "mediom/app/models"
 	"reflect"
@@ -279,5 +279,18 @@ func init() {
 		outs = append(outs, `</div>`)
 
 		return template.HTML(strings.Join(outs, ""))
+	}
+
+	revel.TemplateFuncs["total"] = func(key string) interface{} {
+		switch key {
+		case "users":
+			return UsersCountCached()
+		case "topics":
+			return TopicsCountCached()
+		case "replies":
+			return RepliesCountCached()
+		}
+
+		return nil
 	}
 }

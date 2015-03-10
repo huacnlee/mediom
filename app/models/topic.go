@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"github.com/revel/revel"
+	"github.com/revel/revel/cache"
 	"time"
 )
 
@@ -146,4 +147,14 @@ func (t Topic) IsNormal() bool {
 
 func (t Topic) IsNoPoint() bool {
 	return t.Rank == RankNoPoint
+}
+
+func TopicsCountCached() (count int) {
+	if err := cache.Get("topics/total", &count); err != nil {
+		if err = db.Model(Topic{}).Count(&count).Error; err != nil {
+			go cache.Set("topics/total", count, 30*time.Minute)
+		}
+	}
+
+	return
 }

@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/revel/revel"
+	"github.com/revel/revel/cache"
 	"time"
 )
 
@@ -60,4 +61,14 @@ func CreateReply(r *Reply) revel.Validation {
 		v.Error("服务器异常创建失败")
 	}
 	return v
+}
+
+func RepliesCountCached() (count int) {
+	if err := cache.Get("replies/total", &count); err != nil {
+		if err = db.Model(Reply{}).Count(&count).Error; err != nil {
+			go cache.Set("replies/total", count, 30*time.Minute)
+		}
+	}
+
+	return
 }

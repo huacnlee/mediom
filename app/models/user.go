@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/revel/revel"
+	"github.com/revel/revel/cache"
 	"strings"
 	"time"
 )
@@ -132,5 +133,15 @@ func UpdateUserProfile(u User) (user User, v revel.Validation) {
 
 func FindUserByLogin(login string) (u User, err error) {
 	err = db.Where("login = ?", strings.ToLower(login)).First(&u).Error
+	return
+}
+
+func UsersCountCached() (count int) {
+	if err := cache.Get("users/total", &count); err != nil {
+		if err = db.Model(User{}).Count(&count).Error; err != nil {
+			go cache.Set("users/total", count, 30*time.Minute)
+		}
+	}
+
 	return
 }
