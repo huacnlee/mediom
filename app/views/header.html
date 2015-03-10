@@ -7,6 +7,7 @@
     {{stylesheet_link_tag "app"}}
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
     {{javascript_include_tag "app"}}
+		{{setting "custom_head_html"}}
   </head>
   <body>
   <div class="header">
@@ -34,6 +35,7 @@
 							{{if .current_user.IsAdmin}}
 							<li class="divider"></li>
 							<li><a href="/nodes">节点管理</a></li>
+							<li><a href="/settings">设置项</a></li>
 							{{end}}
               <li class="divider"></li>
               <li><a href="/signout" data-method="post" rel="nofollow">登出</a></li>

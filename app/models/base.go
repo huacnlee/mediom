@@ -36,7 +36,7 @@ func init() {
 	}
 
 	db.LogMode(false)
-	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &NodeGroup{}, &Followable{}, &Notification{})
+	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &NodeGroup{}, &Followable{}, &Notification{}, &Setting{})
 	db.Model(NodeGroup{}).AddIndex("index_on_sort", "sort")
 	db.Model(Node{}).AddIndex("index_on_group_and_sort", "node_group_id", "sort")
 	db.Model(User{}).AddUniqueIndex("index_on_login", "login")
@@ -48,6 +48,7 @@ func init() {
 	db.Model(Reply{}).AddIndex("index_on_deleted_at", "deleted_at")
 	db.Model(Notification{}).AddIndex("index_on_user_id", "user_id")
 	db.Model(Notification{}).AddIndex("index_on_notifyable", "notifyable_type", "notifyable_id")
+	db.Model(Setting{}).AddUniqueIndex("index_on_key", "key")
 	db.LogMode(true)
 
 }

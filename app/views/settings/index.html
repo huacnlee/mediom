@@ -1,0 +1,19 @@
+{{set . "title" "设置项"}}
+{{template "header.html" .}}
+
+<div class="panel panel-default">
+	<div class="panel-heading">设置项</div>
+	<ul class="list-group">
+{{range .settings}}
+	<li class="list-group-item">
+		<span>{{.Key}}</span> 
+		<span class="opts pull-right">
+			<a href="/settings/{{.Key}}/edit"><i class="fa fa-pencil"></i></a>
+		</span>
+	</li>
+{{end}}
+</ul>
+</div>
+
+
+{{template "footer.html" .}}

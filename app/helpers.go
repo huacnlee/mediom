@@ -5,6 +5,7 @@ import (
 	"github.com/huacnlee/timeago"
 	"github.com/revel/revel"
 	"html/template"
+	"math/rand"
 	. "mediom/app/models"
 	"reflect"
 	"strings"
@@ -292,5 +293,15 @@ func init() {
 		}
 
 		return nil
+	}
+
+	revel.TemplateFuncs["setting"] = func(key string) interface{} {
+		return template.HTML(GetSetting(key))
+	}
+
+	revel.TemplateFuncs["random_tip"] = func() interface{} {
+		tipText := GetSetting("tips")
+		tips := strings.Split(tipText, "\n")
+		return template.HTML(tips[rand.Intn(len(tips))])
 	}
 }

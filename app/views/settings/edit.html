@@ -1,0 +1,18 @@
+{{set . "title" "修改设置"}}
+{{template "header.html" .}}
+
+<div class="panel panel-default">
+	<div class="panel-heading">修改 {{.setting.Key}}</div>
+	<form action="/settings/{{.setting.Key}}" class="panel-body" method="POST">
+		{{error_messages .validation}}
+		<div class="form-group">
+			<textarea class="form-control" rows="10" name="val" placeholder="用 Markdown 编写说明">{{raw .setting.Val}}</textarea>
+		</div>
+		<div class="actions">
+			<button type="submit" class="btn btn-primary">更新</button>
+			<a class="btn btn-default" href="/settings">取消</a>
+		</div>
+	</form>
+</div>
+
+{{template "footer.html" .}}
