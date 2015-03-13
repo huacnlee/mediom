@@ -40,14 +40,20 @@ TopicDetailView = Backbone.View.extend
   toggleStar: (e) ->
     a = $(e.target)
     topicId = a.data("id")
-    labelText = "#{a.data("count")} 人收藏"
+    count = parseInt(a.data("count"))
     if a.hasClass("followed")
       $.post("/topics/#{topicId}/unstar").done (res) ->
+        newCount = count - 1
+        labelText = "#{newCount} 人收藏"
         a.removeClass("followed")
+        .data("count", newCount)
         .html('<i class="fa fa-star-o"></i> ' + labelText)
     else
       $.post("/topics/#{topicId}/star").done (res) ->
+        newCount = count + 1
+        labelText = "#{newCount} 人收藏"
         a.addClass("followed")
+        .data("count", newCount)
         .html('<i class="fa fa-star"></i> ' + labelText)
     return false
 
