@@ -13,6 +13,7 @@ _test
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out
+*.sublime*
 
 *.cgo1.go
 *.cgo2.c

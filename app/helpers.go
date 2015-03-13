@@ -165,14 +165,14 @@ func init() {
 		if t.NewRecord() {
 			return out
 		}
-		out = fmt.Sprintf(`<a href="/topics/%v/watch" data-method="post" title="关注此话题，当有新回帖的时候会收到通知"><i class="fa fa-eye"></i> 关注</a>`, t.Id)
+		out = fmt.Sprintf(`<a href="#" data-id="%v" class="watch" title="关注此话题，当有新回帖的时候会收到通知"><i class="fa fa-eye"></i> 关注</a>`, t.Id)
 
 		if u.NewRecord() {
 			return template.HTML(out)
 		}
 
 		if u.IsWatched(t) {
-			out = fmt.Sprintf(`<a href="/topics/%v/unwatch" data-method="post" class="followed" title="点击取消关注"><i class="fa fa-eye"></i> 已关注</a>`, t.Id)
+			out = fmt.Sprintf(`<a href="#" data-id="%v" class="watch followed" title="点击取消关注"><i class="fa fa-eye"></i> 已关注</a>`, t.Id)
 		}
 
 		return template.HTML(out)
@@ -184,14 +184,14 @@ func init() {
 			return out
 		}
 		label := fmt.Sprintf("%v 人收藏", t.StarsCount)
-		out = fmt.Sprintf(`<a href="/topics/%v/star" data-method="post"><i class="fa fa-star-o"></i> %v</a>`, t.Id, label)
+		out = fmt.Sprintf(`<a href="#" data-id="%v" data-count="%v" class="star"><i class="fa fa-star-o"></i> %v</a>`, t.Id, t.StarsCount, label)
 
 		if u.NewRecord() {
 			return template.HTML(out)
 		}
 
 		if u.IsStared(t) {
-			out = fmt.Sprintf(`<a href="/topics/%v/unstar" data-method="post" class="followed"><i class="fa fa-star"></i> %v</a>`, t.Id, label)
+			out = fmt.Sprintf(`<a href="#" data-id="%v" data-count="%v" class="star followed"><i class="fa fa-star"></i> %v</a>`, t.Id, t.StarsCount, label)
 		}
 
 		return template.HTML(out)

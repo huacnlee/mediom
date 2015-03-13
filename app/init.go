@@ -35,6 +35,7 @@ func init() {
 
 	revel.TemplateFuncs["javascript_include_tag"] = train.JavascriptTag
 	revel.TemplateFuncs["stylesheet_link_tag"] = train.StylesheetTag
+
 }
 
 // TODO turn this into revel.HeaderFilter
