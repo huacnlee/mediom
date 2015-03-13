@@ -129,43 +129,43 @@ func (c Topics) Delete() revel.Result {
 }
 
 func (c Topics) Watch() revel.Result {
-	if r := c.requireUser(); r != nil {
+	if r := c.requireUserForJSON(); r != nil {
 		return r
 	}
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.Watch(t)
-	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+	return c.successJSON(t.WatchesCount + 1)
 }
 
 func (c Topics) UnWatch() revel.Result {
-	if r := c.requireUser(); r != nil {
+	if r := c.requireUserForJSON(); r != nil {
 		return r
 	}
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.UnWatch(t)
-	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+	return c.successJSON(t.WatchesCount - 1)
 }
 
 func (c Topics) Star() revel.Result {
-	if r := c.requireUser(); r != nil {
+	if r := c.requireUserForJSON(); r != nil {
 		return r
 	}
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.Star(t)
-	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+	return c.successJSON(t.StarsCount + 1)
 }
 
 func (c Topics) UnStar() revel.Result {
-	if r := c.requireUser(); r != nil {
+	if r := c.requireUserForJSON(); r != nil {
 		return r
 	}
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.UnStar(t)
-	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
+	return c.successJSON(t.StarsCount - 1)
 }
 
 func (c Topics) Rank() revel.Result {

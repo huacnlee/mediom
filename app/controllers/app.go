@@ -68,6 +68,14 @@ func (c App) requireUser() revel.Result {
 	}
 }
 
+func (c App) requireUserForJSON() revel.Result {
+	if r := c.requireUser(); r != nil {
+		return c.errorJSON(-1, "还未登录")
+	} else {
+		return r
+	}
+}
+
 func (c App) requireAdmin() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r
@@ -109,13 +117,13 @@ func (c App) renderValidation(tpl string, v revel.Validation) revel.Result {
 }
 
 type AppResult struct {
-	code int
-	msg  string
-	data interface{}
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
 }
 
 func (c App) errorJSON(code int, msg string) revel.Result {
-	result := &AppResult{code: code, msg: msg}
+	result := AppResult{Code: code, Msg: msg}
 	return c.RenderJson(result)
 }
 
@@ -124,11 +132,11 @@ func (c App) errorsJSON(code int, errs []*revel.ValidationError) revel.Result {
 	for i, err := range errs {
 		msgs[i] = err.Message
 	}
-	result := &AppResult{code: code, msg: strings.Join(msgs, "\n")}
+	result := AppResult{Code: code, Msg: strings.Join(msgs, "\n")}
 	return c.RenderJson(result)
 }
 
 func (c App) successJSON(data interface{}) revel.Result {
-	result := &AppResult{code: 0, msg: "", data: data}
+	result := AppResult{Code: 0, Data: data}
 	return c.RenderJson(result)
 }
