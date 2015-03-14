@@ -1,0 +1,20 @@
+<rss version="2.0">
+<channel>
+<title>Ruby China社区</title>
+<link>https://ruby-china.org/</link>
+<description></description>
+<language>zh-CN</language>
+{{range .topics}}
+<item>
+    <title>{{.Title}}</title>
+    <description>
+    {{markdown .Body | html}}
+    </description>
+    <author>{{.User.Login}}</author>
+    <pubDate>{{.CreatedAt}}</pubDate>
+    <link>http://127.0.0.1:3000/topics/{{.Id}}</link>
+    <link>http://127.0.0.1:3000/topics/{{.Id}}</link>
+</item>
+{{end}}
+</channel>
+</rss>

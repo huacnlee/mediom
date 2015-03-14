@@ -10,6 +10,7 @@ GET     /account/edit     Accounts.Edit
 POST    /account          Accounts.Update
 
 GET     /topics           Topics.Index
+GET     /topics/feed           Topics.Feed
 GET     /topics/node/:node_id      Topics.Index("node")
 GET     /topics/popular           Topics.Index("popular")
 GET     /topics/recent           Topics.Index("recent")

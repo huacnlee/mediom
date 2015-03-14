@@ -30,6 +30,13 @@ func (c Topics) Index(channel string) revel.Result {
 	return c.Render("topics/index.html")
 }
 
+func (c Topics) Feed() revel.Result {
+	topics, _ := FindTopicPages("recent", 0, 1, 20)
+	c.RenderArgs["topics"] = topics
+	c.Response.ContentType = "text/xml"
+	return c.Render("topics/feed.html")
+}
+
 func (c Topics) New() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r

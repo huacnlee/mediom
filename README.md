@@ -6,3 +6,7 @@
 - Go 1.3.x
 - MySQL
 - Ruby, and install gem: sass, coffee-script
+
+## Release
+
+GOOS=linux GOARCH=amd64 revel package mediom
