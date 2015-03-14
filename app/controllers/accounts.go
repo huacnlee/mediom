@@ -21,9 +21,17 @@ func (c Accounts) New() revel.Result {
 }
 
 func (c Accounts) Create() revel.Result {
-	u := &User{}
+	u := User{}
+	newUser := User{}
 
-	newUser, v := u.Signup(c.Params.Get("login"), c.Params.Get("password"), c.Params.Get("password-confirm"))
+	v := revel.Validation{}
+
+	if !c.validateCaptcha(c.Params.Get("captcha")) {
+		v.Error("验证码不正确")
+		return c.renderValidation("accounts/new.html", v)
+	}
+
+	newUser, v = u.Signup(c.Params.Get("login"), c.Params.Get("password"), c.Params.Get("password-confirm"))
 	if v.HasErrors() {
 		return c.renderValidation("accounts/new.html", v)
 	}
@@ -38,11 +46,18 @@ func (c Accounts) Login() revel.Result {
 }
 
 func (c Accounts) LoginCreate() revel.Result {
-	u := &User{}
+	u := User{}
+	newUser := User{}
+	v := revel.Validation{}
 
-	newUser, v := u.Signin(c.Params.Get("login"), c.Params.Get("password"))
+	if !c.validateCaptcha(c.Params.Get("captcha")) {
+		v.Error("验证码不正确")
+		return c.renderValidation("accounts/login.html", v)
+	}
+
+	newUser, v = u.Signin(c.Params.Get("login"), c.Params.Get("password"))
 	if v.HasErrors() {
-		return c.renderValidation("accounts/accounts.html", v)
+		return c.renderValidation("accounts/login.html", v)
 	}
 
 	c.storeUser(&newUser)

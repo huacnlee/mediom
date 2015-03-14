@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"bytes"
 	"fmt"
+	"github.com/dchest/captcha"
 	"github.com/revel/revel"
 	. "mediom/app/models"
 	"reflect"
@@ -139,4 +141,21 @@ func (c App) errorsJSON(code int, errs []*revel.ValidationError) revel.Result {
 func (c App) successJSON(data interface{}) revel.Result {
 	result := AppResult{Code: 0, Data: data}
 	return c.RenderJson(result)
+}
+
+func (c App) Captcha(id string) revel.Result {
+	captchaId := captcha.New()
+	c.Session["captcha_id"] = captchaId
+
+	var buffer bytes.Buffer
+	captcha.WriteImage(&buffer, captchaId, 240, 80)
+
+	c.Response.ContentType = "image/png"
+	c.Response.Status = 200
+
+	return c.RenderText(buffer.String())
+}
+
+func (c App) validateCaptcha(code string) bool {
+	return captcha.VerifyString(c.Session["captcha_id"], code)
 }

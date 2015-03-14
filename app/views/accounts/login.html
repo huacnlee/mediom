@@ -7,13 +7,20 @@
 			<div class="panel-heading">登录社区</div>
 		  <form class="signin panel-body" action="/signin" method="POST">
 		    {{.validation | error_messages}}
-		    <div class="form-group">  
+		    <div class="form-group">
 		      <label for="username">帐号</label>
 		      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">
 		    </div>
-		    <div class="form-group">  
+		    <div class="form-group">
 		      <label for="password">密码</label>
 		      <input type="password" class="form-control" name="password" id="password" >
+		    </div>
+		    <div class="form-group">
+		    	<label for="captcha">验证码</label>
+		    	<input type="text" class="form-control" name="captcha" id="captcha">
+		    	<div class="captcha-block">
+			    	<img class="button-captcha" src="/captcha" alt="点击刷新" title="点击刷新" />
+		    	</div>
 		    </div>
 		    <button type="submit" class="btn btn-block btn-primary">登录</button>
 		  </form>

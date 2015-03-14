@@ -16,6 +16,7 @@ AppView = Backbone.View.extend
     "click .md-dropdown .dropdown-menu li": "toggleDropdown"
     "click #replies .reply .btn-reply": "reply"
     "click #replies a.mention-floor": "mentionFloor"
+    "click .button-captcha": "refreshCaptcha"
 
   toggleDropdown: (e) ->
     $target = $(e.currentTarget)
@@ -99,6 +100,11 @@ AppView = Backbone.View.extend
   gotoUrl: (url) ->
     # Turbolinks.visit(url)
     location.href = url
+
+  refreshCaptcha: (e) ->
+    img = $(e.target)
+    img.attr("src", "/captcha?t=#{(new Date).getTime()}")
+    return false
 
 
 $(document).on "ready page:load", ->
