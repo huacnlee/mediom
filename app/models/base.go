@@ -51,4 +51,5 @@ func init() {
 	db.Model(Setting{}).AddUniqueIndex("index_on_key", "key")
 	db.LogMode(true)
 
+	initPubsub()
 }

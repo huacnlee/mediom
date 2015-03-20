@@ -19,6 +19,10 @@ type Notification struct {
 	UpdatedAt      time.Time
 }
 
+type UnreadMessage struct {
+	UnreadCount int `json:"unread_count"`
+}
+
 func (n *Notification) Topic() (t Topic) {
 	if n.NotifyableType == "Topic" {
 		err := DB.First(&t, n.NotifyableId).Error
@@ -80,7 +84,11 @@ func createNotification(notifyType string, userId int32, actorId int32, notifyab
 		return nil
 	}
 
-	return db.Save(&note).Error
+	err := db.Save(&note).Error
+
+	go PushUnreadMessageToUser(userId)
+
+	return err
 }
 
 func (r *Reply) NotifyReply() error {
@@ -122,6 +130,9 @@ func (u User) ReadNotifications(notes []Notification) error {
 	if len(ids) > 0 {
 		return db.Model(Notification{}).Where("user_id = ? and id in (?)", u.Id, ids).Update("read", true).Error
 	}
+
+	go PushUnreadMessageToUser(u.Id)
+
 	return nil
 }
 

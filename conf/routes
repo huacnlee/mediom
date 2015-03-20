@@ -1,5 +1,6 @@
 
 GET     /				Home.Index
+WS      /msg                      Home.Message
 
 GET 		/signup 			Accounts.New
 POST 	/signup 			Accounts.Create
@@ -11,7 +12,7 @@ POST    /account          Accounts.Update
 
 GET     /topics           Topics.Index
 GET     /topics/feed           Topics.Feed
-GET     /topics/node/:node_id      Topics.Index("node")
+GET  /topics/node/:node_id      Topics.Index("node")
 GET     /topics/popular           Topics.Index("popular")
 GET     /topics/recent           Topics.Index("recent")
 
@@ -46,6 +47,7 @@ GET     /settings/:key/edit       Settings.Edit
 POST    /settings/:key            Settings.Update
 
 GET     /captcha                  App.Captcha
+
 
 GET     /favicon.ico                            404
 GET     /:login      Users.Show

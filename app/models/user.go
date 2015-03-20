@@ -40,6 +40,10 @@ func (u User) GavatarURL(size string) string {
 	return fmt.Sprintf("https://ruby-china.org/avatar/%v?s=%v", emailMD5, size)
 }
 
+func (u User) NotifyChannelId() string {
+	return fmt.Sprintf("notify/%v", u.Id)
+}
+
 func (u User) SameAs(obj interface{}) bool {
 	return obj.(User).Id == u.Id
 }
@@ -56,6 +60,12 @@ func (u User) IsAdmin() bool {
 func (u User) UnReadNotificationsCount() (count int) {
 	db.Model(&Notification{}).Where("`user_id` = ? and `read` = 0", u.Id).Count(&count)
 	return
+}
+
+func PushUnreadMessageToUser(userId int32) {
+	u := User{}
+	u.Id = userId
+	go PushMessage(u.NotifyChannelId(), &UnreadMessage{UnreadCount: u.UnReadNotificationsCount()})
 }
 
 func (u User) EncodePassword(raw string) (md5Digest string) {

@@ -18,6 +18,21 @@ AppView = Backbone.View.extend
     "click #replies a.mention-floor": "mentionFloor"
     "click .button-captcha": "refreshCaptcha"
 
+  initialize: ->
+    @initWebSocket()
+
+  initWebSocket: ->
+    @ws = new WebSocket("ws://#{window.location.host}/msg")
+    @ws.onmessage = @onWebSocketMessage
+
+  onWebSocketMessage: (res) ->
+    notify = JSON.parse(res.data)
+    badge = $(".notification-count .badge")
+    if notify.unread_count > 0
+      badge.addClass("badge-new").text(notify.unread_count)
+    else
+      badge.removeClass("badge-new").text(0)
+
   toggleDropdown: (e) ->
     $target = $(e.currentTarget)
     $target.closest('.input-group-btn')
