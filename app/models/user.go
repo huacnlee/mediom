@@ -65,7 +65,9 @@ func (u User) UnReadNotificationsCount() (count int) {
 func PushUnreadMessageToUser(userId int32) {
 	u := User{}
 	u.Id = userId
-	go PushMessage(u.NotifyChannelId(), &UnreadMessage{UnreadCount: u.UnReadNotificationsCount()})
+	count := u.UnReadNotificationsCount()
+	fmt.Println("-------------------- PushUnreadMessageToUser: ", count)
+	go PushMessage(u.NotifyChannelId(), &UnreadMessage{UnreadCount: count})
 }
 
 func (u User) EncodePassword(raw string) (md5Digest string) {

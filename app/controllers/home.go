@@ -32,10 +32,6 @@ func (c Home) Message() revel.Result {
 	ws := c.Request.Websocket
 
 	Subscribe(c.currentUser.NotifyChannelId(), func(out interface{}) {
-		if !ws.IsClientConn() {
-			return
-		}
-
 		err := websocket.JSON.Send(ws, out)
 		if err != nil {
 			fmt.Println("WebSocket send error: ", err)

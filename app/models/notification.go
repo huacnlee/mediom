@@ -128,10 +128,10 @@ func (u User) ReadNotifications(notes []Notification) error {
 		ids = append(ids, note.Id)
 	}
 	if len(ids) > 0 {
-		return db.Model(Notification{}).Where("user_id = ? and id in (?)", u.Id, ids).Update("read", true).Error
+		err := db.Model(Notification{}).Where("user_id = ? and id in (?)", u.Id, ids).Update("read", true).Error
+		go PushUnreadMessageToUser(u.Id)
+		return err
 	}
-
-	go PushUnreadMessageToUser(u.Id)
 
 	return nil
 }
