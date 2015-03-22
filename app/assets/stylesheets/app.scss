@@ -26,6 +26,9 @@ body {
     border:0px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   }
+  .navbar-nav {
+    a.active { color: #D0897B; }
+  }
 }
 
 a { color: #2776D2; }
