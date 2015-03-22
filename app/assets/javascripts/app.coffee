@@ -5,6 +5,7 @@
 #= require javascripts/turbolinks
 #= require javascripts/underscore
 #= require javascripts/backbone
+#= require javascripts/pager
 AppView = Backbone.View.extend
   el: "body"
 
@@ -17,7 +18,6 @@ AppView = Backbone.View.extend
     "click #replies .reply .btn-reply": "reply"
     "click #replies a.mention-floor": "mentionFloor"
     "click .button-captcha": "refreshCaptcha"
-    "keydown": "handleKeyDown"
 
   initialize: ->
     @initWebSocket()
@@ -121,24 +121,6 @@ AppView = Backbone.View.extend
     img = $(e.target)
     img.attr("src", "/captcha?t=#{(new Date).getTime()}")
     return false
-
-  # handleKeyDown: (e) ->
-  #   self = @
-  #   console.log e
-  #   if e.target.nodeName == 'BODY' or e.target.nodeName == 'HTML'
-  #     if !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey
-  #       self.pageAction(e.which)
-
-  # pageAction: (code) ->
-  #   if code == 37
-  #     link = $(".pager .previous a")
-  #   elsif code == 39
-  #     link = $(".pager .next a")
-  #   href = link.attr("href")
-  #   if href && href != document.location && href != "#"
-  #     Turbolinks.visit(href)
-  #   return false
-
 
 $(document).on "ready page:load", ->
   new AppView()
