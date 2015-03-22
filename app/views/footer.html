@@ -2,11 +2,10 @@
   {{if eq .RunMode "dev"}}
     {{template "debug.html" .}}
   {{end}}
-	
+
 	<footer class="footer">
-		<div class="col-md-2">
-		</div>
+		{{setting "footer_html"}}
 	</footer>
-  
+
   </body>
 </html>
