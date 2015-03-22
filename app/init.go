@@ -27,8 +27,9 @@ func init() {
 		revel.ActionInvoker, // Invoke the action.
 	}
 
-	train.Config.AssetsPath = "app/assets"
-	train.Config.SASS.DebugInfo = false
+	train.Config.AssetsPath = "./assets"
+	train.Config.SASS.DebugInfo = true
+	train.Config.SASS.LineNumbers = true
 	train.Config.Verbose = true
 	train.Config.BundleAssets = true
 	train.ConfigureHttpHandler(nil)
