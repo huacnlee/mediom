@@ -3,6 +3,8 @@ package models
 import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	"log"
+	"os"
 	"time"
 )
 
@@ -36,6 +38,8 @@ func init() {
 	}
 
 	db.LogMode(false)
+	logger = Logger{log.New(os.Stdout, "  ", 0)}
+	db.SetLogger(logger)
 	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &NodeGroup{}, &Followable{}, &Notification{}, &Setting{})
 	db.Model(NodeGroup{}).AddIndex("index_on_sort", "sort")
 	db.Model(Node{}).AddIndex("index_on_group_and_sort", "node_group_id", "sort")

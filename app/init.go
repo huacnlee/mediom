@@ -53,14 +53,14 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 
 var InstramentFilter = func(c *revel.Controller, fc []revel.Filter) {
 	t1 := time.Now()
-	fmt.Println("\nStarted", c.Request.Method, c.Request.URL.String(), "at", time.Now().Format(time.RFC3339), "from", c.Request.RemoteAddr)
+	fmt.Println("\n\nStarted", c.Request.Method, c.Request.URL.String(), "at", time.Now().Format(time.RFC3339), "from", c.Request.RemoteAddr)
 
 	fc[0](c, fc[1:])
 
 	duration := fmt.Sprintf("%.2fms", float64(time.Since(t1).Nanoseconds()/1e4)/100.0)
 	// Response Header X-Runtime
 	c.Response.Out.Header().Add("X-Runtime", duration)
-	fmt.Println("\nComplated", c.Response.Status, "in", duration)
+	fmt.Println("\nComplated", c.Response.Status, "in", duration, "\n")
 }
 
 var AssetsFilter = func(c *revel.Controller, fc []revel.Filter) {
