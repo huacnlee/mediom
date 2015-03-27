@@ -34,11 +34,14 @@ AppView = Backbone.View.extend
 
   onWebSocketMessage: (res) ->
     notify = JSON.parse(res.data)
-    badge = $(".notification-count .badge")
+    badge = $(".notification-count a")
+    counter = badge.find(".count")
     if notify.unread_count > 0
-      badge.addClass("badge-new").text(notify.unread_count)
+      badge.addClass("new")
+      counter.text(notify.unread_count)
     else
-      badge.removeClass("badge-new").text(0)
+      badge.removeClass("new")
+      counter.text(0)
 
   toggleDropdown: (e) ->
     $target = $(e.currentTarget)

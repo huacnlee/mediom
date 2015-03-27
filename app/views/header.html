@@ -11,40 +11,54 @@
   </head>
   <body>
   <div class="header">
-		<nav class="navbar navbar-static-top navbar-default">
+		<nav class="navbar navbar-inverse navbar-static-top navbar-default">
 			<div class="container">
-        <ul class="nav navbar-nav">
-          <li><a href="/" class="home {{active_class .controller_name "home"}}">首页</a></li>
-          <li><a href="/topics" class="topics {{active_class .controller_name "topics"}}">社区</a></li>
-        </ul>
-        {{if .logined}}
-				<ul class="nav navbar-nav pull-right">
-					<li class="notification-count">
-						<a href="/notifications"><span class="badge{{if .current_user.UnReadNotificationsCount}} badge-new{{end}}" title="通知">{{.current_user.UnReadNotificationsCount}}</span></a>
-					</li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{.current_user.Login}} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-						 <li><a href="/{{.current_user.Login}}">个人主页</a></li>
-						 <li class="divider"></li>
-						 <li><a href="/account/edit">个人设置</a></li>
-              <li><a href="/topics/new">发布话题</a></li>
-							{{if .current_user.IsAdmin}}
-							<li class="divider"></li>
-							<li><a href="/nodes">节点管理</a></li>
-							<li><a href="/settings">设置项</a></li>
-							{{end}}
-              <li class="divider"></li>
-              <li><a href="/signout" data-method="post" rel="nofollow">登出</a></li>
-            </ul>
-          </li>
-        </ul>
-        {{else}}
-        <nav  class="nav pull-right">
-				<a href='/signup' class="btn btn-default navbar-btn">注册新用户</a>
-				<a href='/signin' class="btn btn-default navbar-btn">登录</a>
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/" class="navbar-brand">Mediom</a>
+        </div>
+        <nav class="navbar-collapse bs-navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/" class="home {{active_class .controller_name "home"}}">首页</a></li>
+            <li><a href="/topics" class="topics {{active_class .controller_name "topics"}}">社区</a></li>
+          </ul>
+          {{if .logined}}
+  				<ul class="nav navbar-nav navbar-right">
+            <li class="nav-search">
+              <a href="#search-box" data-toggle="collapse" aria-expanded="false" aria-controls="search-box"><i class="fa fa-search"></i></a>
+            </li>
+  					<li class="notification-count">
+  						<a href="/notifications" class="{{if .current_user.UnReadNotificationsCount}}new{{end}}" title="通知"><i class="fa fa-bell"></i><span class="count">{{.current_user.UnReadNotificationsCount}}</span></a>
+  					</li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{.current_user.Login}} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+  						 <li><a href="/{{.current_user.Login}}">个人主页</a></li>
+  						 <li class="divider"></li>
+  						 <li><a href="/account/edit">个人设置</a></li>
+                <li><a href="/topics/new">发布话题</a></li>
+  							{{if .current_user.IsAdmin}}
+  							<li class="divider"></li>
+  							<li><a href="/nodes">节点管理</a></li>
+  							<li><a href="/settings">设置项</a></li>
+  							{{end}}
+                <li class="divider"></li>
+                <li><a href="/signout" data-method="post" rel="nofollow">登出</a></li>
+              </ul>
+            </li>
+          </ul>
+          {{else}}
+          <ul class="nav navbar-nav navbar-right">
+    				<li><a href='/signup'>注册新用户</a></li>
+    				<li><a href='/signin'>登录</a></li>
+          </nav>
+          {{end}}
         </nav>
-        {{end}}
 			</div>
 		</nav>
 	</div>

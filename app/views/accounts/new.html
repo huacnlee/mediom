@@ -8,20 +8,16 @@
 			  <form class="signup panel-body" action="/signup" method="POST">
 			    {{.validation | error_messages}}
 			    <div class="form-group">
-			      <label for="username">帐号</label>
 			      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">
 			    </div>
 			    <div class="form-group">
-			      <label for="password">密码</label>
-			      <input type="password" class="form-control" name="password" id="password">
+			      <input type="password" class="form-control" name="password" placeholder="密码" id="password">
 			    </div>
 			    <div class="form-group">
-			      <label for="password-confirm">确认密码</label>
-			      <input type="password" class="form-control" name="password-confirm" id="password-confirm">
+			      <input type="password" class="form-control" name="password-confirm" placeholder="确认密码"  id="password-confirm">
 			    </div>
 			    <div class="form-group">
-			    	<label for="captcha">验证码</label>
-			    	<input type="text" class="form-control" name="captcha" id="captcha">
+			    	<input type="text" class="form-control" placeholder="验证码" name="captcha" id="captcha">
 			    	<div class="captcha-block">
 				    	<img class="button-captcha" src="/captcha" alt="点击刷新" title="点击刷新" />
 			    	</div>
