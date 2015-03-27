@@ -44,7 +44,13 @@ func (c *App) After() revel.Result {
 }
 
 func (c *App) prependCurrentUser() {
+	userId := c.Session["user_id"]
 	u := &User{}
+	c.currentUser = u
+	if len(userId) == 0 {
+		return
+	}
+
 	DB.Where("id = ?", c.Session["user_id"]).First(u)
 	c.currentUser = u
 }
@@ -152,11 +158,11 @@ func (c App) successJSON(data interface{}) revel.Result {
 }
 
 func (c App) Captcha(id string) revel.Result {
-	captchaId := captcha.New()
+	captchaId := captcha.NewLen(4)
 	c.Session["captcha_id"] = captchaId
 
 	var buffer bytes.Buffer
-	captcha.WriteImage(&buffer, captchaId, 240, 80)
+	captcha.WriteImage(&buffer, captchaId, 200, 80)
 
 	c.Response.ContentType = "image/png"
 	c.Response.Status = 200
