@@ -6,6 +6,7 @@
 #= require javascripts/underscore
 #= require javascripts/backbone
 #= require javascripts/pager
+#= require javascripts/highlight.min
 AppView = Backbone.View.extend
   el: "body"
 
@@ -21,10 +22,15 @@ AppView = Backbone.View.extend
 
   initialize: ->
     @initWebSocket()
+    @initHighlight()
 
   initWebSocket: ->
     @ws = new WebSocket("ws://#{window.location.host}/msg")
     @ws.onmessage = @onWebSocketMessage
+
+  initHighlight: ->
+    $("pre code").each (i, block) ->
+      hljs.highlightBlock(block)
 
   onWebSocketMessage: (res) ->
     notify = JSON.parse(res.data)

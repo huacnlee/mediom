@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/microcosm-cc/bluemonday"
-	. "github.com/russross/blackfriday"
+	// "github.com/microcosm-cc/bluemonday"
+	. "github.com/slene/blackfriday"
 	"regexp"
 )
 
@@ -14,22 +14,27 @@ var (
 
 func MarkdownGitHub(input []byte) []byte {
 	htmlFlags := HTML_USE_XHTML
+	htmlFlags |= HTML_SKIP_HTML
+	htmlFlags |= HTML_SKIP_STYLE
+	htmlFlags |= HTML_SKIP_LINKS
+	htmlFlags |= HTML_SKIP_SCRIPT
+	htmlFlags |= HTML_OMIT_CONTENTS
+	htmlFlags |= HTML_COMPLETE_PAGE
 
 	renderer := HtmlRenderer(htmlFlags, "", "")
 
 	// set up the parser
 	extensions := 0 |
 		EXTENSION_NO_INTRA_EMPHASIS |
+		EXTENSION_TABLES |
 		EXTENSION_FENCED_CODE |
 		EXTENSION_AUTOLINK |
 		EXTENSION_STRIKETHROUGH |
 		EXTENSION_SPACE_HEADERS |
-		EXTENSION_HEADER_IDS |
 		EXTENSION_HARD_LINE_BREAK |
 		EXTENSION_NO_EMPTY_LINE_BEFORE_BLOCK
 
-	unsafe := Markdown(input, renderer, extensions)
-	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+	html := Markdown(input, renderer, extensions)
 	html = LinkMentionUser(html)
 	html = LinkMentionFloor(html)
 	html = RemoveBlankChars(html)
