@@ -48,8 +48,6 @@ POST    /settings/:key            Settings.Update
 
 GET     /captcha                  App.Captcha
 
-
-GET     /favicon.ico                            404
 GET     /:login      Users.Show
 GET     /*filepath                       Static.Serve("public")
 
