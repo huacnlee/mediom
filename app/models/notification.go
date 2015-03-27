@@ -25,7 +25,7 @@ type UnreadMessage struct {
 
 func (n *Notification) Topic() (t Topic) {
 	if n.NotifyableType == "Topic" {
-		err := DB.First(&t, n.NotifyableId).Error
+		err := DB.Unscoped().First(&t, n.NotifyableId).Error
 		if err != nil {
 			return
 		}
@@ -35,7 +35,7 @@ func (n *Notification) Topic() (t Topic) {
 
 func (n *Notification) Reply() (r Reply) {
 	if n.NotifyableType == "Reply" {
-		err := DB.First(&r, n.NotifyableId).Error
+		err := DB.Unscoped().First(&r, n.NotifyableId).Error
 		if err != nil {
 			return
 		}
