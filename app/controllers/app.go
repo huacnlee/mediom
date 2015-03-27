@@ -96,6 +96,10 @@ func (c App) requireAdmin() revel.Result {
 }
 
 func (c App) isOwner(obj interface{}) bool {
+	if c.currentUser.IsAdmin() {
+		return true
+	}
+
 	objType := reflect.TypeOf(obj)
 	switch objType.String() {
 	case "models.Topic":
