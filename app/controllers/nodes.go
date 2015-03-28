@@ -32,7 +32,7 @@ func (c *Nodes) Index() revel.Result {
 	c.loadNodeGroups()
 	nodes := FindAllNodes()
 	c.RenderArgs["nodes"] = nodes
-	return c.Render("nodes/index.html")
+	return c.Render()
 }
 
 func (c *Nodes) Create() revel.Result {
@@ -62,7 +62,7 @@ func (c Nodes) Edit() revel.Result {
 	}
 
 	c.RenderArgs["node"] = node
-	return c.Render("nodes/edit.html")
+	return c.Render()
 }
 
 func (c Nodes) Update() revel.Result {

@@ -166,6 +166,20 @@ a { color: $blue; }
 .popover>.arrow { border-color: $grayDark; }
 .popover>.arrow:after { border-color: $grayDark; }
 
+.alert {
+  padding:5px 10px 3px;
+  border:0px; border-bottom:1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 0px; font-size: 13px;
+  &>ul {
+    padding: 0px 18px;
+    list-style-type: square;
+  }
+}
+.alert-success { background: #81D573; color: #1B8909; }
+.alert-info { background: #ADD0FF; color: #4A5E9E; }
+.alert-warning { background: #FFF280; color: #CD8546; }
+.alert-danger { background: #FF6969; color: #8B2523; }
+
 .pager {
   margin: 0px;
   .info {

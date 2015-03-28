@@ -27,14 +27,14 @@ func (c Topics) Index(channel string) revel.Result {
 	c.RenderArgs["channel"] = channel
 	c.RenderArgs["topics"] = topics
 	c.RenderArgs["page_info"] = pageInfo
-	return c.Render("topics/index.html")
+	return c.Render()
 }
 
 func (c Topics) Feed() revel.Result {
 	topics, _ := FindTopicPages("recent", 0, 1, 20)
 	c.RenderArgs["topics"] = topics
 	c.Response.ContentType = "text/xml"
-	return c.Render("topics/feed.html")
+	return c.Render()
 }
 
 func (c Topics) New() revel.Result {
@@ -44,7 +44,7 @@ func (c Topics) New() revel.Result {
 	t := &Topic{}
 	c.RenderArgs["nodes"] = FindAllNodes()
 	c.RenderArgs["topic"] = t
-	return c.Render("topics/new.html")
+	return c.Render()
 }
 
 func (c Topics) Create() revel.Result {
@@ -76,7 +76,7 @@ func (c Topics) Show() revel.Result {
 	DB.Preload("User").Where("topic_id = ?", t.Id).Order("id asc").Find(&replies)
 	c.RenderArgs["topic"] = t
 	c.RenderArgs["replies"] = replies
-	return c.Render("topics/show.html")
+	return c.Render()
 }
 
 func (c Topics) Edit() revel.Result {
@@ -91,7 +91,7 @@ func (c Topics) Edit() revel.Result {
 	}
 	c.RenderArgs["topic"] = t
 	c.RenderArgs["nodes"] = FindAllNodes()
-	return c.Render("topics/edit.html")
+	return c.Render()
 }
 
 func (c Topics) Update() revel.Result {

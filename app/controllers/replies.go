@@ -66,7 +66,7 @@ func (c Replies) Edit() revel.Result {
 		return c.RenderError(errors.New("Not allow."))
 	}
 	c.RenderArgs["reply"] = reply
-	return c.Render("replies/edit.html")
+	return c.Render()
 }
 
 func (c Replies) Delete() revel.Result {

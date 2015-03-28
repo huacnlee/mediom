@@ -23,7 +23,7 @@ func (c Notifications) Index() revel.Result {
 	c.currentUser.ReadNotifications(notes)
 	c.RenderArgs["notifications"] = notes
 	c.RenderArgs["page_info"] = pageInfo
-	return c.Render("notifications/index.html")
+	return c.Render()
 }
 
 func (c Notifications) Clear() revel.Result {

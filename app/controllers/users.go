@@ -20,5 +20,5 @@ func (c Users) Show(login string) revel.Result {
 		return c.RenderError(err)
 	}
 	c.RenderArgs["user"] = u
-	return c.Render("users/show.html")
+	return c.Render()
 }

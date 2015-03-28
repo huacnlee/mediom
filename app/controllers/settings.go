@@ -25,13 +25,13 @@ func (c Settings) Index() revel.Result {
 	settings := []Setting{}
 	DB.Model(Setting{}).Order("`key` desc").Find(&settings)
 	c.RenderArgs["settings"] = settings
-	return c.Render("settings/index.html")
+	return c.Render()
 }
 
 func (c Settings) Edit(key string) revel.Result {
 	setting := FindSettingByKey(key)
 	c.RenderArgs["setting"] = setting
-	return c.Render("settings/edit.html")
+	return c.Render()
 }
 
 func (c Settings) Update(key string) revel.Result {

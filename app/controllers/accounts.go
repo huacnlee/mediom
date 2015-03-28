@@ -15,9 +15,7 @@ type Accounts struct {
 //}
 
 func (c Accounts) New() revel.Result {
-	a := "hello world"
-	b := "foobar"
-	return c.Render(a, b)
+	return c.Render()
 }
 
 func (c Accounts) Create() revel.Result {
@@ -61,12 +59,13 @@ func (c Accounts) LoginCreate() revel.Result {
 	}
 
 	c.storeUser(&newUser)
-	c.Flash.Success("注册成功")
+	c.Flash.Success("登录成功，欢迎再次回来。")
 	return c.Redirect(Home.Index)
 }
 
 func (c Accounts) Logout() revel.Result {
 	c.clearUser()
+	c.Flash.Success("登出成功")
 	return c.Redirect(Home.Index)
 }
 
@@ -74,7 +73,7 @@ func (c Accounts) Edit() revel.Result {
 	if r := c.requireUser(); r != nil {
 		return r
 	}
-	return c.Render("accounts/edit.html")
+	return c.Render()
 }
 
 func (c Accounts) Update() revel.Result {
@@ -91,7 +90,7 @@ func (c Accounts) Update() revel.Result {
 	u = *c.currentUser
 	_, v := UpdateUserProfile(u)
 	if v.HasErrors() {
-		return c.Render("accounts/edit.html")
+		return c.renderValidation("accounts/edit.html", v)
 	}
 	c.Flash.Success("个人信息修改成功")
 	return c.Redirect("/account/edit")
