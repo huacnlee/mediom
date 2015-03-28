@@ -73,7 +73,7 @@ func (c Topics) Show() revel.Result {
 	t := Topic{}
 	DB.Preload("User").Preload("Node").First(&t, c.Params.Get("id"))
 	replies := []Reply{}
-	DB.Preload("User").Where("topic_id = ?", t.Id).Order("id asc").Find(&replies)
+	DB.Unscoped().Preload("User").Where("topic_id = ?", t.Id).Order("id asc").Find(&replies)
 	c.RenderArgs["topic"] = t
 	c.RenderArgs["replies"] = replies
 	return c.Render()
