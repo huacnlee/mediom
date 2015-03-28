@@ -7,6 +7,7 @@
 			<div class="panel-heading">注册新用户</div>
 			  <form class="signup panel-body" action="/signup" method="POST">
 			    {{.validation | error_messages}}
+			    <input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
 			    <div class="form-group">
 			      <input type="text" class="form-control" name="login" value="{{.params.login}}" id="username" placeholder="帐号">
 			    </div>

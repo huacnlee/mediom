@@ -5,6 +5,7 @@
 	<div class="panel-heading">修改 {{.setting.Key}}</div>
 	<form action="/settings/{{.setting.Key}}" class="panel-body" method="POST">
 		{{error_messages .validation}}
+		<input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
 		<div class="form-group">
 			<textarea class="form-control" rows="10" name="val" placeholder="用 Markdown 编写说明">{{raw .setting.Val}}</textarea>
 		</div>

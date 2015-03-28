@@ -75,7 +75,7 @@ func (c App) requireUser() revel.Result {
 		c.Flash.Error("你还未登录哦")
 		return c.Redirect(Accounts.Login)
 	} else {
-		fmt.Println("current_user: ", c.currentUser.Id, " ", c.currentUser.Login)
+		revel.INFO.Println("current_user { id: ", c.currentUser.Id, ", login: ", c.currentUser.Login, " }")
 		return nil
 	}
 }

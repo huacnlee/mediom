@@ -5,6 +5,7 @@
 	<div class="panel-heading">修改</div>
 	<form action="/nodes/{{.node.Id}}" class="panel-body" method="POST">
 		{{.validation | error_messages}}
+		<input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
 		<div class="form-group">
 			<div class="input-group">
 				{{select_tag .groups "Name" "Id" "node_group_id" .node.NodeGroupId}}

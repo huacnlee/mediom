@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"fmt"
+	"github.com/revel/revel"
 	"log"
 	"reflect"
 	"regexp"
@@ -56,9 +57,9 @@ func (logger Logger) Print(values ...interface{}) {
 			messages = append(messages, fmt.Sprintf(sqlRegexp.ReplaceAllString(values[3].(string), "%v"), formatedValues...))
 
 		}
-		logger.Println(messages...)
+		revel.INFO.Println(messages...)
 	} else {
-		logger.Println(values)
+		revel.INFO.Println(values)
 	}
 
 }

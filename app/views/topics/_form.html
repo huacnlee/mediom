@@ -1,7 +1,7 @@
 <div class="col-md-8 col-md-offset-2">
 	<div class="panel panel-default">
 		<div class="panel-heading">发布新话题</div>
-		<form class="topic-form panel-body" 
+		<form class="topic-form panel-body"
 		  {{if .topic.NewRecord}}
 		  action="/topics" method="POST"
 		  {{else}}
@@ -9,10 +9,11 @@
 		  {{end}}
 		 >
 		  {{.validation | error_messages}}
-		  <div class="form-group">  
+      <input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
+		  <div class="form-group">
 				<div class="input-group">
 					<div class="input-group-btn md-dropdown">
-					  <button class="btn btn-default dropdown-toggle" type="button" 
+					  <button class="btn btn-default dropdown-toggle" type="button"
 							data-toggle="dropdown" aria-expanded="false">
 					    <span data-bind="label">{{if .Node.Name}} {{.Node.Name}} {{else}}请选择节点{{end}}</span> <span class="caret"></span>
 					  </button>
@@ -23,11 +24,11 @@
 							{{end}}
 					  </ul>
 					</div>
-			    <input type="text" class="form-control" name="title" 
+			    <input type="text" class="form-control" name="title"
 			    value="{{.topic.Title}}" id="title" placeholder="请输入 5-100 字的标题">
 				</div>
 		  </div>
-		  <div class="form-group">  
+		  <div class="form-group">
 		    <textarea class="form-control" name="body" rows="20" id="body" placeholder="话题正文，请用 GitHub 风格的 Markdown 编写">{{.topic.Body}}</textarea>
 		  </div>
 		  <button type="submit" class="btn btn-primary" data-disable-with="提交中...">提交</button>

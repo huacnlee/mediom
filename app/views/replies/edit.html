@@ -6,7 +6,8 @@
 		<div class="panel-heading">修改回帖内容</div>
 		<form class="reply-form panel-body" action="/replies/{{.reply.Id}}" method="POST">
 		  {{.validation | error_messages}}
-		  <div class="form-group">  
+		  <input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
+		  <div class="form-group">
 		    <textarea class="form-control" name="body" rows="5" placeholder="">{{.reply.Body}}</textarea>
 		  </div>
 			<div class="actions">

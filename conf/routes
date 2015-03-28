@@ -49,8 +49,9 @@ POST    /settings/:key            Settings.Update
 
 GET     /captcha                  App.Captcha
 
-GET     /:login      Users.Show
 GET     /*filepath                       Static.Serve("public")
+GET     /:login      Users.Show
+
 
 
 
