@@ -420,18 +420,20 @@ a.followed {
     }
     &.deleted {
       margin-bottom: 0px;
-      min-height: 32px;
-      padding-left: 0px;
+      min-height: 24px;
+      padding-top: 5px;
+      padding-bottom: 0px;
+      background: #f9f9f9;
       color:#aaa;
-          text-decoration: line-through;
-          font-size:12px; text-align:center;
+      text-decoration: line-through;
+      font-size:12px; text-align:center;
+      .content { margin-left: 0px; }
     }
     &.light { background:#F7F2FC; }
         &.popular { background:#fffce9; }
 
     .content {
       margin-left: 58px;
-      &.deleted { margin-left:0px; }
     }
     .avatar { position: absolute; top: 14pxpx; left: 14px; text-align:center; }
     .info { font-size: 12px; }
