@@ -3,8 +3,8 @@ package controllers
 import (
 	"code.google.com/p/go.net/websocket"
 	"fmt"
+	. "github.com/huacnlee/mediom/app/models"
 	"github.com/revel/revel"
-	. "mediom/app/models"
 )
 
 type Home struct {

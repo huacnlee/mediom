@@ -2,11 +2,11 @@ package app
 
 import (
 	"fmt"
+	. "github.com/huacnlee/mediom/app/models"
 	"github.com/huacnlee/timeago"
 	"github.com/revel/revel"
 	"html/template"
 	"math/rand"
-	. "mediom/app/models"
 	"reflect"
 	"strings"
 	"time"

@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 	//"fmt"
+	. "github.com/huacnlee/mediom/app/models"
 	"github.com/revel/revel"
-	. "mediom/app/models"
 )
 
 type Topics struct {

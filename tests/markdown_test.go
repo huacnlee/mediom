@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"mediom/app"
+	"github.com/huacnlee/mediom/app"
 	"strings"
 	"testing"
 )

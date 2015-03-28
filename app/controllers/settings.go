@@ -1,8 +1,8 @@
 package controllers
 
 import (
+	. "github.com/huacnlee/mediom/app/models"
 	"github.com/revel/revel"
-	. "mediom/app/models"
 )
 
 type Settings struct {

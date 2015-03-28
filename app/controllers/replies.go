@@ -3,8 +3,8 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	. "github.com/huacnlee/mediom/app/models"
 	"github.com/revel/revel"
-	. "mediom/app/models"
 )
 
 type Replies struct {
