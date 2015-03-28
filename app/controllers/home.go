@@ -39,3 +39,7 @@ func (c Home) Message() revel.Result {
 	})
 	return nil
 }
+
+func (c Home) Search() revel.Result {
+	return c.Redirect(fmt.Sprintf("https://google.com?q=site:ruby-china.org %v", c.Params.Get("q")))
+}

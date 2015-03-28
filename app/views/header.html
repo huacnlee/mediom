@@ -30,7 +30,14 @@
           {{if .logined}}
   				<ul class="nav navbar-nav navbar-right">
             <li class="nav-search">
-              <a href="#search-box" data-toggle="collapse" aria-expanded="false" aria-controls="search-box"><i class="fa fa-search"></i></a>
+              <form class="navbar-form form-search" action="/search" method="GET">
+                <div class="form-group">
+                  <input class="form-control" name="q" type="text" placeholder="搜索本站内容" />
+                </div>
+                <i class="fa btn-search fa-search"></i>
+                <i class="fa btn-close fa-times-circle"></i>
+              </form>
+
             </li>
   					<li class="notification-count">
   						<a href="/notifications" class="{{if .current_user.UnReadNotificationsCount}}new{{end}}" title="通知"><i class="fa fa-bell"></i><span class="count">{{.current_user.UnReadNotificationsCount}}</span></a>

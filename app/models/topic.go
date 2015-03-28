@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"github.com/revel/revel"
 	"github.com/revel/revel/cache"
 	"time"
@@ -115,7 +116,7 @@ func (t *Topic) UpdateLastReply(reply *Reply) (err error) {
 	}
 
 	db.First(&reply.User, reply.UserId)
-	err = db.Exec(`UPDATE topics SET updated_at = ?, last_active_mark = ?, last_replied_at = ?, 
+	err = db.Exec(`UPDATE topics SET updated_at = ?, last_active_mark = ?, last_replied_at = ?,
 		last_reply_id = ?, last_reply_user_login = ?, last_reply_user_id = ? WHERE id = ?`,
 		time.Now(),
 		time.Now().Unix(),
@@ -147,6 +148,13 @@ func (t Topic) IsNormal() bool {
 
 func (t Topic) IsNoPoint() bool {
 	return t.Rank == RankNoPoint
+}
+
+func (t Topic) URL() string {
+	if t.NewRecord() {
+		return ""
+	}
+	return fmt.Sprintf("%v/topics/%v", "https://127.0.0.1:3000", t.Id)
 }
 
 func TopicsCountCached() (count int) {

@@ -40,6 +40,7 @@
 				<span class="opts">
 					{{watch_tag .topic .current_user}}
 					{{star_tag .topic .current_user}}
+					{{share_button .topic.Title .topic.URL}}
 					{{if .current_user.IsAdmin}}
 						{{if .topic.IsNormal}}
 						<a href="/topics/{{.topic.Id}}/rank?v=awesome" title="加精" data-confirm="确定要设置为精华帖么？" data-method="POST"><i class="fa fa-thumbs-o-up"></i> 加精</a>

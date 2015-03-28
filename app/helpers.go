@@ -12,6 +12,17 @@ import (
 	"time"
 )
 
+var (
+	shareSites     = []string{"twitter", "weibo", "facebook", "google_plus", "email"}
+	shareSiteIcons = map[string]string{
+		"twitter":     "twitter",
+		"weibo":       "weibo",
+		"facebook":    "facebook-square",
+		"google_plus": "google-plus-square",
+		"email":       "envelope",
+	}
+)
+
 func init() {
 	revel.TemplateFuncs["plus"] = func(a, b int) int {
 		return a + b
@@ -303,5 +314,17 @@ func init() {
 		tipText := GetSetting("tips")
 		tips := strings.Split(tipText, "\n")
 		return template.HTML(tips[rand.Intn(len(tips))])
+	}
+
+	revel.TemplateFuncs["share_button"] = func(title, url string) interface{} {
+		results := []string{}
+		results = append(results, fmt.Sprintf(`<div class="social-share-button" data-via="gochina" data-title="%v" data-url="%v">`, title, url))
+		for _, siteName := range shareSites {
+			link := fmt.Sprintf(`<a rel="nofollow" data-site="%v" href="#"><i class="fa fa-%v"></i></a>`, siteName, shareSiteIcons[siteName])
+			results = append(results, link)
+		}
+		results = append(results, "</div>")
+		results = append(results, `<a href="#" class="share-button"><i class="fa fa-share-square-o"></i> 转发</a>`)
+		return template.HTML(strings.Join(results, ""))
 	}
 }

@@ -1,6 +1,7 @@
 
 GET     /				Home.Index
 WS      /msg                      Home.Message
+GET     /search         Home.Search
 
 GET 		/signup 			Accounts.New
 POST 	/signup 			Accounts.Create

@@ -7,6 +7,7 @@
 #= require javascripts/backbone
 #= require javascripts/pager
 #= require javascripts/highlight.min
+#= require javascripts/social-share-button
 AppView = Backbone.View.extend
   el: "body"
 
@@ -19,9 +20,13 @@ AppView = Backbone.View.extend
     "click #replies .reply .btn-reply": "reply"
     "click #replies a.mention-floor": "mentionFloor"
     "click .button-captcha": "refreshCaptcha"
+    "click .header .form-search .btn-search": "openHeaderSearchBox"
+    "click .header .form-search .btn-close": "closeHeaderSearchBox"
+    "click .social-share-button a": "sharePage"
 
   initialize: ->
     @initWebSocket()
+    @initShareButtonPopover()
     @initHighlight()
 
   initWebSocket: ->
@@ -129,6 +134,33 @@ AppView = Backbone.View.extend
   refreshCaptcha: (e) ->
     img = $(e.target)
     img.attr("src", "/captcha?t=#{(new Date).getTime()}")
+    return false
+
+  initShareButtonPopover: (e) ->
+    btn = $(".share-button")
+    if btn.size() > 0
+      btn.on "click", ->
+        return false
+      sharePanelHTML = $(".social-share-button")[0].outerHTML
+      btn.data("html", true)
+         .data("trigger", "click")
+         .data("placement","top")
+         .data("content", sharePanelHTML)
+      btn.popover()
+
+  sharePage: (e) ->
+    link = $(e.currentTarget)
+    $(".share-button").popover("hide")
+    SocialShareButton.share(link)
+
+  openHeaderSearchBox: (e) ->
+    $(".header .form-search").addClass("active")
+    $(".header .form-search input").focus()
+    return false
+
+  closeHeaderSearchBox: (e) ->
+    $(".header .form-search input").val("")
+    $(".header .form-search").removeClass("active")
     return false
 
 $(document).on "ready page:load", ->
