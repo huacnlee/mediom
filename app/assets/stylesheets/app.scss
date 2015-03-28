@@ -170,10 +170,14 @@ a { color: $blue; }
   padding:5px 10px 3px;
   border:0px; border-bottom:1px solid rgba(0, 0, 0, 0.07);
   border-radius: 0px; font-size: 13px;
+  transform: scale(1,1);
+  transition: all .3s;
+
   &>ul {
     padding: 0px 18px;
     list-style-type: square;
   }
+  a.close { font-size: 14px; text-shadow: 0 0 0;}
 }
 .alert-success { background: #81D573; color: #1B8909; }
 .alert-info { background: #ADD0FF; color: #4A5E9E; }

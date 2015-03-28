@@ -6,7 +6,7 @@
 	  {{.validation | error_messages}}
 	  <input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
 	  <div class="form-group">
-	    <textarea class="form-control" name="body" rows="5" placeholder="">{{.reply.Body}}</textarea>
+	    <textarea class="form-control" name="body" rows="5" placeholder="在这里输入回帖内容">{{.reply.Body}}</textarea>
 	  </div>
 		<div class="actions">
 	  		<button type="submit" class="btn btn-primary btn-block">回复</button>

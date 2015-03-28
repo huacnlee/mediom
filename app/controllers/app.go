@@ -26,6 +26,7 @@ func (c *App) Before() revel.Result {
 	c.RenderArgs["validation"] = nil
 	c.RenderArgs["logined"] = c.isLogined()
 	c.RenderArgs["current_user"] = c.currentUser
+	c.RenderArgs["app_name"] = revel.AppName
 	c.RenderArgs["controller_name"] = inflections.Underscore(c.Name)
 	c.RenderArgs["method_name"] = inflections.Underscore(c.MethodName)
 	c.RenderArgs["route_name"] = fmt.Sprintf("%v#%v", inflections.Underscore(c.Name), inflections.Underscore(c.MethodName))

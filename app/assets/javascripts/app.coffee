@@ -6,6 +6,7 @@
 #= require javascripts/underscore
 #= require javascripts/backbone
 #= require javascripts/pager
+#= require javascripts/notifier
 #= require javascripts/highlight.min
 #= require javascripts/social-share-button
 AppView = Backbone.View.extend
@@ -28,9 +29,10 @@ AppView = Backbone.View.extend
     @initWebSocket()
     @initShareButtonPopover()
     @initHighlight()
+    $.notifier.checkOrRequirePermission()
 
   initWebSocket: ->
-    @ws = new WebSocket("ws://#{window.location.host}/msg")
+    @ws = new WebSocket("ws://#{location.host}/msg")
     @ws.onmessage = @onWebSocketMessage
 
   initHighlight: ->
@@ -44,6 +46,7 @@ AppView = Backbone.View.extend
     if notify.unread_count > 0
       badge.addClass("new")
       counter.text(notify.unread_count)
+      $.notifier.notify(notify.avatar, "回帖通知", notify.title, notify.path)
     else
       badge.removeClass("new")
       counter.text(0)

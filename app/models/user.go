@@ -62,12 +62,25 @@ func (u User) UnReadNotificationsCount() (count int) {
 	return
 }
 
-func PushUnreadMessageToUser(userId int32) {
+func PushNotifyInfoToUser(userId int32, note Notification) {
 	u := User{}
 	u.Id = userId
-	count := u.UnReadNotificationsCount()
-	fmt.Println("-------------------- PushUnreadMessageToUser: ", count)
-	go PushMessage(u.NotifyChannelId(), &UnreadMessage{UnreadCount: count})
+	actor := User{}
+
+	if note.Id > 0 {
+		db.First(&actor, note.ActorId)
+	}
+
+	info := NotifyInfo{
+		UnreadCount: u.UnReadNotificationsCount(),
+		Title:       note.NotifyableTitle(),
+		Avatar:      actor.GavatarURL("256x256"),
+		Path:        note.NotifyableURL(),
+	}
+
+	revel.INFO.Println("[Push] Notify:", info)
+
+	go PushMessage(u.NotifyChannelId(), &info)
 }
 
 func (u User) EncodePassword(raw string) (md5Digest string) {
