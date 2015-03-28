@@ -15,6 +15,6 @@ GOOS=linux GOARCH=amd64 revel package mediom
 
 ## Example
 
-![](https://ruby-china-files.b0.upaiyun.com/photo/2015/bf91477b0ef2d9e6070fe2e01da3f39f.png)
+![](https://ruby-china-files.b0.upaiyun.com/photo/2015/54b8a61176321df2ae0c8d170115ae3b.png)
 
-![](https://ruby-china-files.b0.upaiyun.com/photo/2015/d0f77b70902ba7a6059c6bf58daffcf2.png)
+![](https://ruby-china-files.b0.upaiyun.com/photo/2015/cdd04fae02d0b78a3cf523e6abf5b198.png)
