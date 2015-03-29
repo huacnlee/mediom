@@ -16,6 +16,10 @@ type App struct {
 	currentUser *User
 }
 
+const (
+	JSON_CODE_NO_LOGIN = -1
+)
+
 func init() {
 	revel.InterceptMethod((*App).Before, revel.BEFORE)
 	revel.InterceptMethod((*App).After, revel.AFTER)
@@ -87,7 +91,7 @@ func (c *App) requireUser() {
 
 func (c App) requireUserForJSON() {
 	if !c.isLogined() {
-		c.Finish(c.errorJSON(-1, "还未登录"))
+		c.Finish(c.errorJSON(JSON_CODE_NO_LOGIN, "还未登录"))
 	}
 }
 

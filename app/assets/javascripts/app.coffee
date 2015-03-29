@@ -9,6 +9,12 @@
 #= require javascripts/notifier
 #= require javascripts/highlight.min
 #= require javascripts/social-share-button
+
+# 和服务端对应的 Json Error code
+JSON_CODE =
+  noLogin: -1
+
+# App View
 AppView = Backbone.View.extend
   el: "body"
 
@@ -29,6 +35,7 @@ AppView = Backbone.View.extend
     @initWebSocket()
     @initShareButtonPopover()
     @initHighlight()
+    @setupAjaxCommonResult()
     $.notifier.checkOrRequirePermission()
 
   initWebSocket: ->
@@ -38,6 +45,12 @@ AppView = Backbone.View.extend
   initHighlight: ->
     $("pre code").each (i, block) ->
       hljs.highlightBlock(block)
+
+  setupAjaxCommonResult: ->
+    $.ajaxSetup
+      success: (res) ->
+        if res.code == JSON_CODE.noLogin
+          location.href = "/signin"
 
   onWebSocketMessage: (res) ->
     notify = JSON.parse(res.data)
