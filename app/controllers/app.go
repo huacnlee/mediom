@@ -21,6 +21,11 @@ func init() {
 	revel.InterceptMethod((*App).After, revel.AFTER)
 }
 
+func (c *App) Finish(r revel.Result) {
+	r.Apply(c.Request, c.Response)
+	panic(nil)
+}
+
 func (c *App) Before() revel.Result {
 	c.prependCurrentUser()
 	c.RenderArgs["validation"] = nil
@@ -71,35 +76,28 @@ func (c App) isLogined() bool {
 	return c.currentUser.Id > 0
 }
 
-func (c App) requireUser() revel.Result {
+func (c *App) requireUser() {
 	if !c.isLogined() {
 		c.Flash.Error("你还未登录哦")
-		return c.Redirect(Accounts.Login)
+		c.Finish(c.Redirect(Accounts.Login))
 	} else {
 		revel.INFO.Println("current_user { id: ", c.currentUser.Id, ", login: ", c.currentUser.Login, " }")
-		return nil
 	}
 }
 
-func (c App) requireUserForJSON() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return c.errorJSON(-1, "还未登录")
-	} else {
-		return r
+func (c App) requireUserForJSON() {
+	if !c.isLogined() {
+		c.Finish(c.errorJSON(-1, "还未登录"))
 	}
 }
 
-func (c App) requireAdmin() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+func (c App) requireAdmin() {
+	c.requireUser()
 
 	if !c.currentUser.IsAdmin() {
 		c.Flash.Error("此功能需要管理员权限。")
-		return c.Redirect("/")
+		c.Finish(c.Redirect("/"))
 	}
-
-	return nil
 }
 
 func (c App) isOwner(obj interface{}) bool {

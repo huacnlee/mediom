@@ -21,9 +21,7 @@ func (c Home) Index() revel.Result {
 }
 
 func (c Home) Message() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 
 	ws := c.Request.Websocket
 

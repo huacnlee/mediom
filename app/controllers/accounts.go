@@ -70,16 +70,12 @@ func (c Accounts) Logout() revel.Result {
 }
 
 func (c Accounts) Edit() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	return c.Render()
 }
 
 func (c Accounts) Update() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	c.currentUser.Email = c.Params.Get("email")
 	c.currentUser.GitHub = c.Params.Get("github")
 	c.currentUser.Twitter = c.Params.Get("twitter")

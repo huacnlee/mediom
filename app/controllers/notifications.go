@@ -14,9 +14,7 @@ type Notifications struct {
 //}
 
 func (c Notifications) Index() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	var page int
 	c.Params.Bind(&page, "page")
 	notes, pageInfo := c.currentUser.NotificationsPage(page, 10)
@@ -27,9 +25,7 @@ func (c Notifications) Index() revel.Result {
 }
 
 func (c Notifications) Clear() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 
 	c.currentUser.ClearNotifications()
 	return c.Redirect("/notifications")

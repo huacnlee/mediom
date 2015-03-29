@@ -38,9 +38,7 @@ func (c Topics) Feed() revel.Result {
 }
 
 func (c Topics) New() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	t := &Topic{}
 	c.RenderArgs["nodes"] = FindAllNodes()
 	c.RenderArgs["topic"] = t
@@ -48,9 +46,7 @@ func (c Topics) New() revel.Result {
 }
 
 func (c Topics) Create() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	var nodeId int32
 	c.Params.Bind(&nodeId, "node_id")
 	t := &Topic{
@@ -80,9 +76,7 @@ func (c Topics) Show() revel.Result {
 }
 
 func (c Topics) Edit() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	t := &Topic{}
 	DB.Where("id = ?", c.Params.Get("id")).First(t)
 	if !c.isOwner(t) {
@@ -95,9 +89,7 @@ func (c Topics) Edit() revel.Result {
 }
 
 func (c Topics) Update() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	if !c.isOwner(t) {
@@ -118,9 +110,7 @@ func (c Topics) Update() revel.Result {
 }
 
 func (c Topics) Delete() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	if !c.isOwner(t) {
@@ -136,9 +126,7 @@ func (c Topics) Delete() revel.Result {
 }
 
 func (c Topics) Watch() revel.Result {
-	if r := c.requireUserForJSON(); r != nil {
-		return r
-	}
+	c.requireUserForJSON()
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.Watch(t)
@@ -146,9 +134,7 @@ func (c Topics) Watch() revel.Result {
 }
 
 func (c Topics) UnWatch() revel.Result {
-	if r := c.requireUserForJSON(); r != nil {
-		return r
-	}
+	c.requireUserForJSON()
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.UnWatch(t)
@@ -156,9 +142,7 @@ func (c Topics) UnWatch() revel.Result {
 }
 
 func (c Topics) Star() revel.Result {
-	if r := c.requireUserForJSON(); r != nil {
-		return r
-	}
+	c.requireUserForJSON()
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.Star(t)
@@ -166,9 +150,7 @@ func (c Topics) Star() revel.Result {
 }
 
 func (c Topics) UnStar() revel.Result {
-	if r := c.requireUserForJSON(); r != nil {
-		return r
-	}
+	c.requireUserForJSON()
 	t := Topic{}
 	DB.First(&t, c.Params.Get("id"))
 	c.currentUser.UnStar(t)
@@ -176,9 +158,7 @@ func (c Topics) UnStar() revel.Result {
 }
 
 func (c Topics) Rank() revel.Result {
-	if r := c.requireAdmin(); r != nil {
-		return r
-	}
+	c.requireAdmin()
 
 	rankVal := 0
 	switch strings.ToLower(c.Params.Get("v")) {

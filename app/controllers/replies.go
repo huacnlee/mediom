@@ -13,9 +13,7 @@ type Replies struct {
 }
 
 func (c Replies) Create() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	reply := &Reply{Body: c.Params.Get("body")}
 	err := DB.Where("id = ?", c.Params.Get("id")).First(&c.topic).Error
 	if err != nil {
@@ -34,9 +32,7 @@ func (c Replies) Create() revel.Result {
 }
 
 func (c Replies) Update() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	reply := &Reply{}
 	err := DB.Model(reply).First(reply, c.Params.Get("id")).Error
 	if err != nil {
@@ -54,9 +50,7 @@ func (c Replies) Update() revel.Result {
 }
 
 func (c Replies) Edit() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	reply := &Reply{}
 	err := DB.Model(reply).First(reply, c.Params.Get("id")).Error
 	if err != nil {
@@ -70,9 +64,7 @@ func (c Replies) Edit() revel.Result {
 }
 
 func (c Replies) Delete() revel.Result {
-	if r := c.requireUser(); r != nil {
-		return r
-	}
+	c.requireUser()
 	reply := Reply{}
 	err := DB.First(&reply, c.Params.Get("id")).Error
 	if err != nil {

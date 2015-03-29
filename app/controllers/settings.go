@@ -14,9 +14,7 @@ func init() {
 }
 
 func (c *Settings) Before() revel.Result {
-	if r := c.requireAdmin(); r != nil {
-		return r
-	}
+	c.requireAdmin()
 
 	return nil
 }
