@@ -21,7 +21,9 @@ func (c Home) Index() revel.Result {
 }
 
 func (c Home) Message() revel.Result {
-	c.requireUser()
+	if !c.isLogined() {
+		return nil
+	}
 
 	ws := c.Request.Websocket
 
