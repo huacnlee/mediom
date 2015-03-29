@@ -1,11 +1,20 @@
 ## Forum App by Go
 
-
 ## Requirements
 
-- Go 1.3.x
+- Go 1.3+
 - MySQL
-- Ruby, and install gem: sass, coffee-script
+- Memcached
+- Node.js && node-sass, coffee-script
+
+## Install
+
+For Assets Pipeline
+
+```bash
+$ npm install -g node-sass@2.0.1
+$ npm install -g coffee-script@1.6.2
+```
 
 ## Release
 
