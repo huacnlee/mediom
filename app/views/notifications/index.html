@@ -1,28 +1,37 @@
 {{set . "title" "社区"}}
 {{template "header.html" .}}
 
-<div id="notifications" class="panel panel-default">
-	<div class="panel-heading clearfix">
-		<b>通知</b>{{if .page_info.TotalEntites}} <span class="info">(共 {{.page_info.TotalEntites}} 条)</span>{{end}}
-		<a href="/notifications/clear" class="btn clean-button btn-xs btn-danger" data-method="POST" data-confirm="确定要清空么？">删除所有通知</a>
-	</div>
-	<div class="panel-body">
-		{{if .notifications}}
-			{{range .notifications}}
-			<div class="notification">
-				{{if .IsReply}}
-				{{template "notifications/_reply.html" .}}
-				{{end}}
-				{{if .IsMention}}
-				{{template "notifications/_mention.html" .}}
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div id="notifications" class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<b>通知</b>{{if .page_info.TotalEntites}} <span class="info">(共 {{.page_info.TotalEntites}} 条)</span>{{end}}
+				<div class="pull-right">
+					<a href="/notifications/clear" class="btn clean-button pull-right btn-warning" data-method="POST" data-confirm="确定要清空么？">清空所有通知</a>
+				</div>
+			</div>
+			<div class="panel-body">
+				{{if .notifications}}
+					{{range .notifications}}
+					<div class="notification">
+						{{if eq .Read false}}
+						<i class="unread fa fa-circle" title="未读"></i>
+						{{end}}
+						{{if .IsReply}}
+						{{template "notifications/_reply.html" .}}
+						{{end}}
+						{{if .IsMention}}
+						{{template "notifications/_mention.html" .}}
+						{{end}}
+					</div>
+					{{end}}
+				{{else}}
+					<div class="noresult">暂时没有通知</div>
 				{{end}}
 			</div>
-			{{end}}
-		{{else}}
-			<div class="noresult">暂时没有通知</div>
-		{{end}}
-	</div>
-	<div class="panel-footer">
-		{{paginate .page_info}}
+			<div class="panel-footer">
+				{{paginate .page_info}}
+			</div>
+		</div>
 	</div>
 </div>

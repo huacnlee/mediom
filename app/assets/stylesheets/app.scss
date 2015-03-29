@@ -450,8 +450,13 @@ a.followed {
   }
   .notification {
     position: relative; padding-left: 58px; min-height: 58px;
+    margin-bottom: 15px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid $gray;
+    &:last-child { margin-bottom: 0px; border-bottom: 0px; padding-bottom: 0px; }
+    .unread { color: $blueLight; font-size: 10px;  position: absolute; right: 5px; top: 20px;}
     .avatar { position: absolute; top: 0px; left: 0px; text-align:center; }
-    .info { color: #999; margin-bottom: 8px;}
+    .info { color: #999; margin-bottom: 8px; font-size: 13px; }
   }
 }
 

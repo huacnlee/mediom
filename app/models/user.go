@@ -62,17 +62,24 @@ func (u User) UnReadNotificationsCount() (count int) {
 	return
 }
 
-func PushNotifyInfoToUser(userId int32, note Notification) {
+func PushNotifyInfoToUser(userId int32, note Notification, isNew bool) {
 	u := User{}
 	u.Id = userId
-	actor := User{}
+	unreadCount := u.UnReadNotificationsCount()
 
+	// Set read, update client unread_count
+	if !isNew {
+		go PushMessage(u.NotifyChannelId(), &NotifyInfo{UnreadCount: unreadCount, IsNew: false})
+		return
+	}
+
+	actor := User{}
 	if note.Id > 0 {
 		db.First(&actor, note.ActorId)
 	}
-
 	info := NotifyInfo{
-		UnreadCount: u.UnReadNotificationsCount(),
+		UnreadCount: unreadCount,
+		IsNew:       true,
 		Title:       note.NotifyableTitle(),
 		Avatar:      actor.GavatarURL("256x256"),
 		Path:        note.NotifyableURL(),

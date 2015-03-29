@@ -57,7 +57,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="panel panel-default">
 			<div class="panel-heading">个人介绍</div>
 				<div class="panel-body">
@@ -67,6 +67,17 @@
 						还为编写介绍信息
 					{{end}}
 				</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">最近发帖</div>
+			<div class="panel-body">
+			<ul>
+				{{range .recent_topics}}
+				<li><a href="/topics/{{.Id}}">{{.Title}}</a></li>
+				{{end}}
+			</ul>
+			</div>
 		</div>
 	</div>
 </div>

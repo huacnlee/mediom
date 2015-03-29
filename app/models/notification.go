@@ -21,6 +21,7 @@ type Notification struct {
 
 type NotifyInfo struct {
 	UnreadCount int    `json:"unread_count"`
+	IsNew       bool   `json:"is_new"`
 	Title       string `json:"title"`
 	Avatar      string `json:"avatar"`
 	Path        string `json:"path"`
@@ -89,7 +90,7 @@ func createNotification(notifyType string, userId int32, actorId int32, notifyab
 
 	err := db.Save(&note).Error
 
-	go PushNotifyInfoToUser(userId, note)
+	go PushNotifyInfoToUser(userId, note, true)
 
 	return err
 }
@@ -132,7 +133,7 @@ func (u User) ReadNotifications(notes []Notification) error {
 	}
 	if len(ids) > 0 {
 		err := db.Model(Notification{}).Where("user_id = ? and id in (?)", u.Id, ids).Update("read", true).Error
-		go PushNotifyInfoToUser(u.Id, Notification{})
+		go PushNotifyInfoToUser(u.Id, Notification{}, false)
 		return err
 	}
 
