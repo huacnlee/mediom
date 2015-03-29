@@ -272,6 +272,7 @@ a.followed {
   .node {
     margin-bottom: 10px;
     &:last-child { margin-bottom: 0px; }
+    .media-left { min-width: 100px; }
     label { font-weight: normal; color: #aaa; text-align: right; }
     .name {
       width: 60px;
@@ -314,20 +315,18 @@ a.followed {
   .topic {
     min-height: 68px;
     border-bottom: 1px solid #F0F0F0;
-    padding: 10px 0;
+    padding: 10px 14px;
     margin: 0 -14px;
     vertical-align: top;
     position: relative;
-    padding-left: 74px;
     &:last-child { border-bottom: 0px; }
-    .avatar { position: absolute; top: 10px; left: 14px; text-align:center; }
+    .avatar { text-align:center; }
     .title {
       font-size: 15px;
     }
     .info { color: #aaa; font-size: 12px; margin-top: 10px; }
     .count {
-      width: 100px; text-align: right;
-      position: absolute; right: 14px; top: 25px; float: right;
+      width: 100px; text-align: right; padding-top: 15px;
       a:link,
       a:hover,
       a:visited {

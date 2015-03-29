@@ -234,7 +234,7 @@ func init() {
 		for _, group := range groups {
 			subs = []string{
 				`<div class="node media clearfix">`,
-				fmt.Sprintf(`<label class="media-left col-md-2">%v</label>`, group.Name),
+				fmt.Sprintf(`<label class="media-left">%v</label>`, group.Name),
 				`<div class="nodes media-body">`,
 			}
 			for _, node := range group.Nodes {
