@@ -70,7 +70,6 @@ func (t Topic) updateFollowCounter(ftype string) {
 	if err != nil {
 		fmt.Println("WARNING: updateFollowCounter execute failed: ", err)
 	}
-
 }
 
 func (u User) IsWatched(t Topic) bool {

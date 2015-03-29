@@ -157,6 +157,11 @@ func (t Topic) URL() string {
 	return fmt.Sprintf("%v/topics/%v", "https://127.0.0.1:3000", t.Id)
 }
 
+func (t Topic) FollowerIds() (ids []int32) {
+	db.Model(Followable{}).Where("follow_type = 'Watch' and topic_id = ?", t.Id).Pluck("user_id", &ids)
+	return
+}
+
 func TopicsCountCached() (count int) {
 	if err := cache.Get("topics/total", &count); err != nil {
 		if err = db.Model(Topic{}).Count(&count).Error; err == nil {

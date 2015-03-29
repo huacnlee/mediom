@@ -100,15 +100,28 @@ func (r *Reply) NotifyReply() error {
 		return nil
 	}
 
-	if r.Topic.NewRecord() {
+	t := Topic{}
+
+	err := db.Find(&t, r.TopicId).Error
+	if err != nil {
 		return nil
 	}
 
-	if r.Topic.UserId == r.UserId {
-		return nil
+	if t.UserId != r.UserId {
+		// 跳过回复人
+		go createNotification("Reply", t.UserId, r.UserId, "Reply", r.Id)
 	}
 
-	return createNotification("Reply", r.Topic.UserId, r.UserId, "Reply", r.Id)
+	followerIds := t.FollowerIds()
+	for _, followerId := range followerIds {
+		if followerId == r.UserId || followerId == t.UserId {
+			// 跳过回复人和发帖人
+			continue
+		}
+		go createNotification("Reply", followerId, r.UserId, "Reply", r.Id)
+	}
+
+	return nil
 }
 
 func NotifyMention(userId, actorId int32, notifyableType string, notifyableId int32) error {
