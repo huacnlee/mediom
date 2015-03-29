@@ -286,7 +286,7 @@ a.followed {
 
 .topics {
   .panel-body {
-    padding: 0 14px;
+    padding: 0 15px;
   }
   .node-info {
     .name {
@@ -315,8 +315,8 @@ a.followed {
   .topic {
     min-height: 68px;
     border-bottom: 1px solid #F0F0F0;
-    padding: 10px 14px;
-    margin: 0 -14px;
+    padding: 10px 15px;
+    margin: 0 -15px;
     vertical-align: top;
     position: relative;
     &:last-child { border-bottom: 0px; }
@@ -347,9 +347,9 @@ a.followed {
 .topic-detail {
   margin-bottom: 30px;
   .panel-heading {
-    padding-right: 60px;
+    padding: 15px;
     h1 { margin-top:0; font-size:24px; color:#333;text-align: left; line-height:100%; margin-bottom:8px; }
-    .avatar { position: absolute; top: 10px; right: 25px; text-align:center; }
+    .avatar { text-align:right; }
   }
 
   .label-awesome {
@@ -408,9 +408,8 @@ a.followed {
     }
   }
   .reply {
-    margin: 0 -15px 0 -15px;
-    padding:15px;
-    min-height: 78px;
+    margin: 0 -15px;
+    padding: 10px 15px;
     position: relative;
     border-bottom: 1px solid #eee;
     &:last-child {
@@ -430,15 +429,15 @@ a.followed {
       color:#aaa;
       text-decoration: line-through;
       font-size:12px; text-align:center;
-      .content { margin-left: 0px; }
+      .media-body { margin-left: 0px; }
     }
     &.light { background:#F7F2FC; }
         &.popular { background:#fffce9; }
 
-    .content {
+    .media-body {
       margin-left: 58px;
     }
-    .avatar { position: absolute; top: 14pxpx; left: 14px; text-align:center; }
+    .avatar { text-align:center; }
     .info { font-size: 12px; }
   }
 }
@@ -448,13 +447,13 @@ a.followed {
     .clean-button { margin-left: 10px; }
   }
   .notification {
-    position: relative; padding-left: 58px; min-height: 58px;
+    position: relative;
     margin-bottom: 15px;
-    padding-bottom: 3px;
+    padding-bottom: 15px;
     border-bottom: 1px solid $gray;
     &:last-child { margin-bottom: 0px; border-bottom: 0px; padding-bottom: 0px; }
     .unread { color: $blueLight; font-size: 10px;  position: absolute; right: 5px; top: 20px;}
-    .avatar { position: absolute; top: 0px; left: 0px; text-align:center; }
+    .avatar { text-align:center; }
     .info { color: #999; margin-bottom: 8px; font-size: 13px; }
   }
 }

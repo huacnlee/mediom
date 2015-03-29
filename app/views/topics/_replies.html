@@ -3,14 +3,14 @@
 	<div class="panel-body">
 	{{if .replies}}
 		{{range $idx, $reply := .replies}}
-		<div id="reply{{plus $idx 1}}" class="reply{{if $reply.IsDeleted}} deleted{{end}}">
+		<div id="reply{{plus $idx 1}}" class="media reply{{if $reply.IsDeleted}} deleted{{end}}">
 			{{if $reply.IsDeleted}}
-			<div class="content">回复已删除</div>
+			<div class="media-body">回复已删除</div>
 			{{else}}
-				<div class="avatar">
+				<div class="avatar media-left">
 					{{user_avatar_tag $reply.User "96x96"}}
 				</div>
-				<div class="content">
+				<div class="media-body">
 					<div class="info">
 						{{user_name_tag $reply.User}} at {{timeago $reply.CreatedAt}}
 						<div class="pull-right opts">

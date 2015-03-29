@@ -4,16 +4,18 @@
 <div class="row">
 	<div class="col-md-9">
 	  <div class="topic-detail panel panel-default">
-			<div class="panel-heading clearfix">
-		    <h1>{{.topic.Title}} {{awesome_icon_tag .topic}}</h1>
-		    <div class="info">
-					{{node_name_tag .topic.Node}}
-					{{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
-					{{if .topic.LastReplyUserLogin}}
-					・ 最后由 {{user_name_tag .topic.LastReplyUserLogin}} 于 {{timeago .topic.LastRepliedAt}}回复
-					{{end}}
-		    </div>
-				<div class="avatar">
+			<div class="panel-heading media clearfix">
+				<div class="media-body">
+				    <h1 class="media-heading">{{.topic.Title}} {{awesome_icon_tag .topic}}</h1>
+				    <div class="info">
+							{{node_name_tag .topic.Node}}
+							{{user_name_tag .topic.User}} 发表于 {{timeago .topic.CreatedAt}}
+							{{if .topic.LastReplyUserLogin}}
+							・ 最后由 {{user_name_tag .topic.LastReplyUserLogin}} 于 {{timeago .topic.LastRepliedAt}}回复
+							{{end}}
+				    </div>
+			    </div>
+				<div class="avatar media-right">
 					{{user_avatar_tag .topic.User "96x96"}}
 				</div>
 			</div>

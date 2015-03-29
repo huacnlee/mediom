@@ -13,9 +13,11 @@
 			<div class="panel-body">
 				{{if .notifications}}
 					{{range .notifications}}
-					<div class="notification">
+					<div class="notification media">
 						{{if eq .Read false}}
-						<i class="unread fa fa-circle" title="未读"></i>
+						<div class="media-right">
+							<i class="unread fa fa-circle" title="未读"></i>
+						</div>
 						{{end}}
 						{{if .IsReply}}
 						{{template "notifications/_reply.html" .}}

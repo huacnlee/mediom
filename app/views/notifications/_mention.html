@@ -1,19 +1,21 @@
-<div class="avatar">
+<div class="avatar media-left">
 	{{user_avatar_tag .Actor "96x96"}}
 </div>
-{{if .IsNotifyableReply}}
-<div class="info">
-	{{user_name_tag .Actor}} 于 {{timeago .CreatedAt}} 在话题 <a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a> 回帖提及了你
+<div class="media-body">
+    {{if .IsNotifyableReply}}
+    <div class="info">
+    	{{user_name_tag .Actor}} 于 {{timeago .CreatedAt}} 在话题 <a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a> 回帖提及了你
+    </div>
+    <div class="summary markdown">
+    	{{markdown .Reply.Body}}
+    </div>
+    {{end}}
+    {{if .IsNotifyableTopic}}
+    <div class="info">
+    	{{user_name_tag .Actor}} 于 {{timeago .CreatedAt}} 发帖 <a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a> 提及了你:
+    	<div class="summary markdown">
+    	{{markdown .Topic.Body}}
+    	</div>
+    </div>
+    {{end}}
 </div>
-<div class="summary  markdown">
-	{{markdown .Reply.Body}}
-</div>
-{{end}}
-{{if .IsNotifyableTopic}}
-<div class="info">
-	{{user_name_tag .Actor}} 于 {{timeago .CreatedAt}} 发帖 <a href="{{.NotifyableURL}}">{{.NotifyableTitle}}</a> 提及了你:
-	<div class="summary markdown">
-	{{markdown .Topic.Body}}
-	</div>
-</div>
-{{end}}
