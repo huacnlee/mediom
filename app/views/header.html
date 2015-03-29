@@ -18,20 +18,17 @@
         <div class="navbar-header">
           <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <i class="fa fa-reorder"></i>
           </button>
           <a href="/" class="navbar-brand">{{.app_name}}</a>
         </div>
         <nav class="navbar-collapse bs-navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/" class="home {{active_class .controller_name "home"}}">首页</a></li>
             <li><a href="/topics" class="topics {{active_class .controller_name "topics"}}">社区</a></li>
           </ul>
           {{if .logined}}
   				<ul class="nav navbar-nav navbar-right">
-            <li class="nav-search">
+            <li class="nav-search hidden-xs">
               <form class="navbar-form form-search" action="/search" method="GET">
                 <div class="form-group">
                   <input class="form-control" name="q" type="text" placeholder="搜索本站内容" />
@@ -47,15 +44,16 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{.current_user.Login}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-  						 <li><a href="/{{.current_user.Login}}">个人主页</a></li>
-  						 <li class="divider"></li>
-  						 <li><a href="/account/edit">个人设置</a></li>
+  						  <li><a href="/{{.current_user.Login}}">个人主页</a></li>
+  						  <li class="divider"></li>
                 <li><a href="/topics/new">发布话题</a></li>
   							{{if .current_user.IsAdmin}}
   							<li class="divider"></li>
   							<li><a href="/nodes">节点管理</a></li>
   							<li><a href="/settings">设置项</a></li>
   							{{end}}
+                <li class="divider"></li>
+                <li><a href="/account/edit">个人设置</a></li>
                 <li class="divider"></li>
                 <li><a href="/signout" data-method="post" rel="nofollow">登出</a></li>
               </ul>
