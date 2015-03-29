@@ -55,10 +55,10 @@ body {
   nav.navbar-collapse.bs-navbar-collapse { border-color: rgba(255,255,255,0.3); }
   .navbar-inverse .navbar-nav>.open>a,
   .navbar-inverse .navbar-nav>.open>a:focus,
-  .navbar-inverse .navbar-nav>.open>a:hover { background: $blueDark}
-  .navbar-inverse .navbar-nav .open .dropdown-menu>li>a { color: $blueText; }
-  .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover { background-color: rgba(255,255,255,0.05); }
-  .navbar-inverse .navbar-nav .open .dropdown-menu .divider { background-color: rgba(255,255,255,0.1); }
+  .navbar-inverse .bs-navbar-collapse.in .navbar-nav>.open>a:hover { background: $blueDark}
+  .navbar-inverse .bs-navbar-collapse.in .navbar-nav .open .dropdown-menu>li>a { color: $blueText; }
+  .navbar-inverse .bs-navbar-collapse.in .navbar-nav .open .dropdown-menu>li>a:hover { background-color: rgba(255,255,255,0.05); }
+  .navbar-inverse .bs-navbar-collapse.in .navbar-nav .open .dropdown-menu .divider { background-color: rgba(255,255,255,0.1); }
   .navbar-nav {
     a { }
     a.active { border-bottom:5px solid $blueDark; padding-bottom: 10px;}
