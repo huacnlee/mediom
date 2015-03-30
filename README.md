@@ -9,14 +9,29 @@
 
 ## Install
 
-For Assets Pipeline
+### For Assets Pipeline
 
 ```bash
 $ npm install -g node-sass@2.0.1
 $ npm install -g coffee-script@1.6.2
 ```
 
-## Release
+### Download & Install Go:
+
+https://golang.org/dl/
+
+## Clone source code, and run:
+
+```
+cd $GOPATH/src
+git clone https://github.com/huacnlee/mediom.git
+cd github.com/huacnlee/mediom
+go get
+go get github.com/revel/cmd/revel
+revel run github.com/huacnlee/mediom
+```
+
+## Release for production
 
 ```bash
 GOOS=linux GOARCH=amd64 revel package github.com/huacnlee/mediom
