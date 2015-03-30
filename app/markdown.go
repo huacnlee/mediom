@@ -16,7 +16,7 @@ func MarkdownGitHub(input []byte) []byte {
 	htmlFlags := HTML_USE_XHTML
 	htmlFlags |= HTML_SKIP_HTML
 	htmlFlags |= HTML_SKIP_STYLE
-	htmlFlags |= HTML_SKIP_LINKS
+	// htmlFlags |= HTML_SKIP_LINKS
 	htmlFlags |= HTML_SKIP_SCRIPT
 	htmlFlags |= HTML_OMIT_CONTENTS
 	htmlFlags |= HTML_COMPLETE_PAGE
