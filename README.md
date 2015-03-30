@@ -19,7 +19,7 @@ $ npm install -g coffee-script@1.6.2
 ## Release
 
 ```bash
-GOOS=linux GOARCH=amd64 revel package mediom
+GOOS=linux GOARCH=amd64 revel package github.com/huacnlee/mediom
 ```
 
 ## Example
