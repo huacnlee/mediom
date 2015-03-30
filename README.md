@@ -30,4 +30,4 @@ GOOS=linux GOARCH=amd64 revel package mediom
 
 ## Try it online:
 
-http://go.ruby-china.org/
+http://115.29.238.54
