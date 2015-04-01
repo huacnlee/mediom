@@ -41,7 +41,7 @@ func (c Accounts) Create() revel.Result {
 		return c.renderValidation("accounts/new.html", v)
 	}
 
-	newUser, v = u.Signup(c.Params.Get("login"), c.Params.Get("password"), c.Params.Get("password-confirm"))
+	newUser, v = u.Signup(c.Params.Get("login"), c.Params.Get("email"), c.Params.Get("password"), c.Params.Get("password-confirm"))
 	if v.HasErrors() {
 		return c.renderValidation("accounts/new.html", v)
 	}

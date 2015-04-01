@@ -97,11 +97,14 @@ func (u User) EncodePassword(raw string) (md5Digest string) {
 	return
 }
 
-func (u User) Signup(login string, password string, passwordConfirm string) (user User, v revel.Validation) {
+func (u User) Signup(login string, email string, password string, passwordConfirm string) (user User, v revel.Validation) {
 	u.Login = strings.ToLower(strings.Trim(login, " "))
+	u.Email = strings.ToLower(strings.Trim(email, " "))
 
+	v.Required(email).Key("Email").Message("不能为空")
 	v.MinSize(login, 5).Key("用户名").Message("最少要 5 个字符")
 	v.MinSize(password, 6).Key("密码").Message("最少要 6 个字符")
+	v.Email(email).Key("Email").Message("格式不正确")
 
 	if password != passwordConfirm {
 		v.Error("密码与确认密码不一致")
