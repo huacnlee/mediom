@@ -3,16 +3,28 @@ package controllers
 import (
 	. "github.com/huacnlee/mediom/app/models"
 	"github.com/revel/revel"
+	"regexp"
 )
 
 type Accounts struct {
 	App
 }
 
-//func init() {
-//	revel.InterceptMethod((*Accounts).Before, revel.BEFORE)
-//	revel.InterceptMethod((*Accounts).After, revel.AFTER)
-//}
+func init() {
+	revel.InterceptMethod((*Accounts).Before, revel.BEFORE)
+	// revel.InterceptMethod((*Accounts).After, revel.AFTER)
+}
+
+var (
+	regexRequireUserActions, _ = regexp.Compile("Edit|Update|Password|UpdatePassword")
+)
+
+func (c *Accounts) Before() revel.Result {
+	if regexRequireUserActions.MatchString(c.Action) {
+		c.requireUser()
+	}
+	return nil
+}
 
 func (c Accounts) New() revel.Result {
 	return c.Render()
@@ -70,12 +82,10 @@ func (c Accounts) Logout() revel.Result {
 }
 
 func (c Accounts) Edit() revel.Result {
-	c.requireUser()
 	return c.Render()
 }
 
 func (c Accounts) Update() revel.Result {
-	c.requireUser()
 	c.currentUser.Email = c.Params.Get("email")
 	c.currentUser.GitHub = c.Params.Get("github")
 	c.currentUser.Twitter = c.Params.Get("twitter")
@@ -90,4 +100,17 @@ func (c Accounts) Update() revel.Result {
 	}
 	c.Flash.Success("个人信息修改成功")
 	return c.Redirect("/account/edit")
+}
+
+func (c Accounts) Password() revel.Result {
+	return c.Render()
+}
+
+func (c Accounts) UpdatePassword() revel.Result {
+	v := c.currentUser.UpdatePassword(c.Params.Get("password"), c.Params.Get("new-password"), c.Params.Get("confirm-password"))
+	if v.HasErrors() {
+		return c.renderValidation("accounts/password.html", v)
+	}
+	c.Flash.Success("密码修改成功")
+	return c.Redirect("/account/password")
 }

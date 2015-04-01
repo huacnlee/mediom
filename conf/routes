@@ -10,6 +10,8 @@ POST		/signin			Accounts.LoginCreate
 POST    /signout         Accounts.Logout
 GET     /account/edit     Accounts.Edit
 POST    /account          Accounts.Update
+GET     /account/password     Accounts.Password
+POST    /account/password/update     Accounts.UpdatePassword
 
 GET     /topics           Topics.Index
 GET     /topics/feed           Topics.Feed

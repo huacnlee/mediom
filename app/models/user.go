@@ -163,6 +163,28 @@ func UpdateUserProfile(u User) (user User, v revel.Validation) {
 	return u, v
 }
 
+func (u User) UpdatePassword(oldPassword, newPassword, confirmPassword string) (v revel.Validation) {
+	user := User{}
+	v.Required(oldPassword).Key("旧密码").Message("不能为空")
+	db.First(&user, "id = ? and password = ?", u.Id, u.EncodePassword(oldPassword))
+	if user.NewRecord() {
+		v.Error("旧密码不正确")
+	}
+	v.MinSize(newPassword, 6).Key("新密码").Message("最少要 6 个子符")
+	if newPassword != confirmPassword {
+		v.Error("新密码与确认新密码输入的内容不一致")
+	}
+	if v.HasErrors() {
+		return v
+	}
+
+	err := db.Model(u).Update("password", u.EncodePassword(newPassword)).Error
+	if err != nil {
+		v.Error(err.Error())
+	}
+	return v
+}
+
 func FindUserByLogin(login string) (u User, err error) {
 	err = db.Where("login = ?", strings.ToLower(login)).First(&u).Error
 	return

@@ -65,6 +65,15 @@ func (c *App) prependCurrentUser() {
 	c.currentUser = u
 }
 
+func (c *App) CurrentUser() *User {
+	if c.currentUser != nil {
+		return c.currentUser
+	}
+
+	c.prependCurrentUser()
+	return c.currentUser
+}
+
 func (c App) storeUser(u *User) {
 	if u.Id == 0 {
 		return
@@ -76,8 +85,8 @@ func (c App) clearUser() {
 	c.Session["user_id"] = ""
 }
 
-func (c App) isLogined() bool {
-	return c.currentUser.Id > 0
+func (c *App) isLogined() bool {
+	return c.CurrentUser().Id > 0
 }
 
 func (c *App) requireUser() {
