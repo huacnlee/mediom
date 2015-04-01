@@ -231,18 +231,22 @@ a { color: $blue; }
   }
 }
 
+.nav-stacked { margin-bottom: 15px; }
 .nav-stacked.nav-pills>li>a {
   text-align: right;
-  border-radius: 0px;
-  margin-bottom: 10px;
-  background: #fff; border-left: 2px solid $blackLight; color: #666; padding: 5px 8px; }
+  border-radius: 3px 0 0 3px;
+  box-shadow: 0 0px 1px rgba(0, 0, 0, 0.09);
+  padding: 5px 15px;
+  margin-bottom: 0px;
+  background: #fff; border-right:2px solid $blackLight; color: #666;
+}
 .nav-stacked.nav-pills>li>a:hover { border-color: $blueLight; color: $blueLight; background-color: #fff; }
 .nav-stacked.nav-pills>li.active>a,
 .nav-stacked.nav-pills>li.active>a:focus,
 .nav-stacked.nav-pills>li.active>a:hover {
-  color: #fff;
-  background-color: $blueLight;
-  border-color: $blueDark;
+  color: $red;
+  background-color: #FFF;
+  border-color: $redLight;
 }
 
 
