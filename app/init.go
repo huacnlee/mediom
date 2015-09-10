@@ -19,7 +19,7 @@ func init() {
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter,						 // Recover from panics and display an error page instead.
-    AdminFilter,
+	AdminFilter,
 		revel.RouterFilter,						 // Use the routing table to select the right Action
 		revel.FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
 		revel.ParamsFilter,						 // Parse parameters into Controller.Params.
@@ -80,12 +80,12 @@ func initAdmin() {
   topic.IndexAttrs("Id", "UserId", "Title", "NodeId", "RepliesCount", "CreatedAt", "UpdatedAt")
 
 	Admin.AddResource(&models.Reply{})
-  Admin.AddResource(&models.User{})
-  Admin.AddResource(&models.Node{})
-  Admin.AddResource(&models.Notification{})
+	Admin.AddResource(&models.User{})
+	Admin.AddResource(&models.Node{})
+	Admin.AddResource(&models.Notification{})
 
 
 	mux = http.NewServeMux()
-  mux.Handle("/system/", http.FileServer(http.Dir("public")))
+	mux.Handle("/system/", http.FileServer(http.Dir("public")))
 	Admin.MountTo("/admin", mux)
 }
