@@ -23,18 +23,20 @@ https://golang.org/dl/
 ## Clone source code, and run:
 
 ```
+go get github.com/revel/cmd/revel
 cd $GOPATH/src
 git clone https://github.com/huacnlee/mediom.git
 cd github.com/huacnlee/mediom
-go get
-go get github.com/revel/cmd/revel
-revel run github.com/huacnlee/mediom
+make install
+make server
 ```
 
 ## Release for production
 
+This will build for Linux amd64
+
 ```bash
-GOOS=linux GOARCH=amd64 revel package github.com/huacnlee/mediom
+make release
 ```
 
 ## Example
