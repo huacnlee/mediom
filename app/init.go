@@ -4,11 +4,11 @@ import (
 	"github.com/cbonello/revel-csrf"
 	"github.com/huacnlee/mediom/app/models"
 	"github.com/huacnlee/train"
-	"github.com/revel/revel"
 	"github.com/qor/qor"
 	"github.com/qor/qor/admin"
+	"github.com/revel/revel"
+	"net/http"
 	"strings"
-  "net/http"
 )
 
 var Admin *admin.Admin
@@ -18,19 +18,19 @@ func init() {
 	// fmt.Println("Start app with dev mode:", revel.Config.BoolDefault("mode.dev", false))
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
-		revel.PanicFilter,						 // Recover from panics and display an error page instead.
-	AdminFilter,
-		revel.RouterFilter,						 // Use the routing table to select the right Action
+		revel.PanicFilter, // Recover from panics and display an error page instead.
+		AdminFilter,
+		revel.RouterFilter,            // Use the routing table to select the right Action
 		revel.FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
-		revel.ParamsFilter,						 // Parse parameters into Controller.Params.
-		revel.SessionFilter,					 // Restore and write the session cookie.
-		revel.FlashFilter,						 // Restore and write the flash cookie.
-		csrf.CSRFFilter,							 // CSRF
-		revel.ValidationFilter,				 // Restore kept validation errors and save new ones from cookie.
-		revel.I18nFilter,							 // Resolve the requested language
-		revel.InterceptorFilter,			 // Run interceptors around the action.
-		revel.CompressFilter,					 // Compress the result.
-		revel.ActionInvoker,					 // Invoke the action.
+		revel.ParamsFilter,            // Parse parameters into Controller.Params.
+		revel.SessionFilter,           // Restore and write the session cookie.
+		revel.FlashFilter,             // Restore and write the flash cookie.
+		csrf.CSRFFilter,               // CSRF
+		revel.ValidationFilter,        // Restore kept validation errors and save new ones from cookie.
+		revel.I18nFilter,              // Resolve the requested language
+		revel.InterceptorFilter,       // Run interceptors around the action.
+		revel.CompressFilter,          // Compress the result.
+		revel.ActionInvoker,           // Invoke the action.
 	}
 
 	train.Config.AssetsPath = "app/assets"
@@ -77,13 +77,12 @@ func initAdmin() {
 	Admin.AddResource(&admin.AssetManager{}, &admin.Config{Invisible: true})
 
 	topic := Admin.AddResource(&models.Topic{})
-  topic.IndexAttrs("Id", "UserId", "Title", "NodeId", "RepliesCount", "CreatedAt", "UpdatedAt")
+	topic.IndexAttrs("Id", "UserId", "Title", "NodeId", "RepliesCount", "CreatedAt", "UpdatedAt")
 
 	Admin.AddResource(&models.Reply{})
 	Admin.AddResource(&models.User{})
 	Admin.AddResource(&models.Node{})
 	Admin.AddResource(&models.Notification{})
-
 
 	mux = http.NewServeMux()
 	mux.Handle("/system/", http.FileServer(http.Dir("public")))
