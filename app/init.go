@@ -1,17 +1,22 @@
 package app
 
 import (
+	"fmt"
 	"github.com/cbonello/revel-csrf"
 	"github.com/huacnlee/mediom/app/models"
 	"github.com/huacnlee/train"
 	"github.com/qor/qor"
 	"github.com/qor/qor/admin"
+	"github.com/qor/qor/publish"
+	"github.com/qor/qor/sorting"
+	"github.com/qor/qor/validations"
 	"github.com/revel/revel"
 	"net/http"
 	"strings"
 )
 
 var Admin *admin.Admin
+var Publish *publish.Publish
 var mux *http.ServeMux
 
 func init() {
@@ -73,18 +78,66 @@ var AdminFilter = func(c *revel.Controller, fc []revel.Filter) {
 
 func initAdmin() {
 	Admin = admin.New(&qor.Config{DB: models.DB})
+	Publish = publish.New(models.DB)
+	sorting.RegisterCallbacks(models.DB)
+	validations.RegisterCallbacks(models.DB)
+
+	nodeSelectMeta := &admin.Meta{Name: "NodeId", Type: "select_one", Collection: nodeCollection}
+	bodyMeta := &admin.Meta{Name: "Body", Type: "text"}
 
 	Admin.AddResource(&admin.AssetManager{}, &admin.Config{Invisible: true})
 
 	topic := Admin.AddResource(&models.Topic{})
+	topic.SearchAttrs("Title")
+	topic.NewAttrs("Title", "NodeId", "Body", "UserId")
+	topic.EditAttrs("Title", "NodeId", "Body", "UserId")
 	topic.IndexAttrs("Id", "UserId", "Title", "NodeId", "RepliesCount", "CreatedAt", "UpdatedAt")
+	topic.Meta(bodyMeta)
+	topic.Meta(nodeSelectMeta)
 
-	Admin.AddResource(&models.Reply{})
-	Admin.AddResource(&models.User{})
-	Admin.AddResource(&models.Node{})
-	Admin.AddResource(&models.Notification{})
+	reply := Admin.AddResource(&models.Reply{})
+	reply.NewAttrs("TopicId", "UserId", "Body")
+	reply.EditAttrs("Body")
+	reply.IndexAttrs("Id", "Topic", "User", "Body", "CreatedAt", "UpdatedAt")
+	reply.Meta(bodyMeta)
+
+	user := Admin.AddResource(&models.User{})
+	user.SearchAttrs("Login", "Email")
+	user.EditAttrs("Login", "Email", "Location", "GitHub", "Twitter", "HomePage", "Tagline", "Description")
+	user.IndexAttrs("Id", "Login", "Email", "Location", "CreatedAt", "UpdatedAt")
+
+	node := Admin.AddResource(&models.Node{})
+	node.IndexAttrs("Id", "NodeGroupId", "Name", "Summary", "Sort")
+	node.NewAttrs("NodeGroupId", "Name", "Summary", "Sort")
+	node.EditAttrs("NodeGroupId", "Name", "Summary", "Sort")
+	node.Meta(&admin.Meta{Name: "NodeGroupId", Type: "select_one", Collection: nodeGroupCollection})
+
+	nodeGroup := Admin.AddResource(&models.NodeGroup{})
+	nodeGroup.IndexAttrs("Id", "Name", "Sort")
+	nodeGroup.NewAttrs("Name", "Sort")
+	nodeGroup.EditAttrs("Name", "Sort")
+
+	notification := Admin.AddResource(&models.Notification{})
+	notification.EditAttrs("Id")
+	notification.IndexAttrs("Id", "UserId", "ActorId", "NotifyType", "Read", "NotifyableType", "NotifyableId", "CreatedAt", "UpdatedAt")
 
 	mux = http.NewServeMux()
 	mux.Handle("/system/", http.FileServer(http.Dir("public")))
 	Admin.MountTo("/admin", mux)
+}
+
+func nodeCollection(resource interface{}, context *qor.Context) (results [][]string) {
+	nodes := models.FindAllNodes()
+	for _, node := range nodes {
+		results = append(results, []string{fmt.Sprintf("%v", node.Id), node.Name})
+	}
+	return
+}
+
+func nodeGroupCollection(resource interface{}, context *qor.Context) (results [][]string) {
+	groups := models.FindAllNodeGroups()
+	for _, group := range groups {
+		results = append(results, []string{fmt.Sprintf("%v", group.Id), group.Name})
+	}
+	return
 }
