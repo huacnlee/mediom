@@ -39,16 +39,6 @@ POST    /replies/:id/delete          Replies.Delete
 GET     /notifications            Notifications.Index
 POST    /notifications/clear      Notifications.Clear
 
-GET     /nodes            Nodes.Index
-POST    /nodes            Nodes.Create
-GET     /nodes/:id/edit            Nodes.Edit
-POST    /nodes/:id            Nodes.Update
-POST    /nodes/:id/delete            Nodes.Delete
-
-GET     /settings                 Settings.Index
-GET     /settings/:key/edit       Settings.Edit
-POST    /settings/:key            Settings.Update
-
 GET     /captcha                  App.Captcha
 
 GET     /:login             Users.Show

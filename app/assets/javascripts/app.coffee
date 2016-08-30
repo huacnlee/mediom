@@ -180,5 +180,5 @@ AppView = Backbone.View.extend
     $(".header .form-search").removeClass("active")
     return false
 
-$(document).on "ready page:load", ->
+document.addEventListener "turbolinks:load", ->
   new AppView()

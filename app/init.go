@@ -85,8 +85,6 @@ func initAdmin() {
 	nodeSelectMeta := &admin.Meta{Name: "NodeId", Type: "select_one", Collection: nodeCollection}
 	bodyMeta := &admin.Meta{Name: "Body", Type: "text"}
 
-  // Admin.AddResource(&admin.AssetManager{}, &admin.Config{Invisible: true})
-
 	topic := Admin.AddResource(&models.Topic{})
 	topic.SearchAttrs("Title")
 	topic.NewAttrs("Title", "NodeId", "Body", "UserId")
@@ -94,6 +92,11 @@ func initAdmin() {
 	topic.IndexAttrs("Id", "UserId", "Title", "NodeId", "RepliesCount", "CreatedAt", "UpdatedAt")
 	topic.Meta(bodyMeta)
 	topic.Meta(nodeSelectMeta)
+
+	setting := Admin.AddResource(&models.Setting{})
+	setting.NewAttrs("Key", "Val")
+	setting.EditAttrs("Key", "Val")
+	setting.IndexAttrs("Id", "Key", "CreatedAt", "UpdatedAt")
 
 	reply := Admin.AddResource(&models.Reply{})
 	reply.NewAttrs("TopicId", "UserId", "Body")
