@@ -12,18 +12,18 @@ type Topic struct {
 	BaseModel
 	UserId             int32 `sql:"not null"`
 	User               User
-	NodeId             int32
+	NodeId             int32 `sql:"not null"`
 	Node               Node
 	Title              string `sql:"size:300;not null"`
 	Body               string `sql:"type:text;not null"`
 	Replies            []Reply
 	RepliesCount       int32 `sql:"not null;default: 0"`
 	LastActiveMark     int64 `sql:"not null; default: 0"`
-	LastRepliedAt      time.Time
-	LastReplyId        int32
-	LastReplyUserId    int32
-	LastReplyUser      User `sql:"size:255"`
-	LastReplyUserLogin string
+	LastRepliedAt      *time.Time
+	LastReplyId        *int32
+	LastReplyUserId    *int32
+	LastReplyUser      User
+	LastReplyUserLogin *string `sql:"size:255"`
 	StarsCount         int32 `sql:"not null; default: 0"`
 	WatchesCount       int32 `sql:"not null; default: 0"`
 	Rank               int32 `sql:"not null; default: 0"`
@@ -92,7 +92,7 @@ func CreateTopic(t *Topic) revel.Validation {
 	t.LastActiveMark = time.Now().Unix()
 	err := db.Save(t).Error
 	if err != nil {
-		v.Error("服务器异常创建失败")
+		v.Error("服务器异常创建失败", err)
 	}
 	return v
 }

@@ -43,9 +43,9 @@ func InitDatabase() {
 	db.LogMode(false)
 	logger = Logger{log.New(os.Stdout, "  ", 0)}
 	db.SetLogger(logger)
-	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &NodeGroup{}, &Followable{}, &Notification{}, &Setting{})
-	db.Model(NodeGroup{}).AddIndex("index_on_sort", "sort")
-	db.Model(Node{}).AddIndex("index_on_group_and_sort", "node_group_id", "sort")
+	db.AutoMigrate(&User{}, &Topic{}, &Reply{}, &Node{}, &Followable{}, &Notification{}, &Setting{})
+	db.Model(Node{}).AddIndex("index_on_parent_id", "parent_id")
+	db.Model(Node{}).AddIndex("index_on_parent_id_and_sort", "parent_id", "sort")
 	db.Model(User{}).AddUniqueIndex("index_on_login", "login")
 	db.Model(Topic{}).AddIndex("index_on_user_id", "user_id")
 	db.Model(Topic{}).AddIndex("index_on_last_active_mark_deleted_at", "last_active_mark", "deleted_at")

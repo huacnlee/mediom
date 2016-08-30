@@ -8,7 +8,7 @@
 		<input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
 		<div class="form-group">
 			<div class="input-group">
-				{{select_tag .groups "Name" "Id" "node_group_id" .node.NodeGroupId}}
+				{{select_tag .groups "Name" "Id" "parent_id" .node.ParentId}}
 				<input type="text" class="form-control" value="{{.node.Name}}" name="name" placeholder="节点名称" />
 			</div>
 		</div>

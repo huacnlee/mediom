@@ -8,9 +8,9 @@ import (
 type Followable struct {
 	Id         int32
 	FollowType string `sql:"size:20; not null"`
-	TopicId    int32
+	TopicId    int32 `sql:"not null"`
 	Topic      Topic
-	UserId     int32
+	UserId     int32 `sql:"not null"`
 	User       User
 	CreatedAt  time.Time
 	UpdatedAt  time.Time

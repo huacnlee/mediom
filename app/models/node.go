@@ -9,17 +9,11 @@ type Node struct {
 	BaseModel
 	Name        string `sql:"not null"`
 	Summary     string `sql:"type:text"`
-	NodeGroupId int
+	ParentId    *int
 	Sort        int `sql:"default: 0; not null"`
+	Children    []Node `gorm:"ForeignKey:ParentId"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-}
-
-type NodeGroup struct {
-	Id    int32
-	Name  string
-	Sort  int `sql:"default: 0; not null"`
-	Nodes []Node
 }
 
 func (n *Node) validate() (v revel.Validation) {
@@ -58,8 +52,8 @@ func UpdateNode(n *Node) revel.Validation {
 	return v
 }
 
-func FindAllNodeGroups() (groups []*NodeGroup) {
-	db.Preload("Nodes").Order("sort desc").Find(&groups)
+func FindAllNodeRoots() (roots []*Node) {
+	db.Preload("Children").Order("sort desc").Where("parent_id is null or parent_id = 0").Find(&roots)
 	return
 }
 

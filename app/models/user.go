@@ -37,7 +37,7 @@ func (u User) BeforeCreate() error {
 
 func (u User) GavatarURL(size string) string {
 	emailMD5 := u.EncodePassword(u.Email)
-	return fmt.Sprintf("https://ruby-china.org/avatar/%v?s=%v", emailMD5, size)
+	return fmt.Sprintf("https://gravatar.com/avatar/%v?s=%v", emailMD5, size)
 }
 
 func (u User) NotifyChannelId() string {

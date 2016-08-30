@@ -110,15 +110,10 @@ func initAdmin() {
 	user.IndexAttrs("Id", "Login", "Email", "Location", "CreatedAt", "UpdatedAt")
 
 	node := Admin.AddResource(&models.Node{})
-	node.IndexAttrs("Id", "NodeGroupId", "Name", "Summary", "Sort")
-	node.NewAttrs("NodeGroupId", "Name", "Summary", "Sort")
-	node.EditAttrs("NodeGroupId", "Name", "Summary", "Sort")
-	node.Meta(&admin.Meta{Name: "NodeGroupId", Type: "select_one", Collection: nodeGroupCollection})
+	node.IndexAttrs("Id", "ParentId", "Name", "Summary", "Sort")
+	node.NewAttrs("ParentId", "Name", "Summary", "Sort")
+	node.EditAttrs("ParentId", "Name", "Summary", "Sort")
 
-	nodeGroup := Admin.AddResource(&models.NodeGroup{})
-	nodeGroup.IndexAttrs("Id", "Name", "Sort")
-	nodeGroup.NewAttrs("Name", "Sort")
-	nodeGroup.EditAttrs("Name", "Sort")
 
 	notification := Admin.AddResource(&models.Notification{})
 	notification.EditAttrs("Id")
@@ -137,10 +132,10 @@ func nodeCollection(resource interface{}, context *qor.Context) (results [][]str
 	return
 }
 
-func nodeGroupCollection(resource interface{}, context *qor.Context) (results [][]string) {
-	groups := models.FindAllNodeGroups()
-	for _, group := range groups {
-		results = append(results, []string{fmt.Sprintf("%v", group.Id), group.Name})
+func nodeRootCollection(resource interface{}, context *qor.Context) (results [][]string) {
+	roots := models.FindAllNodeRoots()
+	for _, node := range roots {
+		results = append(results, []string{fmt.Sprintf("%v", node.Id), node.Name})
 	}
 	return
 }

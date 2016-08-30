@@ -227,17 +227,17 @@ func init() {
 	}
 
 	revel.TemplateFuncs["node_list"] = func() interface{} {
-		groups := FindAllNodeGroups()
+		roots := FindAllNodeRoots()
 		outs := []string{}
 		subs := []string{}
 		outs = append(outs, `<div class="row node-list">`)
-		for _, group := range groups {
+		for _, root := range roots {
 			subs = []string{
 				`<div class="node media clearfix">`,
-				fmt.Sprintf(`<label class="media-left">%v</label>`, group.Name),
+				fmt.Sprintf(`<label class="media-left">%v</label>`, root.Name),
 				`<div class="nodes media-body">`,
 			}
-			for _, node := range group.Nodes {
+			for _, node := range root.Children {
 				subs = append(subs, fmt.Sprintf(`<span class="name"><a href="/topics/node/%v">%v</a></span>`, node.Id, node.Name))
 			}
 			subs = append(subs, "</div></div>")
