@@ -6,10 +6,10 @@ import (
 	"github.com/huacnlee/mediom/app/models"
 	"github.com/huacnlee/train"
 	"github.com/qor/qor"
-	"github.com/qor/qor/admin"
-	"github.com/qor/qor/publish"
-	"github.com/qor/qor/sorting"
-	"github.com/qor/qor/validations"
+	"github.com/qor/admin"
+	"github.com/qor/publish"
+	"github.com/qor/sorting"
+	"github.com/qor/validations"
 	"github.com/revel/revel"
 	"net/http"
 	"strings"
@@ -85,7 +85,7 @@ func initAdmin() {
 	nodeSelectMeta := &admin.Meta{Name: "NodeId", Type: "select_one", Collection: nodeCollection}
 	bodyMeta := &admin.Meta{Name: "Body", Type: "text"}
 
-	Admin.AddResource(&admin.AssetManager{}, &admin.Config{Invisible: true})
+  // Admin.AddResource(&admin.AssetManager{}, &admin.Config{Invisible: true})
 
 	topic := Admin.AddResource(&models.Topic{})
 	topic.SearchAttrs("Title")

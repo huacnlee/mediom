@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var db gorm.DB
+var db *gorm.DB
 var DB *gorm.DB
 
 type BaseModel struct {
@@ -35,7 +35,7 @@ func InitDatabase() {
 	databaseURI := revel.Config.StringDefault("gorm.database_uri", "")
 	var err error
 	db, err = gorm.Open(adapter, databaseURI)
-	DB = &db
+	DB = db
 	if err != nil {
 		panic(err)
 	}
