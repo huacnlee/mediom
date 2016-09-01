@@ -33,7 +33,8 @@
 							{{node_name_tag .Node}}
 							{{user_name_tag .User}} 发表于 {{timeago .CreatedAt}}
 							{{if .LastReplyUserLogin}}
-							・ 最后由 {{user_name_tag .LastReplyUserLogin}} 于 {{timeago .LastRepliedAt}} 回复
+							・ 最后由 {{user_name_tag .LastReplyUserLogin}}
+              于 {{timeago .LastRepliedAt}} 回复
 							{{end}}
 						</div>
 			    </div>

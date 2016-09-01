@@ -23,7 +23,7 @@ type Topic struct {
 	LastReplyId        *int32
 	LastReplyUserId    *int32
 	LastReplyUser      User
-	LastReplyUserLogin *string `sql:"size:255"`
+	LastReplyUserLogin string `sql:"size:255"`
 	StarsCount         int32 `sql:"not null; default: 0"`
 	WatchesCount       int32 `sql:"not null; default: 0"`
 	Rank               int32 `sql:"not null; default: 0"`
