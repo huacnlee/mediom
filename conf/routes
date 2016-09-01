@@ -1,10 +1,9 @@
-
 GET     /				Home.Index
 WS      /msg                      Home.Message
 GET     /search         Home.Search
 
 GET 		/signup 			Accounts.New
-POST 	/signup 			Accounts.Create
+POST   	/signup 			Accounts.Create
 GET 		/signin 			Accounts.Login
 POST		/signin			Accounts.LoginCreate
 POST    /signout         Accounts.Logout
@@ -15,7 +14,7 @@ POST    /account/password/update     Accounts.UpdatePassword
 
 GET     /topics           Topics.Index
 GET     /topics/feed           Topics.Feed
-GET  /topics/node/:node_id      Topics.Index("node")
+GET     /topics/node/:node_id      Topics.Index("node")
 GET     /topics/popular           Topics.Index("popular")
 GET     /topics/recent           Topics.Index("recent")
 
