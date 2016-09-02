@@ -9,13 +9,6 @@
 
 ## Install
 
-### For Assets Pipeline
-
-```bash
-$ npm install -g node-sass@3.3.2
-$ npm install -g coffee-script@1.6.2
-```
-
 ### Download & Install Go:
 
 https://golang.org/dl/
