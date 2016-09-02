@@ -8,7 +8,7 @@ server:
 	revel run github.com/huacnlee/mediom
 release:
 	@make assets
-	GOOS=linux GOARCH=amd64 revel package github.com/huacnlee/mediom
+	GOOS=linux GOARCH=amd64 revel package github.com/huacnlee/mediom prod
 assets:
 	@train --source app/assets --out public
 test:

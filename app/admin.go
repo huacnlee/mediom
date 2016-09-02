@@ -2,13 +2,13 @@ package app
 
 import (
 	"fmt"
-	"github.com/revel/revel"
 	"github.com/huacnlee/mediom/app/models"
-	"github.com/qor/qor"
 	"github.com/qor/admin"
 	"github.com/qor/publish"
+	"github.com/qor/qor"
 	"github.com/qor/sorting"
 	"github.com/qor/validations"
+	"github.com/revel/revel"
 	"net/http"
 	"strings"
 )
@@ -44,7 +44,7 @@ func initAdmin() {
 
 	setting := Admin.AddResource(&models.Setting{})
 	setting.EditAttrs("Key", "Val")
-  setting.Meta(&admin.Meta{Name: "Val", Type: "text"})
+	setting.Meta(&admin.Meta{Name: "Val", Type: "text"})
 	setting.IndexAttrs("Id", "Key", "CreatedAt", "UpdatedAt")
 
 	reply := Admin.AddResource(&models.Reply{})
@@ -56,14 +56,13 @@ func initAdmin() {
 	user := Admin.AddResource(&models.User{})
 	user.SearchAttrs("Login", "Email")
 	user.EditAttrs("Login", "Email", "Location", "GitHub", "Twitter", "HomePage", "Tagline", "Description")
-  user.Meta(&admin.Meta{Name: "Description", Type: "text"})
+	user.Meta(&admin.Meta{Name: "Description", Type: "text"})
 	user.IndexAttrs("Id", "Login", "Email", "Location", "CreatedAt", "UpdatedAt")
 
 	node := Admin.AddResource(&models.Node{})
 	node.IndexAttrs("Id", "ParentId", "Name", "Summary", "Sort")
 	node.NewAttrs("ParentId", "Name", "Summary", "Sort")
 	node.EditAttrs("ParentId", "Name", "Summary", "Sort")
-
 
 	notification := Admin.AddResource(&models.Notification{})
 	notification.EditAttrs("Id")

@@ -9,7 +9,6 @@ import (
 )
 
 func init() {
-	// fmt.Println("Start app with dev mode:", revel.Config.BoolDefault("mode.dev", false))
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter, // Recover from panics and display an error page instead.
@@ -28,6 +27,9 @@ func init() {
 	}
 
 	train.Config.AssetsPath = "app/assets"
+	if !revel.DevMode {
+		train.Config.AssetsPath = "src/github.com/huacnlee/mediom/app/assets"
+	}
 	train.Config.SASS.DebugInfo = false
 	train.Config.SASS.LineNumbers = false
 	train.Config.Verbose = false
@@ -56,6 +58,3 @@ var AssetsFilter = func(c *revel.Controller, fc []revel.Filter) {
 		fc[0](c, fc[1:])
 	}
 }
-
-
-
