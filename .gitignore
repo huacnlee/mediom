@@ -6,6 +6,9 @@ routes/
 *.o
 *.a
 *.so
+*.log
+*.tar
+*.gz
 
 # Folders
 _obj
