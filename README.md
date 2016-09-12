@@ -11,7 +11,7 @@
 
 ### Download & Install Go:
 
-https://golang.org/dl/
+https://golang.org/dl
 
 ## Clone source code, and run:
 
