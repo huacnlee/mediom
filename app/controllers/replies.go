@@ -19,7 +19,7 @@ func (c Replies) Create() revel.Result {
 	if err != nil {
 		return c.RenderError(err)
 	}
-	c.RenderArgs["topic"] = c.topic
+	c.ViewArgs["topic"] = c.topic
 
 	reply.TopicId = c.topic.Id
 	reply.UserId = c.currentUser.Id
@@ -59,7 +59,7 @@ func (c Replies) Edit() revel.Result {
 	if !c.isOwner(reply) {
 		return c.RenderError(errors.New("Not allow."))
 	}
-	c.RenderArgs["reply"] = reply
+	c.ViewArgs["reply"] = reply
 	return c.Render()
 }
 

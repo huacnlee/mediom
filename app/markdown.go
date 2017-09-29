@@ -1,8 +1,7 @@
 package app
 
 import (
-	// "github.com/microcosm-cc/bluemonday"
-	. "github.com/slene/blackfriday"
+	"github.com/russross/blackfriday"
 	"regexp"
 )
 
@@ -13,31 +12,31 @@ var (
 )
 
 func MarkdownGitHub(input []byte) []byte {
-	htmlFlags := HTML_USE_XHTML
-	htmlFlags |= HTML_SKIP_HTML
-	htmlFlags |= HTML_SKIP_STYLE
-	// htmlFlags |= HTML_SKIP_LINKS
-	htmlFlags |= HTML_SKIP_SCRIPT
-	htmlFlags |= HTML_OMIT_CONTENTS
-	htmlFlags |= HTML_COMPLETE_PAGE
+	htmlFlags := blackfriday.UseXHTML
+	htmlFlags |= blackfriday.SkipHTML
+	htmlFlags |= blackfriday.SkipLinks
+	htmlFlags |= blackfriday.NofollowLinks
+	htmlFlags |= blackfriday.CompletePage
 
-	renderer := HtmlRenderer(htmlFlags, "", "")
+	renderer := blackfriday.NewHTMLRenderer(blackfriday.HTMLRendererParameters{
+		Flags: htmlFlags,
+	})
 
 	// set up the parser
 	extensions := 0 |
-		EXTENSION_NO_INTRA_EMPHASIS |
-		EXTENSION_TABLES |
-		EXTENSION_FENCED_CODE |
-		EXTENSION_AUTOLINK |
-		EXTENSION_STRIKETHROUGH |
-		EXTENSION_SPACE_HEADERS |
-		EXTENSION_HARD_LINE_BREAK |
-		EXTENSION_NO_EMPTY_LINE_BEFORE_BLOCK
+		blackfriday.NoIntraEmphasis |
+		blackfriday.Tables |
+		blackfriday.FencedCode |
+		blackfriday.Autolink |
+		blackfriday.Strikethrough |
+		blackfriday.SpaceHeadings |
+		blackfriday.HardLineBreak |
+		blackfriday.NoEmptyLineBeforeBlock
 
-	html := Markdown(input, renderer, extensions)
+	html := blackfriday.Run(input, blackfriday.WithRenderer(renderer), blackfriday.WithExtensions(extensions))
+	html = RemoveBlankChars(html)
 	html = LinkMentionUser(html)
 	html = LinkMentionFloor(html)
-	html = RemoveBlankChars(html)
 	return html
 }
 

@@ -221,9 +221,9 @@ func init() {
 	revel.TemplateFuncs["active_class"] = func(a string, b string) string {
 		if strings.EqualFold(a, b) {
 			return " active "
-		} else {
-			return ""
 		}
+
+		return ""
 	}
 
 	revel.TemplateFuncs["node_list"] = func() interface{} {

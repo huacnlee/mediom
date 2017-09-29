@@ -20,19 +20,19 @@ func (c Topics) Index(channel string) revel.Result {
 	node := Node{}
 	if strings.EqualFold(channel, "node") {
 		DB.Model(&Node{}).First(&node, nodeId)
-		c.RenderArgs["node"] = node
+		c.ViewArgs["node"] = node
 	}
 	topics, pageInfo := FindTopicPages(channel, nodeId, page, 20)
 	pageInfo.Path = c.Request.URL.Path
-	c.RenderArgs["channel"] = channel
-	c.RenderArgs["topics"] = topics
-	c.RenderArgs["page_info"] = pageInfo
+	c.ViewArgs["channel"] = channel
+	c.ViewArgs["topics"] = topics
+	c.ViewArgs["page_info"] = pageInfo
 	return c.Render()
 }
 
 func (c Topics) Feed() revel.Result {
 	topics, _ := FindTopicPages("recent", 0, 1, 20)
-	c.RenderArgs["topics"] = topics
+	c.ViewArgs["topics"] = topics
 	c.Response.ContentType = "application/rss+xml"
 	return c.Render()
 }
@@ -40,8 +40,8 @@ func (c Topics) Feed() revel.Result {
 func (c Topics) New() revel.Result {
 	c.requireUser()
 	t := &Topic{}
-	c.RenderArgs["nodes"] = FindAllNodes()
-	c.RenderArgs["topic"] = t
+	c.ViewArgs["nodes"] = FindAllNodes()
+	c.ViewArgs["topic"] = t
 	return c.Render()
 }
 
@@ -58,8 +58,8 @@ func (c Topics) Create() revel.Result {
 	t.UserId = c.currentUser.Id
 	v := CreateTopic(t)
 	if v.HasErrors() {
-		c.RenderArgs["topic"] = t
-		c.RenderArgs["nodes"] = FindAllNodes()
+		c.ViewArgs["topic"] = t
+		c.ViewArgs["nodes"] = FindAllNodes()
 		return c.renderValidation("topics/new.html", v)
 	}
 	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))
@@ -70,8 +70,8 @@ func (c Topics) Show() revel.Result {
 	DB.Preload("User").Preload("Node").First(&t, c.Params.Get("id"))
 	replies := []Reply{}
 	DB.Unscoped().Preload("User").Where("topic_id = ?", t.Id).Order("id asc").Find(&replies)
-	c.RenderArgs["topic"] = t
-	c.RenderArgs["replies"] = replies
+	c.ViewArgs["topic"] = t
+	c.ViewArgs["replies"] = replies
 	return c.Render()
 }
 
@@ -83,8 +83,8 @@ func (c Topics) Edit() revel.Result {
 		c.Flash.Error("没有修改的权限")
 		return c.Redirect("/")
 	}
-	c.RenderArgs["topic"] = t
-	c.RenderArgs["nodes"] = FindAllNodes()
+	c.ViewArgs["topic"] = t
+	c.ViewArgs["nodes"] = FindAllNodes()
 	return c.Render()
 }
 
@@ -102,8 +102,8 @@ func (c Topics) Update() revel.Result {
 	t.Body = c.Params.Get("body")
 	v := UpdateTopic(&t)
 	if v.HasErrors() {
-		c.RenderArgs["topic"] = t
-		c.RenderArgs["nodes"] = FindAllNodes()
+		c.ViewArgs["topic"] = t
+		c.ViewArgs["nodes"] = FindAllNodes()
 		return c.renderValidation("topics/edit.html", v)
 	}
 	return c.Redirect(fmt.Sprintf("/topics/%v", t.Id))

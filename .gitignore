@@ -32,3 +32,4 @@ _testmain.go
 *.prof
 
 public/assets
+vendor/

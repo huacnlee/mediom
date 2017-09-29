@@ -160,9 +160,11 @@ a { color: $blue; }
   padding: 6px 0 7px 0;
   margin-right: 10px;
 }
-&.open {
+
+.open {
   .btn.dropdown-toggle { background: #FFF; padding-bottom: 6px; border-bottom: 2px solid $blueLight; }
 }
+
 .input-group {
   .btn.dropdown-toggle { padding-right: 6px; }
   .form-control { padding-left: 6px; }

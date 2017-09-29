@@ -19,8 +19,8 @@ func (c Notifications) Index() revel.Result {
 	c.Params.Bind(&page, "page")
 	notes, pageInfo := c.currentUser.NotificationsPage(page, 8)
 	c.currentUser.ReadNotifications(notes)
-	c.RenderArgs["notifications"] = notes
-	c.RenderArgs["page_info"] = pageInfo
+	c.ViewArgs["notifications"] = notes
+	c.ViewArgs["page_info"] = pageInfo
 	return c.Render()
 }
 

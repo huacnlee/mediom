@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+// App base controller
 type App struct {
 	*revel.Controller
 	currentUser *User
@@ -25,53 +26,47 @@ func init() {
 	revel.InterceptMethod((*App).After, revel.AFTER)
 }
 
+// Finish request
 func (c *App) Finish(r revel.Result) {
 	r.Apply(c.Request, c.Response)
 	panic(nil)
 }
 
+// Before action
 func (c *App) Before() revel.Result {
-	c.prependCurrentUser()
-	c.RenderArgs["validation"] = nil
-	c.RenderArgs["logined"] = c.isLogined()
-	c.RenderArgs["current_user"] = c.currentUser
-	c.RenderArgs["app_name"] = revel.AppName
-	c.RenderArgs["controller_name"] = inflections.Underscore(c.Name)
-	c.RenderArgs["method_name"] = inflections.Underscore(c.MethodName)
-	c.RenderArgs["route_name"] = fmt.Sprintf("%v#%v", inflections.Underscore(c.Name), inflections.Underscore(c.MethodName))
+	c.prependcurrentUser()
+	c.ViewArgs["validation"] = nil
+	c.ViewArgs["logined"] = c.isLogined()
+	c.ViewArgs["current_user"] = c.currentUser
+	c.ViewArgs["app_name"] = revel.AppName
+	c.ViewArgs["controller_name"] = inflections.Underscore(c.Name)
+	c.ViewArgs["method_name"] = inflections.Underscore(c.MethodName)
+	c.ViewArgs["route_name"] = fmt.Sprintf("%v#%v", inflections.Underscore(c.Name), inflections.Underscore(c.MethodName))
 	return c.Result
 }
 
+// After action
 func (c *App) After() revel.Result {
 	newParams := make(map[string]string, len(c.Params.Values))
 	for key := range c.Params.Values {
 		newParams[key] = c.Params.Get(key)
 	}
 	if len(newParams) > 0 {
-		c.RenderArgs["params"] = newParams
+		c.ViewArgs["params"] = newParams
 	}
 	return c.Result
 }
 
-func (c *App) prependCurrentUser() {
-	userId := c.Session["user_id"]
+func (c *App) prependcurrentUser() {
+	userID := c.Session["user_id"]
 	u := &User{}
 	c.currentUser = u
-	if len(userId) == 0 {
+	if len(userID) == 0 {
 		return
 	}
 
 	DB.Where("id = ?", c.Session["user_id"]).First(u)
 	c.currentUser = u
-}
-
-func (c *App) CurrentUser() *User {
-	if c.currentUser != nil {
-		return c.currentUser
-	}
-
-	c.prependCurrentUser()
-	return c.currentUser
 }
 
 func (c App) storeUser(u *User) {
@@ -86,7 +81,7 @@ func (c App) clearUser() {
 }
 
 func (c *App) isLogined() bool {
-	return c.CurrentUser().Id > 0
+	return c.currentUser.Id > 0
 }
 
 func (c *App) requireUser() {
@@ -140,7 +135,7 @@ func (c App) isOwner(obj interface{}) bool {
 }
 
 func (c App) renderValidation(tpl string, v revel.Validation) revel.Result {
-	c.RenderArgs["validation"] = v
+	c.ViewArgs["validation"] = v
 	return c.RenderTemplate(tpl)
 }
 
@@ -152,7 +147,7 @@ type AppResult struct {
 
 func (c App) errorJSON(code int, msg string) revel.Result {
 	result := AppResult{Code: code, Msg: msg}
-	return c.RenderJson(result)
+	return c.successJSON(result)
 }
 
 func (c App) errorsJSON(code int, errs []*revel.ValidationError) revel.Result {
@@ -161,12 +156,12 @@ func (c App) errorsJSON(code int, errs []*revel.ValidationError) revel.Result {
 		msgs[i] = err.Message
 	}
 	result := AppResult{Code: code, Msg: strings.Join(msgs, "\n")}
-	return c.RenderJson(result)
+	return c.successJSON(result)
 }
 
 func (c App) successJSON(data interface{}) revel.Result {
 	result := AppResult{Code: 0, Data: data}
-	return c.RenderJson(result)
+	return c.successJSON(result)
 }
 
 func (c App) Captcha(id string) revel.Result {

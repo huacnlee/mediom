@@ -22,14 +22,14 @@ func (c *Users) Before() revel.Result {
 	if err != nil {
 		c.Finish(c.NotFound("页面不存在。"))
 	}
-	c.RenderArgs["user"] = c.user
+	c.ViewArgs["user"] = c.user
 	return nil
 }
 
 func (c Users) Show() revel.Result {
 	recentTopics := []Topic{}
 	DB.Order("id desc").Where("user_id = ?", c.user.Id).Limit(10).Find(&recentTopics)
-	c.RenderArgs["recent_topics"] = recentTopics
+	c.ViewArgs["recent_topics"] = recentTopics
 	return c.Render()
 }
 
